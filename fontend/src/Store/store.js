@@ -2,7 +2,7 @@ import {createStore, applyMiddleware} from "redux";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import ReduxThunk from 'redux-thunk';
 
-import reducer from "./reducers/reducers";
+import reducer from "./reducers/reducer";
 import httpActions from "../middleware/httpActions";
 
 

@@ -3,9 +3,9 @@ import {Provider} from "react-redux";
 import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 
 import store from "./Store/store";
-import login from "./View/login";
-import resetPassword from "./View/resetPassword";
-import {defaultLayout} from "./layout";
+import login from "./View/Login";
+import resetPassword from "./View/ForgotPassword";
+import {DefaultLayout} from "./layout";
 
 const SignInRoute = ({ component: Component }) => (
     <Route
@@ -38,7 +38,7 @@ const App = () => {
                 <Switch>
                     <Route exact path="/resetPassword" name="Reset Password" component={resetPassword}/>
                     <SignInRoute exact path="/login" name="Login" component={login}/>
-                    <RestRoute path="/" name="Home" component={defaultLayout}/>
+                    <RestRoute path="/" name="Home" component={DefaultLayout}/>
                 </Switch>
             </BrowserRouter>
         </Provider>

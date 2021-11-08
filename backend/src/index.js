@@ -1,21 +1,7 @@
-import http from "http";
-import app from "./server";
+import "./mongoDB.js";
+import app from "./server.js";
+import config from "./config/index.js";
 
-let server = null;
-
-if (process.env.PLATFORM_NODE_ENV === "development") {
-    server = http.createServer(app);
-} else {
-    console.log("This is the production environment");
-    server = app;
-}
-
-const PORT = process.env.PLATFORM_PORT || 8080;
-
-app.listen(PORT, async () => {
-    try {
-        console.log(`Server listening on port ${PORT}`);
-    } catch (err) {
-        console.log("Server init error", err);
-    }
+app.listen(config.port,()=>{
+    console.log(`Server Started on Port ${config.port}`);
 });

@@ -1,3 +1,3 @@
-import defaultLayout from "./defaultLayout";
+import DefaultLayout from "./DefaultLayout/index.js";
 
-export {defaultLayout};
+export {DefaultLayout};
