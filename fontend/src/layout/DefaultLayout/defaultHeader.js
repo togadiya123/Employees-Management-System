@@ -95,7 +95,7 @@ const DefaultHeader = ({setDrawerStatus}) => {
     return <AppBar sx={{
         backgroundColor: `var(--main)`,
         zIndex: (theme) => theme.zIndex.drawer + 1
-    }}>
+    }} id={"AppBar"} position={"unset"}>
         <Toolbar>
             <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{mr: 2}}
                         onClick={drawerStatusSetHandler}>
