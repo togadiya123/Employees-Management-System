@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import {User} from "../modal/index.js";
+import {User} from "../../modal/index.js";
 import responseHandler from "../../responseHandler.js";
 import config from "../../config/index.js";
 
@@ -32,7 +32,7 @@ const logIn = async (req, res) => {
         user.tokens.push({token});
         await user.save();
 
-        responseHandler(`login success`,res,{...user._doc,token});
+        responseHandler(`login success`,res,{token});
     } catch (e) {
         res.status(400).send(`Error : ${e}`);
     }

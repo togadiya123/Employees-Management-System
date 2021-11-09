@@ -29,6 +29,18 @@ const RESPONSE_LIST = [
         technicalMessage: `User has been registered successfully.`,
         message: `User has been registered successfully.`,
     },
+    {
+        value: `token missing`,
+        statusCode: 403,
+        technicalMessage: `Token not provided in header`,
+        message: `Token not provided in header`,
+    },
+    {
+        value: `invalid token`,
+        statusCode: 403,
+        technicalMessage: `Provided token is not valid token`,
+        message: `Provided token is not valid token`,
+    },
 ];
 
 const deleteUnnecessaryValue = (data) => {

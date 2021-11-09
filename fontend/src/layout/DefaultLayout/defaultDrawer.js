@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText} from '@mui/material';
+import {Box, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText,Toolbar} from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import {DRAWER_LIST_ITEM} from "../../HelperFunction/staticList";
@@ -27,6 +27,7 @@ const DefaultDrawer = ({drawerStatus, setDrawerStatus}) => {
             // display: `inline-block`,
         },
     }}>
+        <Toolbar/>
         <Box>
             <List>
                 {DRAWER_LIST_ITEM.map(eachListItem => <ListItem key={eachListItem.key} button={eachListItem.isButton}
