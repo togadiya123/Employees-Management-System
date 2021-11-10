@@ -32,14 +32,32 @@ const RESPONSE_LIST = [
     {
         value: `token missing`,
         statusCode: 403,
-        technicalMessage: `Token not provided in header`,
-        message: `Token not provided in header`,
+        technicalMessage: `Token not provided in header, Pass the token with 'x-access-token' or 'authorization' key in header.`,
+        message: `Token not provided in header.`,
     },
     {
         value: `invalid token`,
         statusCode: 403,
-        technicalMessage: `Provided token is not valid token`,
-        message: `Provided token is not valid token`,
+        technicalMessage: `Provided token is not valid.`,
+        message: `Provided token is not valid.`,
+    },
+    {
+        value: `user not found`,
+        statusCode: 403,
+        technicalMessage: `User not found, when try to get information of user by id in middleware.`,
+        message: `User not found.`,
+    },
+    {
+        value: `expired token`,
+        statusCode: 403,
+        technicalMessage: `Authentication is failed, Due to Token Expired.`,
+        message: `Authentication is failed.`,
+    },
+    {
+        value: `passed user info`,
+        statusCode: 201,
+        technicalMessage: `Successfully Passed User Information.`,
+        message: `Successfully Passed User Information.`,
     },
 ];
 
@@ -56,15 +74,15 @@ const deleteUnnecessaryValue = (data) => {
     return data;
 };
 
-export default (value, res, data = {}) => {
+export default (value, res, data) => {
     let response = RESPONSE_LIST.find(eachResponse => eachResponse.value === value);
     if (!response)
         response = {value, statusCode: 400, technicalMessage: `Error : Error for ${value}`, message: value};
-    data = deleteUnnecessaryValue({
-        ...data,
+
+    const message = {
         technicalMessage: response.technicalMessage,
         message: response.message,
         statusCode: response.statusCode
-    });
-    res.status(response.statusCode).send({...data});
+    };
+    res.status(response.statusCode).send(data ? {data: deleteUnnecessaryValue(data), ...message} : message);
 };
