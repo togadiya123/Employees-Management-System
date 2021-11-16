@@ -1,9 +1,17 @@
 import axios from "axios";
 import config from "../config";
+import {toast} from "react-toastify";
+
+const defaultToasterOptions = {
+    isLoading: false,
+    autoClose: 4000,
+    closeButton: true,
+};
 
 const httpActions = () => next => async action => {
     const {
         method = "GET",
+        toasterString,
         url,
         isHttpAction,
         headers,
@@ -11,15 +19,16 @@ const httpActions = () => next => async action => {
         body,
     } = action;
 
-    const authKey = JSON.parse(localStorage.getItem("LOGIN"));
+    const authKey = localStorage.getItem("token");
 
     if (isHttpAction) {
+        let toasterId = null;
+        toasterString && (toasterId = toast.loading(toasterString || `Waiting for Response`))
         next({
             type: `${actionType}_FETCHING`,
             payload: {},
         });
         const baseURL = config.BACKEND_BASE_API_URL;
-        console.log(baseURL, "baseURL");
         const accessAndContentHeader = {
             'Access-Control-Allow-Origin': '*',
             'Content-type': 'application/json',
@@ -29,7 +38,7 @@ const httpActions = () => next => async action => {
             const response = await axios({
                 url,
                 headers: {
-                    Authorization: (authKey && authKey['AUTH']) || '',
+                    Authorization: authKey || '',
                     ...accessAndContentHeader,
                     ...headers,
                 },
@@ -38,13 +47,19 @@ const httpActions = () => next => async action => {
                 method,
             });
             const {data} = response;
+            toasterId && await toast.update(toasterId, {type: 'success', render: data.message || `Success`, ...defaultToasterOptions});
             next({
                 type: `${actionType}_SUCCESS`,
                 payload: data,
             })
         } catch (e) {
-            const {message} = e;
-            console.log(e);
+            const {response: {data: {message}}} = e;
+            console.log('Error : got in https action\n', e, e.response);
+            toasterId && await toast.update(toasterId, {
+                type: 'error',
+                render: message || `Something going wrong !`,
+                ...defaultToasterOptions,
+            });
             next({
                 type: `${actionType}_FAILED`,
                 payload: {message, e},

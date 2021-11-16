@@ -1,11 +1,13 @@
 import React from 'react';
 import {Provider} from "react-redux";
-import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
+import {ToastContainer} from "react-toastify";
 
 import store from "./Store/store";
-import login from "./View/Login";
-import resetPassword from "./View/ForgotPassword";
-import {DefaultLayout} from "./layout";
+import login from "./Components/View/Login";
+import resetPassword from "./Components/View/ForgotPassword";
+import {DefaultLayout} from "./Components/layout";
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignInRoute = ({ component: Component }) => (
     <Route
@@ -41,6 +43,7 @@ const App = () => {
                     <RestRoute path="/" name="Home" component={DefaultLayout}/>
                 </Switch>
             </BrowserRouter>
+            <ToastContainer position={"bottom-right"} autoClose={5000} limit={4}/>
         </Provider>
     );
 };

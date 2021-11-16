@@ -2,8 +2,8 @@ import React from "react";
 import {Box, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText,Toolbar} from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
-import {DRAWER_LIST_ITEM} from "../../HelperFunction/staticList";
-import {commonTransition} from "../../HelperFunction";
+import {DRAWER_LIST_ITEM} from "../../../HelperFunction/staticList";
+import {commonTransition} from "../../../HelperFunction";
 
 const DefaultDrawer = ({drawerStatus, setDrawerStatus}) => {
 

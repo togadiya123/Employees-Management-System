@@ -7,7 +7,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-import config from "../../config";
+import config from "../../../config";
 import {Search, SearchIconWrapper, StyledInputBase} from "../../CommonComponents";
 
 const DefaultHeader = ({setDrawerStatus}) => {
@@ -28,8 +28,8 @@ const DefaultHeader = ({setDrawerStatus}) => {
             key: "account",
             value: "Account",
             icon: <AccountCircle/>,
-            onClickHandler: () => {
-                setAccountMenu((accountMenu) => ({...accountMenu, isOpen: true}))
+            onClickHandler: (e) => {
+                setAccountMenu((accountMenu) => ({...accountMenu, data: e.currentTarget, isOpen: true}))
             },
             size: "large",
             edge: "start",
@@ -68,8 +68,12 @@ const DefaultHeader = ({setDrawerStatus}) => {
 
     const getMenuItemsList = (list) => list.map(eachIcon => <MenuItem onClick={eachIcon.onClickHandler}
                                                                       key={eachIcon.key}>
-            <IconButton size={eachIcon.size} aria-label={eachIcon.key} key={eachIcon.key} edge={eachIcon.edge}
-                        onClick={eachIcon.onClickHandler} color={eachIcon.color}>
+            <IconButton size={eachIcon.size}
+                        aria-label={eachIcon.key}
+                        key={eachIcon.key} edge={eachIcon.edge}
+                        disableFocusRipple={true}
+                        disableRipple={true}
+                        color={eachIcon.color}>
                 <Badge badgeContent={eachIcon.badge} color="error">
                     {eachIcon.icon}
                 </Badge>
@@ -79,10 +83,10 @@ const DefaultHeader = ({setDrawerStatus}) => {
     );
 
     const closeAccountMenu = () => {
-        setAccountMenu((accountMenu) => ({...accountMenu, isOpen: false}));
+        setAccountMenu(() => ({data: null, isOpen: false}));
     };
     const closeMobileViewMenu = () => {
-        setMobileViewMenu((mobileViewMenu) => ({...mobileViewMenu, isOpen: false}));
+        setMobileViewMenu(() => ({data: null, isOpen: false}));
     };
     const drawerStatusSetHandler = () => {
         setDrawerStatus(drawerStatus => ({...drawerStatus, isOpen: !drawerStatus.isOpen}));
@@ -126,18 +130,20 @@ const DefaultHeader = ({setDrawerStatus}) => {
             </Box>
             <Box sx={{display: {xs: 'flex', md: 'none'}}}>
                 <IconButton size="large" aria-label="show more" aria-haspopup="true" color="inherit"
-                            onClick={() => {
-                                setMobileViewMenu((data) => ({...data, isOpen: true}))
+                            onClick={(e) => {
+                                setMobileViewMenu((data) => ({...data, data: e.currentTarget, isOpen: true}))
                             }}>
                     <MoreIcon/>
                 </IconButton>
             </Box>
             <Menu open={accountMenu.isOpen}
-                  onClose={closeAccountMenu}
+                  anchorEl={accountMenu.data}
+                onClose={closeAccountMenu}
                   anchorOrigin={{vertical: 'top', horizontal: 'right',}}>
                 {getMenuItemsList(ACCOUNT_MENU_ITEM)}
             </Menu>
             <Menu open={mobileViewMenu.isOpen}
+                  anchorEl={mobileViewMenu.data}
                   onClose={closeMobileViewMenu}
                   anchorOrigin={{vertical: 'top', horizontal: 'right',}}>
                 {getMenuItemsList(NAVIGATION_MENU_LIST)}

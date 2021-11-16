@@ -1,9 +1,18 @@
-import {LOGIN_USER} from "./actionType";
+import {GET_USER_INFO, LOGIN_USER} from "./actionType";
 
 export const loginUser = payload => ({
     actionType: LOGIN_USER,
-    isHttpAction : true,
+    toasterString: `Waiting for Login Response.`,
+    isHttpAction: true,
     url: '/auth/logIn',
-    method: 'post',
-    body:payload,
+    method: 'POST',
+    body: payload,
+});
+
+export const getUserInfo = payload => ({
+    actionType: GET_USER_INFO,
+    isHttpAction: true,
+    url: '/user/getUserInfo',
+    method: 'GET',
+    body: payload,
 });

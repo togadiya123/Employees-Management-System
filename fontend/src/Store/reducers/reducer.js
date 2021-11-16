@@ -1,5 +1,5 @@
 import rootState from "./rootState";
-import {LOGIN_USER} from "../actions/actionType";
+import {GET_USER_INFO, LOGIN_USER} from "../actions/actionType";
 import {getFormattedResponse} from "../../HelperFunction";
 
 const reducer = (state = rootState, {type, payload }) => {
@@ -34,10 +34,11 @@ const reducer = (state = rootState, {type, payload }) => {
 
         case `${LOGIN_USER}_SUCCESS`: {
             state.apiResponses.push(getFormattedResponse(`${LOGIN_USER}_SUCCESS`, payload));
-            localStorage.setItem("token",payload.token);
+            localStorage.setItem("token", payload.data.token);
             return {
                 ...state,
                 user: {
+                    ...state.user,
                     logInApiFetching: false,
                     isLogIn: true,
                     ...payload
@@ -50,7 +51,43 @@ const reducer = (state = rootState, {type, payload }) => {
             return {
                 ...state,
                 user: {
+                    ...state.user,
                     logInApiFetching: false,
+                    isLogIn: false,
+                    ...payload
+                }
+            }
+        }
+        case `${GET_USER_INFO}_FETCHING`: {
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    getUserInfoFetching: true,
+                }
+            };
+        }
+
+        case `${GET_USER_INFO}_SUCCESS`: {
+            state.apiResponses.push(getFormattedResponse(`${GET_USER_INFO}_SUCCESS`, payload));
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    getUserInfoFetching: false,
+                    isLogIn: true,
+                    ...payload
+                }
+            }
+        }
+
+        case `${GET_USER_INFO}_FAILED` : {
+            state.apiResponses.push(getFormattedResponse(`${GET_USER_INFO}_FAILED`, payload));
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    getUserInfoFetching: false,
                     isLogIn: false,
                     ...payload
                 }

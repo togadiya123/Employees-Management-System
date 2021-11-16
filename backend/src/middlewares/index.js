@@ -8,7 +8,7 @@ import {toObjectId} from "../helperFunction.js";
 
 export const verifyToken = async (req, res, next) => {
     try {
-        let token = req.headers['x-access-token'] || req.headers['authorization'];
+        let token = req.headers['x-access-token'] || req.headers['authorization'] || req.headers['Authorization'];
 
         if (isNullUndefinedEmpty(token)) return responseHandler(`token missing`, res);
 

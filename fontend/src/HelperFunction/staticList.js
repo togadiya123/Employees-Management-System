@@ -22,3 +22,48 @@ export const DRAWER_LIST_ITEM = [
         isButton : true,
     },
 ];
+
+
+export const LOGIN_FORM_FIELD = [
+    {
+        id: `email`,
+        label: `Email Id`,
+        type: `input`,
+        fieldType: `email`,
+        validationType: `email`,
+        required: true,
+        value: '',
+        helperText: `Enter Your Email-Id`,
+        isValid: false,
+        isInitialValue: true,
+        isCurrentlyInputInFocus: false
+    },
+    {
+        id: `password`,
+        label: `Password`,
+        type: `input`,
+        fieldType: `password`,
+        validationType: `strongPassword`,
+        required: true,
+        value: '',
+        helperText: `Enter Your Password`,
+        isValid: false,
+        isInitialValue: true,
+        isCurrentlyInputInFocus: false
+    },
+    {
+        id: `logIn`,
+        childText: `Log In`,
+        type: `button`,
+        fieldType: `button`,
+        validationType: `allRequired`,
+        color: `white`,
+        bgcolor: `var(--main) !important`,
+        variant: `contained`,
+        size: 'large',
+        helperText: ``,
+        isValid: false,
+        isInitialValue: true,
+        isCurrentlyInputInFocus: false
+    },
+];
