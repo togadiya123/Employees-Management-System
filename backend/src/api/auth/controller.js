@@ -10,31 +10,31 @@ const register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         body.password = await bcrypt.hash(body.password, salt);
         await User.create(body);
-        responseHandler(`register success`,res);
+        return responseHandler(`register success`,res);
     } catch (e) {
         console.log(`Error : ${e}`);
-        res.status(400).send(`Error : ${e}`);
+        return res.status(400).send(`Error : ${e}`);
     }
 };
 
 const logIn = async (req, res) => {
     try {
         let {emailId, password} = req.body;
-        if (!(emailId && password)) responseHandler(`invalid email or password`,res);
+        if (!(emailId && password))return responseHandler(`invalid email or password`,res);
 
         const user = await User.findOne({emailId: emailId});
-        if(!user) responseHandler(`invalid email`,res);
+        if(!user)return responseHandler(`invalid email`,res);
 
         const response = await bcrypt.compare(password, user.password);
-        if(!response) responseHandler(`invalid password`,res);
+        if(!response)return responseHandler(`invalid password`,res);
 
         const token = jwt.sign({id: user._id, email: user.emailId}, config.JWTSecret);
         user.tokens.push({token});
         await user.save();
 
-        responseHandler(`login success`,res,{token});
+        return responseHandler(`login success`,res,{token});
     } catch (e) {
-        res.status(400).send(`Error : ${e}`);
+        return res.status(400).send(`Error : ${e}`);
     }
 };
 

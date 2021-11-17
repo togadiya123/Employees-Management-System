@@ -24,6 +24,12 @@ const RESPONSE_LIST = [
         message: `Login successfully`,
     },
     {
+        value: `logout success`,
+        statusCode: 200,
+        technicalMessage: `User has been logout successfully.`,
+        message: `Logout successfully`,
+    },
+    {
         value: `register success`,
         statusCode: 200,
         technicalMessage: `User has been registered successfully.`,
@@ -84,5 +90,5 @@ export default (value, res, data) => {
         message: response.message,
         statusCode: response.statusCode
     };
-    res.status(response.statusCode).send(data ? {data: deleteUnnecessaryValue(data), ...message} : message);
+    return res.status(response.statusCode).send(data ? {data: deleteUnnecessaryValue(data), ...message} : message);
 };

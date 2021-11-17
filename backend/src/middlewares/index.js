@@ -19,56 +19,28 @@ export const verifyToken = async (req, res, next) => {
             req.tokenDecoded = {...decoded, token};
         });
 
-        const user = await User.aggregate([
-            {
-                $match: {
-                    $and: [
-                        {
-                            _id: toObjectId(req.tokenDecoded.id),
+        const user = await User.find({
+            $and: [
+                {
+                    _id: toObjectId(req.tokenDecoded.id),
 
-                        },
-                        {
-                            tokens: {
-                                $elemMatch: {
-                                    token: req.tokenDecoded.token
-                                }
-                            }
+                },
+                {
+                    tokens: {
+                        $elemMatch: {
+                            token: req.tokenDecoded.token
                         }
-                    ]
+                    }
                 }
-            }
-        ]);
+            ]
+        });
 
-        if(!user.length) responseHandler(`expired token`,res);
-
+        if (!user.length)return responseHandler(`expired token`, res);
         req.user = user[0];
 
         next();
     } catch (error) {
-        console.log(`Error : ${error}`);
-        res.status(400).send(`Error : ${error}`);
+        console.log(`Error on verifyToken: ${error}`);
+        return res.status(400).send(`Error on verifyToken: ${error}`);
     }
 };
-
-// export const userDetails = async (req, res, next) => {
-//     try {
-//         // const user = User.findById(req?.tokenDecoded?.id);
-//         // if (!user) return responseHandler(`user not found`, res);
-//
-//         const user = await User.aggregate([
-//             {
-//                 $match: {
-//                     $and : [
-//                         {id : req?.tokenDecoded?.id},
-//                         {$in : [req?.tokenDecoded?.token , "$tokens" ]}
-//                     ]
-//                 }
-//             }
-//         ])
-//
-//
-//     } catch (error) {
-//         console.log(`Error : ${error}`);
-//         res.status(400).send(`Error : ${error}`);
-//     }
-// };
