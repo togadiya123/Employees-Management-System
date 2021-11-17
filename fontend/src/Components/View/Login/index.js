@@ -124,8 +124,8 @@ const Login = ({history}) => {
     };
 
     useEffect(() => {
-        user.isLogIn && history.push(`/`);
-    }, [user]);
+        user.isLogIn && history.replace(`/`);
+    }, [user,history]);
 
 
     return <React.Fragment>

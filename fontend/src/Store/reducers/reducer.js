@@ -1,8 +1,8 @@
 import rootState from "./rootState";
-import {GET_USER_INFO, LOGIN_USER} from "../actions/actionType";
+import {GET_USER_INFO, LOGIN_USER, LOGOUT_USER} from "../actions/actionType";
 import {getFormattedResponse} from "../../HelperFunction";
 
-const reducer = (state = rootState, {type, payload }) => {
+const reducer = (state = rootState, {type, payload}) => {
     switch (type) {
         case `_FETCHING`: {
             return {
@@ -41,7 +41,7 @@ const reducer = (state = rootState, {type, payload }) => {
                     ...state.user,
                     logInApiFetching: false,
                     isLogIn: true,
-                    ...payload
+                    ...payload.data
                 }
             }
         }
@@ -54,16 +54,16 @@ const reducer = (state = rootState, {type, payload }) => {
                     ...state.user,
                     logInApiFetching: false,
                     isLogIn: false,
-                    ...payload
                 }
             }
         }
+
         case `${GET_USER_INFO}_FETCHING`: {
             return {
                 ...state,
                 user: {
                     ...state.user,
-                    getUserInfoFetching: true,
+                    fetchingUserInformation: true,
                 }
             };
         }
@@ -74,22 +74,42 @@ const reducer = (state = rootState, {type, payload }) => {
                 ...state,
                 user: {
                     ...state.user,
-                    getUserInfoFetching: false,
-                    isLogIn: true,
-                    ...payload
+                    fetchingUserInformation: false,
+                    haveUserInfo: true,
+                    ...payload.data
                 }
             }
         }
 
         case `${GET_USER_INFO}_FAILED` : {
+            localStorage.removeItem("token");
             state.apiResponses.push(getFormattedResponse(`${GET_USER_INFO}_FAILED`, payload));
+            return rootState;
+        }
+
+        case `${LOGOUT_USER}_FETCHING`: {
             return {
                 ...state,
                 user: {
                     ...state.user,
-                    getUserInfoFetching: false,
-                    isLogIn: false,
-                    ...payload
+                    logOutApiFetching: true,
+                }
+            };
+        }
+
+        case `${LOGOUT_USER}_SUCCESS`: {
+            localStorage.removeItem("token");
+            state.apiResponses.push(getFormattedResponse(`${LOGOUT_USER}_SUCCESS`, payload));
+            return rootState;
+        }
+
+        case `${LOGOUT_USER}_FAILED` : {
+            state.apiResponses.push(getFormattedResponse(`${LOGOUT_USER}_FAILED`, payload));
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    logOutApiFetching: false,
                 }
             }
         }

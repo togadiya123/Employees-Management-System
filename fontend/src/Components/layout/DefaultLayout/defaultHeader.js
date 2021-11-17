@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {useDispatch} from "react-redux";
 import {AppBar, Badge, Box, IconButton, Menu, MenuItem, Toolbar, Typography} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -9,8 +10,11 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 import config from "../../../config";
 import {Search, SearchIconWrapper, StyledInputBase} from "../../CommonComponents";
+import {logOutUser} from "../../../Store/actions/action";
 
 const DefaultHeader = ({setDrawerStatus}) => {
+
+    const dispatch = useDispatch();
 
     const NAVIGATION_MENU_LIST = [
         {
@@ -44,7 +48,7 @@ const DefaultHeader = ({setDrawerStatus}) => {
             value: "Profile",
             icon: <AccountCircle/>,
             size: "large",
-            onClick: () => {
+            onClickHandler: () => {
             },
             edge: "start",
             badge: 0,
@@ -55,7 +59,8 @@ const DefaultHeader = ({setDrawerStatus}) => {
             value: "Log Out",
             icon: <LogoutIcon/>,
             size: "large",
-            onClick: () => {
+            onClickHandler: () => {
+                dispatch(logOutUser())
             },
             edge: "start",
             badge: 0,
@@ -94,12 +99,13 @@ const DefaultHeader = ({setDrawerStatus}) => {
 
     useEffect(() => {
         drawerStatusSetHandler();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return <AppBar sx={{
         backgroundColor: `var(--main)`,
         zIndex: (theme) => theme.zIndex.drawer + 1
-    }} id={"AppBar"} position={"unset"}>
+    }} id={"AppBar"} position={"relative"}>
         <Toolbar>
             <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{mr: 2}}
                         onClick={drawerStatusSetHandler}>
@@ -138,7 +144,7 @@ const DefaultHeader = ({setDrawerStatus}) => {
             </Box>
             <Menu open={accountMenu.isOpen}
                   anchorEl={accountMenu.data}
-                onClose={closeAccountMenu}
+                  onClose={closeAccountMenu}
                   anchorOrigin={{vertical: 'top', horizontal: 'right',}}>
                 {getMenuItemsList(ACCOUNT_MENU_ITEM)}
             </Menu>

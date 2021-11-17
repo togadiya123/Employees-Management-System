@@ -1,4 +1,4 @@
-import {GET_USER_INFO, LOGIN_USER} from "./actionType";
+import {GET_USER_INFO, LOGIN_USER, LOGOUT_USER} from "./actionType";
 
 export const loginUser = payload => ({
     actionType: LOGIN_USER,
@@ -9,10 +9,17 @@ export const loginUser = payload => ({
     body: payload,
 });
 
-export const getUserInfo = payload => ({
+export const getUserInfo = () => ({
     actionType: GET_USER_INFO,
     isHttpAction: true,
     url: '/user/getUserInfo',
     method: 'GET',
-    body: payload,
+});
+
+export const logOutUser = () => ({
+    actionType: LOGOUT_USER,
+    toasterString: `Waiting for Logout Response.`,
+    isHttpAction: true,
+    url: '/user/logOut',
+    method: 'GET',
 });
