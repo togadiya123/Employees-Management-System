@@ -63,7 +63,7 @@ const RESPONSE_LIST = [
         value: `passed user info`,
         statusCode: 201,
         technicalMessage: `Successfully Passed User Information.`,
-        message: `Successfully Passed User Information.`,
+        message: `Successfully Get User Information.`,
     },
 ];
 

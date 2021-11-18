@@ -2,7 +2,7 @@ import rootState from "./rootState";
 import {GET_USER_INFO, LOGIN_USER, LOGOUT_USER} from "../actions/actionType";
 import {getFormattedResponse} from "../../HelperFunction";
 
-const reducer = (state = rootState, {type, payload}) => {
+const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload}) => {
     switch (type) {
         case `_FETCHING`: {
             return {
@@ -19,6 +19,7 @@ const reducer = (state = rootState, {type, payload}) => {
 
         case `_FAILED` : {
             return {
+
                 ...state,
             }
         }
@@ -83,7 +84,6 @@ const reducer = (state = rootState, {type, payload}) => {
 
         case `${GET_USER_INFO}_FAILED` : {
             localStorage.removeItem("token");
-            state.apiResponses.push(getFormattedResponse(`${GET_USER_INFO}_FAILED`, payload));
             return rootState;
         }
 
@@ -99,7 +99,7 @@ const reducer = (state = rootState, {type, payload}) => {
 
         case `${LOGOUT_USER}_SUCCESS`: {
             localStorage.removeItem("token");
-            state.apiResponses.push(getFormattedResponse(`${LOGOUT_USER}_SUCCESS`, payload));
+            console.log("rootState", rootState);
             return rootState;
         }
 

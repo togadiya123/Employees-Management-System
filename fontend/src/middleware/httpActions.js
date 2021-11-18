@@ -18,12 +18,11 @@ const httpActions = () => next => async action => {
         actionType,
         body,
     } = action;
-
     const authKey = localStorage.getItem("token");
 
     if (isHttpAction) {
         let toasterId = null;
-        toasterString && (toasterId = toast.loading(toasterString || `Waiting for Response`))
+        toasterString && (toasterId = await toast.loading(toasterString || `Waiting for Response`))
         next({
             type: `${actionType}_FETCHING`,
             payload: {},

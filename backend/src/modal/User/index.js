@@ -8,19 +8,26 @@ const userSchema = Schema(
         firstName: {
             type: String,
             required: true,
-            trim: true
+            trim: true,
         },
         lastName: {
             type: String,
             required: true,
-            trim: true
+            trim: true,
         },
         designation: {
             type: String,
             required: true,
+            trim: true,
         },
         qualification: {
             type: String,
+            required: true,
+            trim: true,
+        },
+        positionType: {
+            type: String,
+            enum: ['Admin', "User"],
             required: true,
         },
         emailId: {
@@ -41,7 +48,6 @@ const userSchema = Schema(
             unique: true,
             trim: true,
             validate(value) {
-
                 if (value.length !== 12 || !validator.isNumeric(value)) {
                     throw new Error('Number Is Not Valid !')
                 }
@@ -72,6 +78,7 @@ const userSchema = Schema(
         },
         status: {
             type: String,
+            enum: ['Active','DeActive',`Pending`],
             required: true,
         },
         tokens: [{

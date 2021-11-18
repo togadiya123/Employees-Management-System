@@ -30,8 +30,8 @@ const DefaultLayout = ({history}) => {
         <Stack sx={{height:`100vh`}}>
             <DefaultHeader setDrawerStatus={setDrawerStatus}/>
             <Stack sx={{flex:'auto'}} direction={`row`}>
-                <DefaultDrawer drawerStatus={drawerStatus} setDrawerStatus={setDrawerStatus}/>
-                <DefaultMainContainer/>
+                <DefaultDrawer drawerStatus={drawerStatus} setDrawerStatus={setDrawerStatus} history={history}/>
+                <DefaultMainContainer history={history}/>
             </Stack>
         </Stack>
     </React.Fragment>;

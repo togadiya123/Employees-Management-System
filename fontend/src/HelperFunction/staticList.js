@@ -1,25 +1,55 @@
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import WorkOffIcon from '@mui/icons-material/WorkOff';
+import PersonIcon from '@mui/icons-material/Person';
+import config from "../config";
 
 export const DRAWER_LIST_ITEM = [
     {
         key: "dashboard",
         textValue: "Dashboard",
+        route: '/dashboard',
         icon: <DashboardIcon/>,
-        isButton : true,
+        isButton: true,
+        haveAdminView: true,
+        haveUserView: true,
     },
     {
         key: "attendance",
         textValue: "Attendance",
+        route: '/attendance',
         icon: <AssessmentIcon/>,
-        isButton : true,
+        isButton: true,
+        haveAdminView: true,
+        haveUserView: true,
+    },
+    {
+        key: "leave",
+        textValue: "Leave",
+        route: '/leave',
+        icon: <WorkOffIcon/>,
+        isButton: true,
+        haveAdminView: true,
+        haveUserView: true,
     },
     {
         key: "salary",
         textValue: "Salary",
+        route: '/salary',
         icon: <MonetizationOnIcon/>,
-        isButton : true,
+        isButton: true,
+        haveAdminView: true,
+        haveUserView: true,
+    },
+    {
+        key: "employee",
+        textValue: "Employee",
+        route: '/employee',
+        icon: <PersonIcon/>,
+        isButton: true,
+        haveAdminView: true,
+        haveUserView: false,
     },
 ];
 
@@ -67,3 +97,7 @@ export const LOGIN_FORM_FIELD = [
         isCurrentlyInputInFocus: false
     },
 ];
+
+export const FOOTER_STRING_ARRAY = [
+    `All Copyright are reserved by ${config.APPLICATION_NAME} ${String.fromCharCode(9400)} ${new Date().getFullYear()}.`,
+    `Powered by togadiya`];

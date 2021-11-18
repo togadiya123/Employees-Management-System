@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {Card, Container} from "@mui/material";
 import isEmail from "validator/es/lib/isEmail";
 
-import "./index.scss"
 import isStrongPassword from "validator/es/lib/isStrongPassword";
 import {loginUser} from "../../../Store/actions/action";
 import {LOGIN_FORM_FIELD} from "../../../HelperFunction/staticList";

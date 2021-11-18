@@ -5,7 +5,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import {DRAWER_LIST_ITEM} from "../../../HelperFunction/staticList";
 import {commonTransition} from "../../../HelperFunction";
 
-const DefaultDrawer = ({drawerStatus, setDrawerStatus}) => {
+const DefaultDrawer = ({drawerStatus, setDrawerStatus, history}) => {
 
     const drawerStatusSetHandler = () => {
         setDrawerStatus(drawerStatus => ({...drawerStatus, isNarrow: !drawerStatus.isNarrow}));
@@ -23,8 +23,13 @@ const DefaultDrawer = ({drawerStatus, setDrawerStatus}) => {
         },
     }}>
         <Box>
-            <List>
-                {DRAWER_LIST_ITEM.map(eachListItem => <ListItem key={eachListItem.key} button={eachListItem.isButton}
+            <List disablePadding>
+                {DRAWER_LIST_ITEM.map(eachListItem => <ListItem key={eachListItem.key}
+                                                                button={eachListItem.isButton}
+                                                                selected={history.location.pathname.startsWith(eachListItem.route)}
+                                                                onClick={() => {
+                                                                    history.replace(eachListItem.route || '/')
+                                                                }}
                                                                 sx={{padding: "10px 22px"}}>
                         <ListItemIcon sx={{minWidth: "46px"}}>{eachListItem.icon}</ListItemIcon>
                         <ListItemText primary={eachListItem.textValue}/>

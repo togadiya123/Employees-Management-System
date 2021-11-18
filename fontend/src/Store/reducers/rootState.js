@@ -1,8 +1,8 @@
-import {user,apiResponses} from "./initialReducerStore";
+import {user, apiResponses} from "./initialReducerStore";
 
 const rootState = {
     user,
-    apiResponses,
+    apiResponses: apiResponses,
 };
 
 export default rootState;
