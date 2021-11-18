@@ -1,8 +1,11 @@
 import React from "react";
+import {Container} from '@mui/material';
+
 import {commonTransition} from "../../../HelperFunction";
 
 const DefaultMainContainer = () => {
-    return <main style={{width:`100%`,height:`100%`,...(commonTransition(`width`))}}>
-    </main>;
+    return <Container component={`main`} sx={{height: `100%`, ...(commonTransition(`width`))}}>
+
+    </Container>;
 };
 export default DefaultMainContainer;

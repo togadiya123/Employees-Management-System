@@ -11,6 +11,7 @@ export const loginUser = payload => ({
 
 export const getUserInfo = () => ({
     actionType: GET_USER_INFO,
+    toasterString: `Waiting for User Information.`,
     isHttpAction: true,
     url: '/user/getUserInfo',
     method: 'GET',

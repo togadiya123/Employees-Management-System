@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import { Stack } from '@mui/material';
 
 import DefaultHeader from "./defaultHeader";
 import DefaultDrawer from "./defaultDrawer";
@@ -26,13 +27,13 @@ const DefaultLayout = ({history}) => {
     }, []);
 
     return <React.Fragment>
-        <div className={`flex flexDirectionColumn`}>
+        <Stack sx={{height:`100vh`}}>
             <DefaultHeader setDrawerStatus={setDrawerStatus}/>
-            <div className={`flex`}>
+            <Stack sx={{flex:'auto'}} direction={`row`}>
                 <DefaultDrawer drawerStatus={drawerStatus} setDrawerStatus={setDrawerStatus}/>
                 <DefaultMainContainer/>
-            </div>
-        </div>
+            </Stack>
+        </Stack>
     </React.Fragment>;
 };
 

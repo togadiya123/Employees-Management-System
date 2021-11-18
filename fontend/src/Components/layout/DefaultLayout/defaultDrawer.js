@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText,Toolbar} from '@mui/material';
+import {Box, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText} from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import {DRAWER_LIST_ITEM} from "../../../HelperFunction/staticList";
@@ -13,21 +13,15 @@ const DefaultDrawer = ({drawerStatus, setDrawerStatus}) => {
 
     return <Drawer id={"Drawer"} open={drawerStatus.isOpen} anchor={"left"} onClose={() => {
     }} variant="persistent" sx={{
-        // display: `inline-block`,
-        // height: {xs: `calc(100vh - 56px)`, sm: `calc(100vh - 64px)`},
         width: (theme) => drawerStatus.isOpen ? drawerStatus.isNarrow ? `calc(${theme.spacing(8.6)})` : `200px` : `0`,
         ...(commonTransition(`width`)),
         "& .MuiDrawer-paper": {
             ...(commonTransition(`transform, width`)),
             width: (theme) => drawerStatus.isNarrow ? `calc(${theme.spacing(8.6)})` : `200px`,
-            // width: `100%`,
-            // top: (theme) => {console.log(theme); return 0},
             overflowX: `hidden`,
-            // position: `unset`,
-            // display: `inline-block`,
+            position: `relative`,
         },
     }}>
-        <Toolbar/>
         <Box>
             <List>
                 {DRAWER_LIST_ITEM.map(eachListItem => <ListItem key={eachListItem.key} button={eachListItem.isButton}
