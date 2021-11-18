@@ -30,7 +30,12 @@ const DefaultDrawer = ({drawerStatus, setDrawerStatus, history}) => {
                                                                 onClick={() => {
                                                                     history.replace(eachListItem.route || '/')
                                                                 }}
-                                                                sx={{padding: "10px 22px"}}>
+                                                                sx={
+                                                                    {
+                                                                        px: {xs: 2.75, sm: 2.75},
+                                                                        py: {xs: 1.25, sm: 1.25}
+                                                                    }
+                                                                }>
                         <ListItemIcon sx={{minWidth: "46px"}}>{eachListItem.icon}</ListItemIcon>
                         <ListItemText primary={eachListItem.textValue}/>
                     </ListItem>

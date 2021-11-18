@@ -5,12 +5,14 @@ import {FOOTER_STRING_ARRAY} from "../../../HelperFunction/staticList";
 const Footer = () => {
 
     return <React.Fragment>
-        <Stack direction={`row`} sx={{
-            padding: 2,
-            justifyContent: `space-between`,
-            flexWrap: `wrap`,
-            gap: 0.5
-        }}>
+        <Stack direction={`row`}
+               sx={{
+                   boxShadow: 10,
+                   px: {xs: 1, sm: 2},
+                   py: {xs: 0.5, sm: 1.5},
+                   justifyContent: `space-between`,
+                   flexWrap: `wrap`,
+               }}>
             {FOOTER_STRING_ARRAY.map((eachString, index) => <Typography id={`footerString${index}`}
                                                                         key={`footerString${index}`}
                                                                         variant={`subtitle1`}
