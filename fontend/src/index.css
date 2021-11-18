@@ -1,0 +1,13 @@
+:root{
+  --main: #3F51B5;
+  --secondary : #121212;
+  --white: #fff;
+  --white15 : #ffffff15;
+  --white25: #ffffff25;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
