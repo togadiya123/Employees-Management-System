@@ -3,53 +3,65 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import WorkOffIcon from '@mui/icons-material/WorkOff';
 import PersonIcon from '@mui/icons-material/Person';
-import config from "../config";
 
-export const DRAWER_LIST_ITEM = [
+import config from "../config";
+import {Attendance, Dashboard, Employee, Leave, Salary} from "../Components/View";
+
+export const ROUTE_LIST = [
     {
         key: "dashboard",
         textValue: "Dashboard",
         route: '/dashboard',
+        exact: true,
         icon: <DashboardIcon/>,
         isButton: true,
         haveAdminView: true,
         haveUserView: true,
+        component: Dashboard,
     },
     {
         key: "attendance",
         textValue: "Attendance",
         route: '/attendance',
+        exact: true,
         icon: <AssessmentIcon/>,
         isButton: true,
         haveAdminView: true,
         haveUserView: true,
+        component: Attendance,
     },
     {
         key: "leave",
         textValue: "Leave",
         route: '/leave',
+        exact: true,
         icon: <WorkOffIcon/>,
         isButton: true,
         haveAdminView: true,
         haveUserView: true,
+        component: Leave,
     },
     {
         key: "salary",
         textValue: "Salary",
         route: '/salary',
+        exact: true,
         icon: <MonetizationOnIcon/>,
         isButton: true,
         haveAdminView: true,
         haveUserView: true,
+        component: Salary,
     },
     {
         key: "employee",
         textValue: "Employee",
         route: '/employee',
+        exact: true,
         icon: <PersonIcon/>,
         isButton: true,
         haveAdminView: true,
         haveUserView: false,
+        component: Employee,
     },
 ];
 

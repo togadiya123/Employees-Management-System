@@ -2,10 +2,9 @@ import React from "react";
 import {Box, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText} from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
-import {DRAWER_LIST_ITEM} from "../../../HelperFunction/staticList";
 import {commonTransition} from "../../../HelperFunction";
 
-const DefaultDrawer = ({drawerStatus, setDrawerStatus, history}) => {
+const DefaultDrawer = ({routeList, drawerStatus, setDrawerStatus, history}) => {
 
     const drawerStatusSetHandler = () => {
         setDrawerStatus(drawerStatus => ({...drawerStatus, isNarrow: !drawerStatus.isNarrow}));
@@ -24,18 +23,16 @@ const DefaultDrawer = ({drawerStatus, setDrawerStatus, history}) => {
     }}>
         <Box>
             <List disablePadding>
-                {DRAWER_LIST_ITEM.map(eachListItem => <ListItem key={eachListItem.key}
-                                                                button={eachListItem.isButton}
-                                                                selected={history.location.pathname.startsWith(eachListItem.route)}
-                                                                onClick={() => {
-                                                                    history.replace(eachListItem.route || '/')
-                                                                }}
-                                                                sx={
-                                                                    {
-                                                                        px: {xs: 2.75, sm: 2.75},
-                                                                        py: {xs: 1.25, sm: 1.25}
-                                                                    }
-                                                                }>
+                {routeList.map(eachListItem => <ListItem key={eachListItem.key}
+                                                         button={eachListItem.isButton}
+                                                         selected={history.location.pathname.startsWith(eachListItem.route)}
+                                                         onClick={() => {
+                                                             history.replace(eachListItem.route || '/')
+                                                         }}
+                                                         sx={{
+                                                             px: {xs: 2.75, sm: 2.75},
+                                                             py: {xs: 1.25, sm: 1.25}
+                                                         }}>
                         <ListItemIcon sx={{minWidth: "46px"}}>{eachListItem.icon}</ListItemIcon>
                         <ListItemText primary={eachListItem.textValue}/>
                     </ListItem>
