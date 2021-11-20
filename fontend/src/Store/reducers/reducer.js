@@ -23,6 +23,7 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
                 ...state,
             }
         }
+
         case `${LOGIN_USER}_FETCHING`: {
             return {
                 ...state,
@@ -84,7 +85,7 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
 
         case `${GET_USER_INFO}_FAILED` : {
             localStorage.removeItem("token");
-            return rootState;
+            return JSON.parse(JSON.stringify(rootState));
         }
 
         case `${LOGOUT_USER}_FETCHING`: {
@@ -100,7 +101,7 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         case `${LOGOUT_USER}_SUCCESS`: {
             localStorage.removeItem("token");
             console.log("rootState", rootState);
-            return rootState;
+            return JSON.parse(JSON.stringify(rootState));
         }
 
         case `${LOGOUT_USER}_FAILED` : {
