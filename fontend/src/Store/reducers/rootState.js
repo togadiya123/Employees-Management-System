@@ -1,8 +1,9 @@
-import {user, apiResponses} from "./initialReducerStore";
+import {apiResponses, loader, user} from "./initialReducerStore";
 
 const rootState = {
     user,
-    apiResponses: apiResponses,
+    apiResponses,
+    loader
 };
 
 export default rootState;

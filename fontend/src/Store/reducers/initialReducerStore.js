@@ -7,3 +7,7 @@ export const user = {
 };
 
 export const apiResponses = [];
+
+export const loader = {
+    status: false
+};

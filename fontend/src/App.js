@@ -3,10 +3,10 @@ import {Provider} from "react-redux";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
 
+import 'react-toastify/dist/ReactToastify.css';
 import store from "./Store/store";
 import {ForgotPassword, Login} from "./Components/View";
 import {DefaultLayout} from "./Components/layout";
-import 'react-toastify/dist/ReactToastify.css';
 
 const SignInRoute = ({ component: Component }) => (
     <Route

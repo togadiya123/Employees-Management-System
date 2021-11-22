@@ -1,6 +1,7 @@
 import axios from "axios";
 import config from "../config";
 import {toast} from "react-toastify";
+import {LOADER_END, LOADER_START} from "../Store/actions/actionType";
 
 const defaultToasterOptions = {
     isLoading: false,
@@ -20,9 +21,14 @@ const httpActions = () => next => async action => {
     } = action;
     const authKey = localStorage.getItem("token");
 
+    next({
+        type : `${LOADER_START}`,
+        payload : {}
+    });
+
     if (isHttpAction) {
-        let toasterId = null;
-        toasterString && (toasterId = await toast.loading(toasterString || `Waiting for Response`))
+        let toasterId;
+        toasterString && (toasterId = await toast.loading(toasterString || `Waiting for Response`));
         next({
             type: `${actionType}_FETCHING`,
             payload: {},
@@ -67,6 +73,11 @@ const httpActions = () => next => async action => {
     } else {
         next(action);
     }
+
+    next({
+        type : `${LOADER_END}`,
+        payload : {}
+    });
 };
 
 export default httpActions;

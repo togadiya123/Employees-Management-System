@@ -21,7 +21,7 @@ const DefaultLayout = ({history}) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        !user.isLogIn && history.replace('/');
+        !localStorage.getItem('token') && history.replace('/');
         user.haveUserInfo && setRouteList(() => ROUTE_LIST.filter(eachListItem => (user.positionType === config.POSITION_TYPE_I && eachListItem.haveAdminView) || (user.positionType === config.POSITION_TYPE_II && eachListItem.haveUserView)));
     }, [user, history]);
     useEffect(() => {
@@ -30,9 +30,10 @@ const DefaultLayout = ({history}) => {
     }, []);
 
     return <React.Fragment>
-        <Stack sx={{height:`100vh`}}>
+        {routeList.length ? <Stack sx={{height: `100vh`}}>
             <DefaultHeader setDrawerStatus={setDrawerStatus}/>
-            <Stack sx={{flex:'auto'}} direction={`row`}>
+            <Stack sx={{flex: 'auto'}}
+                   direction={`row`}>
                 <DefaultDrawer routeList={routeList}
                                drawerStatus={drawerStatus}
                                setDrawerStatus={setDrawerStatus}
@@ -40,7 +41,7 @@ const DefaultLayout = ({history}) => {
                 <DefaultMainContainer routeList={routeList}
                                       history={history}/>
             </Stack>
-        </Stack>
+        </Stack> : <></>}
     </React.Fragment>;
 };
 

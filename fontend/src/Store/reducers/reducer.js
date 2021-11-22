@@ -1,5 +1,5 @@
 import rootState from "./rootState";
-import {GET_USER_INFO, LOGIN_USER, LOGOUT_USER} from "../actions/actionType";
+import {GET_USER_INFO, LOADER_END, LOADER_START, LOGIN_USER, LOGOUT_USER} from "../actions/actionType";
 import {getFormattedResponse} from "../../HelperFunction";
 
 const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload}) => {
@@ -111,6 +111,26 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
                 user: {
                     ...state.user,
                     logOutApiFetching: false,
+                }
+            }
+        }
+
+        case `${LOADER_START}`: {
+            return {
+                ...state,
+                loader: {
+                    ...state.loader,
+                    status: true
+                }
+            }
+        }
+
+        case `${LOADER_END}`: {
+            return {
+                ...state,
+                loader: {
+                    ...state.loader,
+                    status: false
                 }
             }
         }
