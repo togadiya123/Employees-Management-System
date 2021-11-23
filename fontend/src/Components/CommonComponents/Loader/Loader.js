@@ -12,7 +12,7 @@ const Loader = () => {
         {
             width: "100vw",
             height: "100vh",
-            backgroundColor: "#FFFFFF50",
+            backgroundColor: "var(--white70)",
             display: "flex",
             position: "absolute",
             top: "50%",
@@ -31,7 +31,7 @@ const Loader = () => {
             display: "flex",
             border: "3px solid var(--main)",
             animation: "rotating 2.3s infinite",
-            background: "linear-gradient(to right, var(--main) 50%, #FFF 50%)",
+            background: "linear-gradient(to right, var(--main) 50%, var(--white70) 50%)",
             backgroundSize: "200% 100%",
             backgroundPosition: "right bottom",
             transform: "rotate(-90deg)",
