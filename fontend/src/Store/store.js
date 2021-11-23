@@ -3,7 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import ReduxThunk from 'redux-thunk';
 
 import reducer from "./reducers/reducer";
-import httpActions from "../middleware/httpActions";
+import httpActions from "./middleware/httpActions";
 
 
 const store = createStore(

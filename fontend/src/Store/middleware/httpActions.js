@@ -1,7 +1,7 @@
 import axios from "axios";
-import config from "../config";
+import config from "../../config";
 import {toast} from "react-toastify";
-import {LOADER_END, LOADER_START} from "../Store/actions/actionType";
+import {LOADER_END, LOADER_START} from "../actions/actionType";
 
 const defaultToasterOptions = {
     isLoading: false,

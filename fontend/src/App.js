@@ -1,18 +1,17 @@
 import React from 'react';
-import {Provider} from "react-redux";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
 
 import 'react-toastify/dist/ReactToastify.css';
-import store from "./Store/store";
 import {ForgotPassword, Login} from "./Components/View";
 import {DefaultLayout} from "./Components/layout";
+import Loader from "./Components/CommonComponents/Loader/Loader";
 
-const SignInRoute = ({ component: Component }) => (
+const SignInRoute = ({component: Component}) => (
     <Route
         render={(props) =>
             localStorage.getItem("token") ? (
-                <Redirect to="/dashboard" />
+                <Redirect to="/dashboard"/>
             ) : (
                 <Component {...props} />
             )
@@ -20,31 +19,30 @@ const SignInRoute = ({ component: Component }) => (
     />
 );
 
-const RestRoute = ({ component: Component }) => (
+const RestRoute = ({component: Component}) => (
     <Route
         render={(props) =>
             localStorage.getItem("token") ? (
                 <Component {...props} />
             ) : (
-                <Redirect to="/login" />
+                <Redirect to="/login"/>
             )
         }
     />
 );
 
 const App = () => {
-    return (
-        <Provider store={store}>
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path="/resetPassword" name="Reset Password" component={ForgotPassword}/>
-                    <SignInRoute exact path="/login" name="Login" component={Login}/>
-                    <RestRoute path="/" name="Home" component={DefaultLayout}/>
-                </Switch>
-            </BrowserRouter>
-            <ToastContainer position={"bottom-right"} autoClose={5000} limit={4}/>
-        </Provider>
-    );
+    return <React.Fragment>
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/resetPassword" name="Reset Password" component={ForgotPassword}/>
+                <SignInRoute exact path="/login" name="Login" component={Login}/>
+                <RestRoute component={DefaultLayout}/>
+            </Switch>
+        </BrowserRouter>
+        <Loader/>
+        <ToastContainer position={"bottom-right"} autoClose={5000} limit={4}/>
+    </React.Fragment>;
 };
 
 export default App;
