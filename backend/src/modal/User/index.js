@@ -90,12 +90,4 @@ const userSchema = Schema(
     {timestamps: true}
 );
 
-userSchema.methods.toJSON = function () {
-    const user = this;
-    const userObject = user.toObject();
-    delete userObject.password;
-    delete userObject.tokens;
-    return userObject;
-};
-
 export default mongoose.model("user", userSchema);

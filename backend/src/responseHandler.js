@@ -65,6 +65,12 @@ const RESPONSE_LIST = [
         technicalMessage: `Successfully Passed User Information.`,
         message: `Successfully Get User Information.`,
     },
+    {
+        value: `succeeds apply to leave`,
+        statusCode: 200,
+        technicalMessage: `Successfully Created Leave Application.`,
+        message: `Successfully Created Leave Application.`,
+    },
 ];
 
 const deleteUnnecessaryValue = (data) => {
