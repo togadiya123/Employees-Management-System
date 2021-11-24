@@ -7,7 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import config from "../config";
 import {Attendance, Dashboard, Employee, Leave, Salary} from "../Components/View";
 
-export const ROUTE_LIST = [
+export const ROUTE_LIST = () => [
     {
         key: "dashboard",
         textValue: "Dashboard",

@@ -22,7 +22,7 @@ const DefaultLayout = ({history}) => {
 
     useEffect(() => {
         !localStorage.getItem('token') && history.replace('/');
-        user.haveUserInfo && setRouteList(() => ROUTE_LIST.filter(eachListItem => (user.positionType === config.POSITION_TYPE_I && eachListItem.haveAdminView) || (user.positionType === config.POSITION_TYPE_II && eachListItem.haveUserView)));
+        user.haveUserInfo && setRouteList(() => ROUTE_LIST().filter(eachListItem => (user.positionType === config.POSITION_TYPE_I && eachListItem.haveAdminView) || (user.positionType === config.POSITION_TYPE_II && eachListItem.haveUserView)));
     }, [user, history]);
     useEffect(() => {
         dispatch(getUserInfo());
