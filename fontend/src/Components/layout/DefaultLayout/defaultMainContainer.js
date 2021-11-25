@@ -7,12 +7,26 @@ import Breadcrumb from "../../CommonComponents/Breadcrumb";
 import Footer from "../../CommonComponents/Footer";
 
 const DefaultMainContainer = ({routeList, history}) => {
+
+    const formatRouteList = (routeList) => {
+        const generateList = (list, newList) => {
+            list.forEach(eachListItem => {
+                    newList.push(eachListItem);
+                    Array.isArray(eachListItem.subRoute) && eachListItem.subRoute.length && generateList(eachListItem.subRoute, newList)
+                }
+            );
+        };
+        const list = [];
+        generateList(routeList, list);
+        return list;
+    };
+
     return <Stack component={`main`} sx={{height: `100%`, width: `100%`, ...(commonTransition(`width`))}}>
         <Breadcrumb history={history}/>
-        <Container sx={{flex: `auto`, display: `flex`}}>
+        <Container sx={{flex: `auto`, display: `flex`, py: `1rem`}}>
             <Switch>
                 {
-                    routeList.map(({key, route, exact, textValue, component}) => <Route key={key}
+                    formatRouteList(routeList).map(({key, route, exact, textValue, component}) => <Route key={key}
                                                                                         path={route}
                                                                                         exact={exact}
                                                                                         name={textValue}

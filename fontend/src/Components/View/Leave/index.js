@@ -1,5 +1,4 @@
-const Leave = () => {
-    return "Leave";
-};
+import Leave from './Leave';
+import ApplyToLeave from './ApplyToLeave';
 
-export default Leave;
+export {Leave, ApplyToLeave};

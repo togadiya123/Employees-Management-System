@@ -20,10 +20,18 @@ const DefaultLayout = ({history}) => {
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
 
+    const getRoutes = (routeList) => routeList.map(eachListItem => {
+        const isDisplay = (user.positionType === config.POSITION_TYPE_I && eachListItem.haveAdminView) || (user.positionType === config.POSITION_TYPE_II && eachListItem.haveUserView);
+        Array.isArray(eachListItem.subRoute) && eachListItem.subRoute.length > 0 && (eachListItem.subRoute = getRoutes(eachListItem.subRoute));
+        return isDisplay ? eachListItem : undefined
+    }).filter(eachListItem => undefined !== eachListItem);
+
     useEffect(() => {
         !localStorage.getItem('token') && history.replace('/');
-        user.haveUserInfo && setRouteList(() => ROUTE_LIST().filter(eachListItem => (user.positionType === config.POSITION_TYPE_I && eachListItem.haveAdminView) || (user.positionType === config.POSITION_TYPE_II && eachListItem.haveUserView)));
+        user.haveUserInfo && setRouteList(() => getRoutes(ROUTE_LIST()));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user, history]);
+
     useEffect(() => {
         dispatch(getUserInfo());
         // eslint-disable-next-line react-hooks/exhaustive-deps

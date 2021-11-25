@@ -5,7 +5,7 @@ import WorkOffIcon from '@mui/icons-material/WorkOff';
 import PersonIcon from '@mui/icons-material/Person';
 
 import config from "../config";
-import {Attendance, Dashboard, Employee, Leave, Salary} from "../Components/View";
+import {Attendance, Dashboard, Employee, Leave, ApplyToLeave, Salary} from "../Components/View";
 
 export const ROUTE_LIST = () => [
     {
@@ -40,6 +40,19 @@ export const ROUTE_LIST = () => [
         haveAdminView: true,
         haveUserView: true,
         component: Leave,
+        subRoute: [
+            {
+                key: "applyToLeave",
+                textValue: "applyToLeave",
+                route: '/leave/applyToLeave',
+                exact: true,
+                icon: <WorkOffIcon/>,
+                isButton: true,
+                haveAdminView: false,
+                haveUserView: true,
+                component: ApplyToLeave,
+            }
+        ]
     },
     {
         key: "salary",
@@ -104,6 +117,44 @@ export const LOGIN_FORM_FIELD = [
         variant: `contained`,
         size: 'large',
         helperText: ``,
+        isValid: false,
+        isInitialValue: true,
+        isCurrentlyInputInFocus: false
+    },
+];
+
+export const APPLY_TO_LEAVE_FORM_FIELD = [
+    {
+        id: `leaveType`,
+        label: `Leave Type`,
+        type: `input`,
+        fieldType: `select`,
+        validationType: ``,
+        required: true,
+        value: '',
+        helperText: `Select Leave Type`,
+        option: [
+            {
+                id: `Privilege Leave`,
+                label: `Privilege Leave`,
+                value: `Privilege Leave`,
+            },
+            {
+                id: `Sick Leave`,
+                label: `Sick Leave`,
+                value: `Sick Leave`,
+            },
+            {
+                id: `Compensatory Leave`,
+                label: `Compensatory Leave`,
+                value: `Compensatory Leave`,
+            },
+            {
+                id: `Less of pay Leave`,
+                label: `Less of pay Leave`,
+                value: `Less of pay Leave`,
+            },
+        ],
         isValid: false,
         isInitialValue: true,
         isCurrentlyInputInFocus: false
