@@ -100,7 +100,6 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
 
         case `${LOGOUT_USER}_SUCCESS`: {
             localStorage.removeItem("token");
-            console.log("rootState", rootState);
             return JSON.parse(JSON.stringify(rootState));
         }
 

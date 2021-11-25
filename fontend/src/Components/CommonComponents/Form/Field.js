@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, FormHelperText, TextField, MenuItem} from "@mui/material";
+import {Button, FormHelperText, MenuItem, TextField} from "@mui/material";
 import {isNullUndefinedEmpty} from "../../../HelperFunction";
 
 const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
@@ -25,6 +25,7 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
     const color = isNullUndefinedEmpty(field.color) ? '' : field.color;
     const bgcolor = isNullUndefinedEmpty(field.bgcolor) ? '' : field.bgcolor;
     const option = Array.isArray(field.option) ? field.option : [];
+    const select = field.fieldType === `select`;
 
     const sx = {};
     color && (sx.color = color);
@@ -39,6 +40,7 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
                                                  type={fieldType}
                                                  variant={variant}
                                                  fullWidth={fullWidth}
+                                                 select={select}
                                                  error={error(field)}
                                                  sx={sx}
                                                  onFocus={onFocus}
