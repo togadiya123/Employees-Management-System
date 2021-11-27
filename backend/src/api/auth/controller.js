@@ -12,7 +12,7 @@ const register = async (req, res) => {
         await User.create(body);
         return responseHandler(`register success`,res);
     } catch (e) {
-        console.log(`Error : ${e}`);
+        console.log(`Error on register`);
         return res.status(400).send(`Error : ${e}`);
     }
 };
@@ -34,7 +34,7 @@ const logIn = async (req, res) => {
 
         return responseHandler(`login success`,res,{token});
     } catch (e) {
-        return res.status(400).send(`Error : ${e}`);
+        return res.status(400).send(`Error on login`);
     }
 };
 
