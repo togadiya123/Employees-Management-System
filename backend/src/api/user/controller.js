@@ -4,7 +4,7 @@ const getUserInfo = async (req, res) => {
     try {
         return responseHandler(`passed user info`, res, req.user);
     } catch (e) {
-        console.log(`Error on GetUserInfo`);
+        console.log(`Error on GetUserInfo : ${e}`);
         return res.status(400).send(`Error on GetUserInfo : ${e}`);
     }
 };
@@ -18,7 +18,7 @@ const logOut = async (req, res) => {
 
         return responseHandler(`logout success`, res);
     } catch (e) {
-        console.log(`Error on Logout`);
+        console.log(`Error on Logout : ${e}`);
         return res.status(400).send(`Error on Logout : ${e}`);
     }
 };
