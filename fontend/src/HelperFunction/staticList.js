@@ -5,7 +5,7 @@ import WorkOffIcon from '@mui/icons-material/WorkOff';
 import PersonIcon from '@mui/icons-material/Person';
 
 import config from "../config";
-import {Attendance, Dashboard, Employee, Leave, ApplyToLeave, Salary} from "../Components/View";
+import {ApplyToLeave, Attendance, Dashboard, Employee, Leave, Salary} from "../Components/View";
 
 export const ROUTE_LIST = () => [
     {
@@ -80,7 +80,7 @@ export const ROUTE_LIST = () => [
 
 
 export const LOGIN_FORM_FIELD = [
-    {
+    [{
         id: `email`,
         label: `Email Id`,
         type: `input`,
@@ -88,12 +88,12 @@ export const LOGIN_FORM_FIELD = [
         validationType: `email`,
         required: true,
         value: '',
+        fullWidth: true,
         helperText: `Enter Your Email-Id`,
         isValid: false,
         isInitialValue: true,
-        isCurrentlyInputInFocus: false
-    },
-    {
+    }],
+    [{
         id: `password`,
         label: `Password`,
         type: `input`,
@@ -101,12 +101,12 @@ export const LOGIN_FORM_FIELD = [
         validationType: `strongPassword`,
         required: true,
         value: '',
+        fullWidth: true,
         helperText: `Enter Your Password`,
         isValid: false,
         isInitialValue: true,
-        isCurrentlyInputInFocus: false
-    },
-    {
+    }],
+    [{
         id: `logIn`,
         childText: `Log In`,
         type: `button`,
@@ -117,18 +117,20 @@ export const LOGIN_FORM_FIELD = [
         variant: `contained`,
         size: 'large',
         helperText: ``,
+        fullWidth:true,
         isValid: false,
         isInitialValue: true,
-        isCurrentlyInputInFocus: false
-    },
+    }],
 ];
 
 export const APPLY_TO_LEAVE_FORM_FIELD = [
-    {
+    [{
         id: `leaveType`,
-        label: `Leave Type`,
+        label: ``,
         type: `input`,
         fieldType: `select`,
+        topSideLabel: `Leave Type`,
+        fullWidth: false,
         validationType: ``,
         required: true,
         value: '',
@@ -157,8 +159,37 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
         ],
         isValid: false,
         isInitialValue: true,
-        isCurrentlyInputInFocus: false
-    },
+    }],
+    [
+        {
+            id: `startingDate`,
+            label: ``,
+            type: `input`,
+            fieldType: `datetime-local`,
+            topSideLabel: `Leave Starting Date`,
+            fullWidth: false,
+            validationType: [{type: `less than to`, validateWith: `id`, id: `endingDate`}],
+            required: true,
+            value: '',
+            helperText: `Select a leave stating date and time.`,
+            isValid: false,
+            isInitialValue: true,
+        },
+        {
+            id: `endingDate`,
+            label: ``,
+            type: `input`,
+            fieldType: `datetime-local`,
+            topSideLabel: `Leave Ending Date`,
+            fullWidth: false,
+            validationType: [{type: `grater than to`, validateWith: `id`, id: `startingDate`}],
+            required: true,
+            value: '',
+            helperText: `Select a leave ending date and time.`,
+            isValid: false,
+            isInitialValue: true,
+        }
+    ],
 ];
 
 export const FOOTER_STRING_ARRAY = [

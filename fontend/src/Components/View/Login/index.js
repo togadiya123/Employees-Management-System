@@ -7,7 +7,7 @@ import isStrongPassword from "validator/es/lib/isStrongPassword";
 import {loginUser} from "../../../Store/actions/action";
 import {LOGIN_FORM_FIELD} from "../../../HelperFunction/staticList";
 import Form from "../../../Components/CommonComponents/Form";
-import {getObjFromArrayById, isNullUndefinedEmpty} from "../../../HelperFunction";
+import {getObjArrayFromArrayOfArrayById, getObjFromArrayById, isNullUndefinedEmpty} from "../../../HelperFunction";
 
 const Login = ({history}) => {
 
@@ -19,34 +19,34 @@ const Login = ({history}) => {
     const logInSubmitHandler = (e) => {
         let data = JSON.parse(JSON.stringify(loginFormFields));
         data = setAllFieldValidation(data);
-        data.forEach(eachField => {
+        data.forEach(eachRow => eachRow.forEach(eachField => {
             if (`${eachField.id}-${eachField.type}` === e.target.id) {
                 const {isValid, errorText} = getAllFieldRequirementValidation(data);
                 eachField.isValid = isValid;
                 eachField.errorText = errorText;
                 eachField.isInitialValue = false;
             }
-        });
+        }));
         setLoginFormFields(() => data);
-        getObjFromArrayById(data, 'logIn')?.isValid && dispatch(loginUser({
-            emailId: getObjFromArrayById(data, 'email')?.value,
-            password: getObjFromArrayById(data, 'password')?.value
+        getObjFromArrayById(getObjArrayFromArrayOfArrayById(data), 'logIn')?.isValid && dispatch(loginUser({
+            emailId: getObjFromArrayById(getObjArrayFromArrayOfArrayById(data), 'email')?.value,
+            password: getObjFromArrayById(getObjArrayFromArrayOfArrayById(data), 'password')?.value
         }));
     };
 
     const setAllFieldValidation = (data = loginFormFields) => {
-        data.forEach(eachField => {
+        data.forEach(eachRow => eachRow.forEach(eachField => {
             const {isValid, errorText} = getValidationStatus(eachField);
             eachField.isValid = isValid;
             eachField.errorText = errorText;
             eachField.isInitialValue = false;
-        });
+        }));
         return data;
     };
 
     const getAllFieldRequirementValidation = (data = loginFormFields) => {
         const returnableObj = {isValid: true, errorText: ''};
-        const obj = data.find(eachField => !getValidationStatus(eachField).isValid);
+        const obj = data.find(eachRow => eachRow.forEach(eachField => !getValidationStatus(eachField).isValid));
         if (!isNullUndefinedEmpty(obj)) {
             returnableObj.isValid = obj.isValid;
             returnableObj.errorText = obj.errorText;
@@ -94,31 +94,31 @@ const Login = ({history}) => {
     const onChangeHandler = (e) => {
         const data = JSON.parse(JSON.stringify(loginFormFields));
         const {target: {id}} = e;
-        data.forEach(eachField => {
+        data.forEach(eachRow => eachRow.forEach(eachField => {
             if (`${eachField.id}-${eachField.type}` === id) {
                 eachField.value = e.target.value;
                 const {isValid, errorText} = getValidationStatus(eachField);
                 eachField.isValid = isValid;
                 eachField.errorText = errorText;
             }
-        });
-        data.forEach(eachField => {
+        }));
+        data.forEach(eachRow => eachRow.forEach(eachField => {
             if (`${eachField.id}-${eachField.type}` === 'logIn-button' && !eachField.isInitialValue) {
                 const {isValid, errorText} = getAllFieldRequirementValidation(data);
                 eachField.isValid = isValid;
                 eachField.errorText = errorText;
             }
-        });
+        }));
         setLoginFormFields(() => data);
     };
     const onBlurHandler = (e) => {
         const data = JSON.parse(JSON.stringify(loginFormFields));
         const {target: {id}} = e;
-        data.forEach(eachField => {
+        data.forEach(eachRow => eachRow.forEach(eachField => {
             if (`${eachField.id}-${eachField.type}` === id) {
                 eachField.isInitialValue = false;
             }
-        });
+        }));
         setLoginFormFields(() => data);
     };
 

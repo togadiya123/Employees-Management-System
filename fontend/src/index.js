@@ -10,7 +10,7 @@ ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementBy
 
 if(navigator.serviceWorker){
     navigator.serviceWorker.register(`${process.env.PUBLIC_URL}/sw.js`).then((registration)=>{
-        console.log('SW registration');
+        // console.log('SW registration');
     }).catch((e)=>{
         console.log(e);
     })
