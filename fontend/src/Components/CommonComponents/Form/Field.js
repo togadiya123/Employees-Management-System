@@ -1,13 +1,13 @@
 import React from "react";
 import {
     Button,
-    FormHelperText,
-    TextField,
-    MenuItem,
-    Typography,
-    RadioGroup,
     FormControlLabel,
-    Radio
+    FormHelperText,
+    MenuItem,
+    Radio,
+    RadioGroup,
+    TextField,
+    Typography
 } from "@mui/material";
 import {isNullUndefinedEmpty} from "../../../HelperFunction";
 
@@ -32,14 +32,15 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
     const fieldType = isNullUndefinedEmpty(field.fieldType) ? 'text' : field.fieldType;
     const variant = isNullUndefinedEmpty(field.variant) ? `outlined` : field.variant;
     const fullWidth = isNullUndefinedEmpty(field.fullWidth) ? false : field.fullWidth;
+    const multiline = isNullUndefinedEmpty(field.multiline) ? false : field.multiline;
     const size = isNullUndefinedEmpty(field.size) ? '' : field.size;
     const color = isNullUndefinedEmpty(field.color) ? '' : field.color;
     const bgcolor = isNullUndefinedEmpty(field.bgcolor) ? '' : field.bgcolor;
     const value = isNullUndefinedEmpty(field.value) ? '' : field.value;
     const option = Array.isArray(field.option) ? field.option : [];
+    const sx = isNullUndefinedEmpty(field.sx) ? {} : field.sx;
     const select = field.fieldType === "select";
 
-    const sx = {};
     color && (sx.color = color);
     bgcolor && (sx.bgcolor = bgcolor);
 
@@ -56,6 +57,7 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
         {
             topSideLabel && <Typography id={`${id}-topSideLabel`}
                                          sx={{
+                                             color: (theme) => error(field) ? theme.palette.error.main : 'inherit',
                                              display: `flex`,
                                              alignItems: 'center'
                                          }}>
@@ -64,17 +66,21 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
         }
         {
             field.type === `input` && <TextField id={id}
-                                                 helperText={errorText || helperText}
+                                                 name={id}
+                                                 helperText={!field.isInitialValue ? errorText || helperText : (label || fieldType !== 'text') ? helperText : ''}
                                                  label={label}
                                                  autoComplete={''}
                                                  type={fieldType}
                                                  select={select}
                                                  value={value}
                                                  size={size}
+                                                 multiline={multiline}
+                                                 minRows={2}
+                                                 placeholder={helperText}
                                                  variant={variant}
                                                  fullWidth={fullWidth}
                                                  error={error(field)}
-                                                 sx={{...sx, flex: 1,minWidth:'fitContent'}}
+                                                 sx={sx}
                                                  onFocus={onFocus}
                                                  onChange={onChange}
                                                  onBlur={onBlur}>

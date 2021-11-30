@@ -130,11 +130,15 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
         type: `input`,
         fieldType: `select`,
         topSideLabel: `Leave Type`,
-        fullWidth: false,
+        fullWidth: true,
         validationType: ``,
         required: true,
         value: '',
-        helperText: `Select Leave Type`,
+        size: 'small',
+        sx: {
+            maxWidth: '210px',
+        },
+        helperText: `Select a leave type`,
         option: [
             {
                 id: `Privilege Leave`,
@@ -171,6 +175,10 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
             validationType: [{type: `less than to`, validateWith: `id`, id: `endingDate`}],
             required: true,
             value: '',
+            size: 'small',
+            sx: {
+                maxWidth: '250px',
+            },
             helperText: `Select a leave stating date and time.`,
             isValid: false,
             isInitialValue: true,
@@ -185,11 +193,31 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
             validationType: [{type: `grater than to`, validateWith: `id`, id: `startingDate`}],
             required: true,
             value: '',
+            size: 'small',
+            sx: {
+                maxWidth: '250px',
+            },
             helperText: `Select a leave ending date and time.`,
             isValid: false,
             isInitialValue: true,
         }
     ],
+    [{
+        id: `leaveDescription`,
+        label: ``,
+        type: `input`,
+        fieldType: `text`,
+        multiline: true,
+        topSideLabel: `Description`,
+        fullWidth: true,
+        validationType: ``,
+        required: true,
+        value: '',
+        size: 'small',
+        helperText: `fill a leave description`,
+        isValid: false,
+        isInitialValue: true,
+    }],
 ];
 
 export const FOOTER_STRING_ARRAY = [

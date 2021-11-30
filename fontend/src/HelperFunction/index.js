@@ -1,3 +1,6 @@
+import isEmail from "validator/es/lib/isEmail";
+import isStrongPassword from "validator/es/lib/isStrongPassword";
+
 export const getFormattedResponse = (key, response) => {
     return {
         key,
@@ -22,7 +25,7 @@ export const getObjFromArrayById = (array, objId) => {
     return Array.isArray(array) ? array.find(obj => obj.id === objId) : {}
 };
 
-export const getObjArrayFromArrayOfArrayById = (array, objId) => {
+export const getObjArrayFromArrayOfArrayById = (array) => {
     const data = [];
     array?.forEach(eachArray => eachArray?.forEach(obj => {
         data.push(obj)
@@ -32,4 +35,83 @@ export const getObjArrayFromArrayOfArrayById = (array, objId) => {
 
 export const getRootCSSProperty = (key) => {
     return getComputedStyle(document.querySelector(':root')).getPropertyValue(key);
+};
+
+export const setAllFieldValidation = (data) => {
+    data.forEach(eachRow => eachRow.forEach(eachField => {
+        const {isValid, errorText} = getValidationStatus(eachField);
+        eachField.isValid = isValid;
+        eachField.errorText = errorText;
+        eachField.isInitialValue = false;
+    }));
+    return data;
+};
+
+export const getAllFieldRequirementValidation = (data) => {
+    const returnableObj = {isValid: true, errorText: ''};
+    const obj = getObjArrayFromArrayOfArrayById(data).find(eachField => !getValidationStatus(eachField).isValid);
+    if (!isNullUndefinedEmpty(obj)) {
+        returnableObj.isValid = obj.isValid;
+        returnableObj.errorText = obj.errorText;
+    }
+    return returnableObj;
+};
+
+export const getValidationStatus = (inputtedObj) => {
+    const isValid = true;
+    const errorText = '';
+    if (inputtedObj.required) {
+        if (isNullUndefinedEmpty(inputtedObj.value)) return {isValid: false, errorText: 'Fill the required field.'};
+    }
+    switch (inputtedObj.validationType) {
+        case `email`:
+            if (!isEmail(inputtedObj.value)) return {isValid: false, errorText: 'Fill the valid email id.'};
+            break;
+        case `strongPassword`:
+            if (!isStrongPassword(inputtedObj.value, {
+                minLength: 8,
+                minLowercase: 1,
+                minUppercase: 1,
+                minSymbols: 1
+            })) return {isValid: false, errorText: `Fill the strong password.`};
+            break;
+        default:
+            break;
+    }
+    return {isValid, errorText};
+};
+
+export const commonChangeHandler = (state, setState, e, allFieldRequirementButtonId = null) => {
+    const data = JSON.parse(JSON.stringify(state));
+    const {target: {id, name}} = e;
+    data.forEach(eachRow => eachRow.forEach(eachField => {
+        if (`${eachField.id}-${eachField.type}` === (id || name)) {
+            eachField.value = e.target.value;
+            const {isValid, errorText} = getValidationStatus(eachField);
+            eachField.isValid = isValid;
+            eachField.errorText = errorText;
+        }
+    }));
+    allFieldRequirementButtonId && data.forEach(eachRow => eachRow.forEach(eachField => {
+        if (`${eachField.id}-${eachField.type}` === allFieldRequirementButtonId && !eachField.isInitialValue) {
+            const {isValid, errorText} = getAllFieldRequirementValidation(data);
+            eachField.isValid = isValid;
+            eachField.errorText = errorText;
+        }
+    }));
+    setState(() => data);
+};
+
+export const commonBlurHandler = (state, setState, e) => {
+    const data = JSON.parse(JSON.stringify(state));
+    const {target: {id, name}} = e;
+    data.forEach(eachRow => eachRow.forEach(eachField => {
+        if (`${eachField.id}-${eachField.type}` === (id || name)) {
+            eachField.isInitialValue = false;
+            const {isValid, errorText} = getValidationStatus(eachField);
+            eachField.isValid = isValid;
+            eachField.errorText = errorText;
+        }
+    }));
+    setState(() => data);
 };

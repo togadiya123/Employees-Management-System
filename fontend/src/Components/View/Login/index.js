@@ -1,13 +1,18 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Card, Container} from "@mui/material";
-import isEmail from "validator/es/lib/isEmail";
 
-import isStrongPassword from "validator/es/lib/isStrongPassword";
 import {loginUser} from "../../../Store/actions/action";
 import {LOGIN_FORM_FIELD} from "../../../HelperFunction/staticList";
 import Form from "../../../Components/CommonComponents/Form";
-import {getObjArrayFromArrayOfArrayById, getObjFromArrayById, isNullUndefinedEmpty} from "../../../HelperFunction";
+import {
+    commonBlurHandler,
+    commonChangeHandler,
+    getAllFieldRequirementValidation,
+    getObjArrayFromArrayOfArrayById,
+    getObjFromArrayById,
+    setAllFieldValidation
+} from "../../../HelperFunction";
 
 const Login = ({history}) => {
 
@@ -34,50 +39,6 @@ const Login = ({history}) => {
         }));
     };
 
-    const setAllFieldValidation = (data = loginFormFields) => {
-        data.forEach(eachRow => eachRow.forEach(eachField => {
-            const {isValid, errorText} = getValidationStatus(eachField);
-            eachField.isValid = isValid;
-            eachField.errorText = errorText;
-            eachField.isInitialValue = false;
-        }));
-        return data;
-    };
-
-    const getAllFieldRequirementValidation = (data = loginFormFields) => {
-        const returnableObj = {isValid: true, errorText: ''};
-        const obj = data.find(eachRow => eachRow.forEach(eachField => !getValidationStatus(eachField).isValid));
-        if (!isNullUndefinedEmpty(obj)) {
-            returnableObj.isValid = obj.isValid;
-            returnableObj.errorText = obj.errorText;
-        }
-        return returnableObj;
-    };
-
-    const getValidationStatus = (inputtedObj) => {
-        const isValid = true;
-        const errorText = '';
-        if (inputtedObj.isRequired) {
-            if (isNullUndefinedEmpty(inputtedObj.value)) return {isValid: false, errorText: 'Fill the required field.'};
-        }
-        switch (inputtedObj.validationType) {
-            case `email`:
-                if (!isEmail(inputtedObj.value)) return {isValid: false, errorText: 'Fill the valid email id.'};
-                break;
-            case `strongPassword`:
-                if (!isStrongPassword(inputtedObj.value, {
-                    minLength: 8,
-                    minLowercase: 1,
-                    minUppercase: 1,
-                    minSymbols: 1
-                })) return {isValid: false, errorText: `Fill the strong password.`};
-                break;
-            default:
-                break;
-        }
-        return {isValid, errorText};
-    };
-
     const onFocusHandler = (e) => {
     };
     const onClickHandler = (e) => {
@@ -92,34 +53,10 @@ const Login = ({history}) => {
         }
     };
     const onChangeHandler = (e) => {
-        const data = JSON.parse(JSON.stringify(loginFormFields));
-        const {target: {id}} = e;
-        data.forEach(eachRow => eachRow.forEach(eachField => {
-            if (`${eachField.id}-${eachField.type}` === id) {
-                eachField.value = e.target.value;
-                const {isValid, errorText} = getValidationStatus(eachField);
-                eachField.isValid = isValid;
-                eachField.errorText = errorText;
-            }
-        }));
-        data.forEach(eachRow => eachRow.forEach(eachField => {
-            if (`${eachField.id}-${eachField.type}` === 'logIn-button' && !eachField.isInitialValue) {
-                const {isValid, errorText} = getAllFieldRequirementValidation(data);
-                eachField.isValid = isValid;
-                eachField.errorText = errorText;
-            }
-        }));
-        setLoginFormFields(() => data);
+        commonChangeHandler(loginFormFields, setLoginFormFields, e, `logIn-button`);
     };
     const onBlurHandler = (e) => {
-        const data = JSON.parse(JSON.stringify(loginFormFields));
-        const {target: {id}} = e;
-        data.forEach(eachRow => eachRow.forEach(eachField => {
-            if (`${eachField.id}-${eachField.type}` === id) {
-                eachField.isInitialValue = false;
-            }
-        }));
-        setLoginFormFields(() => data);
+        commonBlurHandler(loginFormFields, setLoginFormFields, e);
     };
 
     useEffect(() => {
