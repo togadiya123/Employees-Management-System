@@ -37,6 +37,21 @@ export const getRootCSSProperty = (key) => {
     return getComputedStyle(document.querySelector(':root')).getPropertyValue(key);
 };
 
+export const commonSubmitHandler = (state, setState, e, allFieldRequirementButtonId = null, callback) => {
+    let data = JSON.parse(JSON.stringify(state));
+    data = setAllFieldValidation(data);
+    data.forEach(eachRow => eachRow.forEach(eachField => {
+        if (`${eachField.id}-${eachField.type}` === e.target.id) {
+            const {isValid, errorText} = getAllFieldRequirementValidation(data);
+            eachField.isValid = isValid;
+            eachField.errorText = errorText;
+            eachField.isInitialValue = false;
+        }
+    }));
+    setState(() => data);
+    allFieldRequirementButtonId && getObjFromArrayById(getObjArrayFromArrayOfArrayById(data), allFieldRequirementButtonId)?.isValid && callback(data);
+};
+
 export const setAllFieldValidation = (data) => {
     data.forEach(eachRow => eachRow.forEach(eachField => {
         const {isValid, errorText} = getValidationStatus(eachField);
@@ -92,17 +107,10 @@ export const commonChangeHandler = (state, setState, e, allFieldRequirementButto
             eachField.errorText = errorText;
         }
     }));
-    allFieldRequirementButtonId && data.forEach(eachRow => eachRow.forEach(eachField => {
-        if (`${eachField.id}-${eachField.type}` === allFieldRequirementButtonId && !eachField.isInitialValue) {
-            const {isValid, errorText} = getAllFieldRequirementValidation(data);
-            eachField.isValid = isValid;
-            eachField.errorText = errorText;
-        }
-    }));
-    setState(() => data);
+    setState(() => commonValidationForSubmitButton(data, allFieldRequirementButtonId));
 };
 
-export const commonBlurHandler = (state, setState, e) => {
+export const commonBlurHandler = (state, setState, e, allFieldRequirementButtonId = null) => {
     const data = JSON.parse(JSON.stringify(state));
     const {target: {id, name}} = e;
     data.forEach(eachRow => eachRow.forEach(eachField => {
@@ -113,5 +121,16 @@ export const commonBlurHandler = (state, setState, e) => {
             eachField.errorText = errorText;
         }
     }));
-    setState(() => data);
+    setState(() => commonValidationForSubmitButton(data, allFieldRequirementButtonId));
+};
+
+export const commonValidationForSubmitButton = (data, allFieldRequirementButtonId) => {
+    allFieldRequirementButtonId && data.forEach(eachRow => eachRow.forEach(eachField => {
+        if (`${eachField.id}-${eachField.type}` === allFieldRequirementButtonId && !eachField.isInitialValue) {
+            const {isValid, errorText} = getAllFieldRequirementValidation(data);
+            eachField.isValid = isValid;
+            eachField.errorText = errorText;
+        }
+    }));
+    return data;
 };

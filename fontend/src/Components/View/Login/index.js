@@ -8,10 +8,9 @@ import Form from "../../../Components/CommonComponents/Form";
 import {
     commonBlurHandler,
     commonChangeHandler,
-    getAllFieldRequirementValidation,
+    commonSubmitHandler,
     getObjArrayFromArrayOfArrayById,
-    getObjFromArrayById,
-    setAllFieldValidation
+    getObjFromArrayById
 } from "../../../HelperFunction";
 
 const Login = ({history}) => {
@@ -22,21 +21,12 @@ const Login = ({history}) => {
     const {user} = useSelector(store => store);
 
     const logInSubmitHandler = (e) => {
-        let data = JSON.parse(JSON.stringify(loginFormFields));
-        data = setAllFieldValidation(data);
-        data.forEach(eachRow => eachRow.forEach(eachField => {
-            if (`${eachField.id}-${eachField.type}` === e.target.id) {
-                const {isValid, errorText} = getAllFieldRequirementValidation(data);
-                eachField.isValid = isValid;
-                eachField.errorText = errorText;
-                eachField.isInitialValue = false;
-            }
-        }));
-        setLoginFormFields(() => data);
-        getObjFromArrayById(getObjArrayFromArrayOfArrayById(data), 'logIn')?.isValid && dispatch(loginUser({
-            emailId: getObjFromArrayById(getObjArrayFromArrayOfArrayById(data), 'email')?.value,
-            password: getObjFromArrayById(getObjArrayFromArrayOfArrayById(data), 'password')?.value
-        }));
+        commonSubmitHandler(loginFormFields, setLoginFormFields, e, 'logIn', (data) => {
+            dispatch(loginUser({
+                emailId: getObjFromArrayById(getObjArrayFromArrayOfArrayById(data), 'email')?.value,
+                password: getObjFromArrayById(getObjArrayFromArrayOfArrayById(data), 'password')?.value
+            }))
+        });
     };
 
     const onFocusHandler = (e) => {

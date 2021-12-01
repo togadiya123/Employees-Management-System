@@ -125,6 +125,16 @@ export const LOGIN_FORM_FIELD = [
 
 export const APPLY_TO_LEAVE_FORM_FIELD = [
     [{
+        id: `applyToLeave`,
+        label: `APPLY TO LEAVE`,
+        type: `text`,
+        variant: `h5`,
+        align: `center`,
+        gutterBottom: true,
+        size: 'small',
+        fullWidth: true,
+    }],
+    [{
         id: `leaveType`,
         label: ``,
         type: `input`,
@@ -175,6 +185,7 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
             validationType: [{type: `less than to`, validateWith: `id`, id: `endingDate`}],
             required: true,
             value: '',
+            min: new Date(),
             size: 'small',
             sx: {
                 maxWidth: '250px',
@@ -205,6 +216,7 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
     [{
         id: `leaveDescription`,
         label: ``,
+        leftSideLabel: ``,
         type: `input`,
         fieldType: `text`,
         multiline: true,
@@ -218,6 +230,45 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
         isValid: false,
         isInitialValue: true,
     }],
+    [
+        {
+            id: `cancel`,
+            childText: `Cancel`,
+            type: `button`,
+            fieldType: `button`,
+            validationType: ``,
+            color: `white`,
+            bgcolor: `var(--main) !important`,
+            variant: `contained`,
+            size: 'large',
+            helperText: ``,
+            formControlCenter: true,
+            formControlLeft: false,
+            formControlRight: false,
+            fullWidth: false,
+            isValid: false,
+            isInitialValue: true,
+        },
+        {
+            id: `submit`,
+            childText: `Submit`,
+            type: `button`,
+            fieldType: `button`,
+            validationType: ``,
+            color: `white`,
+            bgcolor: `var(--main) !important`,
+            variant: `contained`,
+            size: 'large',
+            sx: {
+                width: `fit-content`,
+            },
+            helperText: ``,
+            fullWidth: false,
+            isValid: false,
+            isInitialValue: true,
+        },
+
+    ],
 ];
 
 export const FOOTER_STRING_ARRAY = [

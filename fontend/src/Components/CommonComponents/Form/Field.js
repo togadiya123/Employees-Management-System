@@ -29,11 +29,14 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
     const helperText = isNullUndefinedEmpty(field.helperText) ? '' : field.helperText;
     const childText = isNullUndefinedEmpty(field.childText) ? '' : field.childText;
     const errorText = isNullUndefinedEmpty(field.errorText) ? '' : field.errorText;
+    const min = isNullUndefinedEmpty(field.min) ? '' : field.min;
+    const size = isNullUndefinedEmpty(field.size) ? '' : field.size;
     const fieldType = isNullUndefinedEmpty(field.fieldType) ? 'text' : field.fieldType;
     const variant = isNullUndefinedEmpty(field.variant) ? `outlined` : field.variant;
     const fullWidth = isNullUndefinedEmpty(field.fullWidth) ? false : field.fullWidth;
     const multiline = isNullUndefinedEmpty(field.multiline) ? false : field.multiline;
-    const size = isNullUndefinedEmpty(field.size) ? '' : field.size;
+    const gutterBottom = isNullUndefinedEmpty(field.gutterBottom) ? false : field.gutterBottom;
+    const align = isNullUndefinedEmpty(field.align) ? '' : field.align;
     const color = isNullUndefinedEmpty(field.color) ? '' : field.color;
     const bgcolor = isNullUndefinedEmpty(field.bgcolor) ? '' : field.bgcolor;
     const value = isNullUndefinedEmpty(field.value) ? '' : field.value;
@@ -45,6 +48,16 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
     bgcolor && (sx.bgcolor = bgcolor);
 
     return <React.Fragment>
+
+        {
+            field.type === `text` && <Typography id={`${id}-text`}
+                                                 variant={variant}
+                                                 sx={sx}
+                                                 align={align}
+                                                 gutterBottom={gutterBottom}>
+                {label}
+            </Typography>
+        }
         {
             leftSideLabel && <Typography id={`${id}-leftSideLabel`}
                                          sx={{
@@ -76,6 +89,7 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
                                                  size={size}
                                                  multiline={multiline}
                                                  minRows={2}
+                                                 min={min}
                                                  placeholder={helperText}
                                                  variant={variant}
                                                  fullWidth={fullWidth}

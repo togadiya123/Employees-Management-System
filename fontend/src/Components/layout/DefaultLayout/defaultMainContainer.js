@@ -21,7 +21,8 @@ const DefaultMainContainer = ({routeList, history}) => {
         return list;
     };
 
-    return <Stack component={`main`} sx={{height: `100%`, width: `100%`, ...(commonTransition(`width`))}}>
+    return <Stack component={`main`}
+                  sx={{height: `100%`, width: `100%`, overflow: `auto`, ...(commonTransition(`width`))}}>
         <Breadcrumb history={history}/>
         <Container sx={{flex: `auto`, display: `flex`, py: `1rem`}}>
             <Switch>

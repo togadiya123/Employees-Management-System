@@ -40,7 +40,7 @@ const DefaultLayout = ({history}) => {
     return <React.Fragment>
         {routeList.length ? <Stack sx={{height: `100vh`}}>
             <DefaultHeader setDrawerStatus={setDrawerStatus}/>
-            <Stack sx={{flex: 'auto'}}
+            <Stack sx={{flex: 'auto',overflow:`auto`}}
                    direction={`row`}>
                 <DefaultDrawer routeList={routeList}
                                drawerStatus={drawerStatus}
