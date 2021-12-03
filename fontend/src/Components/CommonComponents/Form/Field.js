@@ -17,26 +17,25 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
         let haveError = true;
         if (field.isValid || field.isInitialValue)
             return false;
-        else if (field.currentlyInputInFocus)
-            return true;
         return haveError;
     };
 
-    const id = isNullUndefinedEmpty(field.id) ? Math.random() : `${field.id}-${field.type}`;
+    const id = isNullUndefinedEmpty(field.id) ? `` : `${field.id}-${field.type}`;
     const label = isNullUndefinedEmpty(field.label) ? '' : field.label;
     const leftSideLabel = isNullUndefinedEmpty(field.leftSideLabel) ? '' : field.leftSideLabel;
     const topSideLabel = isNullUndefinedEmpty(field.topSideLabel) ? '' : field.topSideLabel;
     const helperText = isNullUndefinedEmpty(field.helperText) ? '' : field.helperText;
     const childText = isNullUndefinedEmpty(field.childText) ? '' : field.childText;
-    const errorText = isNullUndefinedEmpty(field.errorText) ? '' : field.errorText;
-    const min = isNullUndefinedEmpty(field.min) ? '' : field.min;
-    const size = isNullUndefinedEmpty(field.size) ? '' : field.size;
+    const minDate = isNullUndefinedEmpty(field.minDate) ? '' : field.minDate;
+    const maxDate = isNullUndefinedEmpty(field.maxDate) ? '' : field.maxDate;
     const fieldType = isNullUndefinedEmpty(field.fieldType) ? 'text' : field.fieldType;
+    const align = isNullUndefinedEmpty(field.align) ? '' : field.align;
+    const errorText = isNullUndefinedEmpty(field.errorText) ? '' : field.errorText;
+    const size = isNullUndefinedEmpty(field.size) ? '' : field.size;
     const variant = isNullUndefinedEmpty(field.variant) ? `outlined` : field.variant;
     const fullWidth = isNullUndefinedEmpty(field.fullWidth) ? false : field.fullWidth;
     const multiline = isNullUndefinedEmpty(field.multiline) ? false : field.multiline;
     const gutterBottom = isNullUndefinedEmpty(field.gutterBottom) ? false : field.gutterBottom;
-    const align = isNullUndefinedEmpty(field.align) ? '' : field.align;
     const color = isNullUndefinedEmpty(field.color) ? '' : field.color;
     const bgcolor = isNullUndefinedEmpty(field.bgcolor) ? '' : field.bgcolor;
     const value = isNullUndefinedEmpty(field.value) ? '' : field.value;
@@ -80,7 +79,7 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
         {
             field.type === `input` && <TextField id={id}
                                                  name={id}
-                                                 helperText={!field.isInitialValue ? errorText || helperText : (label || fieldType !== 'text') ? helperText : ''}
+                                                 helperText={!field.isInitialValue && errorText ? errorText : (label || fieldType !== 'text') ? helperText : ''}
                                                  label={label}
                                                  autoComplete={''}
                                                  type={fieldType}
@@ -89,7 +88,10 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
                                                  size={size}
                                                  multiline={multiline}
                                                  minRows={2}
-                                                 min={min}
+                                                 inputProps={{
+                                                     min: minDate,
+                                                     max: maxDate,
+                                                 }}
                                                  placeholder={helperText}
                                                  variant={variant}
                                                  fullWidth={fullWidth}

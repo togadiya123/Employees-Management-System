@@ -25,7 +25,7 @@ export const getObjFromArrayById = (array, objId) => {
     return Array.isArray(array) ? array.find(obj => obj.id === objId) : {}
 };
 
-export const getObjArrayFromArrayOfArrayById = (array) => {
+export const getObjArrayFromObjOfArrayOfArray = (array) => {
     const data = [];
     array?.forEach(eachArray => eachArray?.forEach(obj => {
         data.push(obj)
@@ -36,6 +36,8 @@ export const getObjArrayFromArrayOfArrayById = (array) => {
 export const getRootCSSProperty = (key) => {
     return getComputedStyle(document.querySelector(':root')).getPropertyValue(key);
 };
+
+export const getFormObject = (data, id) => getObjFromArrayById(getObjArrayFromObjOfArrayOfArray(data), id);
 
 export const commonSubmitHandler = (state, setState, e, allFieldRequirementButtonId = null, callback) => {
     let data = JSON.parse(JSON.stringify(state));
@@ -49,7 +51,7 @@ export const commonSubmitHandler = (state, setState, e, allFieldRequirementButto
         }
     }));
     setState(() => data);
-    allFieldRequirementButtonId && getObjFromArrayById(getObjArrayFromArrayOfArrayById(data), allFieldRequirementButtonId)?.isValid && callback(data);
+    allFieldRequirementButtonId && getObjFromArrayById(getObjArrayFromObjOfArrayOfArray(data), allFieldRequirementButtonId)?.isValid && callback(data);
 };
 
 export const setAllFieldValidation = (data) => {
@@ -64,7 +66,7 @@ export const setAllFieldValidation = (data) => {
 
 export const getAllFieldRequirementValidation = (data) => {
     const returnableObj = {isValid: true, errorText: ''};
-    const obj = getObjArrayFromArrayOfArrayById(data).find(eachField => !getValidationStatus(eachField).isValid);
+    const obj = getObjArrayFromObjOfArrayOfArray(data).find(eachField => !getValidationStatus(eachField).isValid);
     if (!isNullUndefinedEmpty(obj)) {
         returnableObj.isValid = obj.isValid;
         returnableObj.errorText = obj.errorText;
@@ -96,8 +98,8 @@ export const getValidationStatus = (inputtedObj) => {
     return {isValid, errorText};
 };
 
-export const commonChangeHandler = (state, setState, e, allFieldRequirementButtonId = null) => {
-    const data = JSON.parse(JSON.stringify(state));
+export const commonChangeHandler = (state = [], setState = (e) => e, e = {}, allFieldRequirementButtonId = null, callback = (e) => e) => {
+    let data = JSON.parse(JSON.stringify(state));
     const {target: {id, name}} = e;
     data.forEach(eachRow => eachRow.forEach(eachField => {
         if (`${eachField.id}-${eachField.type}` === (id || name)) {
@@ -107,6 +109,7 @@ export const commonChangeHandler = (state, setState, e, allFieldRequirementButto
             eachField.errorText = errorText;
         }
     }));
+    data = callback(data, id || name);
     setState(() => commonValidationForSubmitButton(data, allFieldRequirementButtonId));
 };
 

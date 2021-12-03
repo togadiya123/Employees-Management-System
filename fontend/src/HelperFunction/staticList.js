@@ -1,3 +1,5 @@
+import moment from "moment";
+
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
@@ -185,7 +187,8 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
             validationType: [{type: `less than to`, validateWith: `id`, id: `endingDate`}],
             required: true,
             value: '',
-            min: new Date(),
+            minDate: moment().format(config.DEFAULT_DATE_FORMAT),
+            maxDate: ``,
             size: 'small',
             sx: {
                 maxWidth: '250px',
@@ -204,6 +207,8 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
             validationType: [{type: `grater than to`, validateWith: `id`, id: `startingDate`}],
             required: true,
             value: '',
+            minDate: moment().format(config.DEFAULT_DATE_FORMAT),
+            maxDate: ``,
             size: 'small',
             sx: {
                 maxWidth: '250px',

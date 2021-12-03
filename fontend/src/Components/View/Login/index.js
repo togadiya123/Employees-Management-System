@@ -9,7 +9,7 @@ import {
     commonBlurHandler,
     commonChangeHandler,
     commonSubmitHandler,
-    getObjArrayFromArrayOfArrayById,
+    getObjArrayFromObjOfArrayOfArray,
     getObjFromArrayById
 } from "../../../HelperFunction";
 
@@ -23,8 +23,8 @@ const Login = ({history}) => {
     const logInSubmitHandler = (e) => {
         commonSubmitHandler(loginFormFields, setLoginFormFields, e, 'logIn', (data) => {
             dispatch(loginUser({
-                emailId: getObjFromArrayById(getObjArrayFromArrayOfArrayById(data), 'email')?.value,
-                password: getObjFromArrayById(getObjArrayFromArrayOfArrayById(data), 'password')?.value
+                emailId: getObjFromArrayById(getObjArrayFromObjOfArrayOfArray(data), 'email')?.value,
+                password: getObjFromArrayById(getObjArrayFromObjOfArrayOfArray(data), 'password')?.value
             }))
         });
     };
