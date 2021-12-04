@@ -1,14 +1,13 @@
 import jwt from 'jsonwebtoken';
 
-import {isNullUndefinedEmpty} from "../helperFunction.js";
+import {isNullUndefinedEmpty, toObjectId} from "../helperFunction.js";
 import responseHandler from "../responseHandler.js";
 import config from '../config/index.js';
 import {User} from "../modal/index.js";
-import {toObjectId} from "../helperFunction.js";
 
 export const verifyToken = async (req, res, next) => {
     try {
-        let token = req.headers['x-access-token'] || req.headers['authorization'] || req.headers['Authorization'];
+        let token = req.headers['authorization'];
 
         if (isNullUndefinedEmpty(token)) return responseHandler(`token missing`, res);
 
@@ -35,8 +34,12 @@ export const verifyToken = async (req, res, next) => {
             ]
         });
 
-        if (!user.length)return responseHandler(`expired token`, res);
+        if (!user.length) return responseHandler(`expired token`, res);
         req.user = user[0];
+        req.body = {
+            ...req.body,
+            user: toObjectId(req.tokenDecoded.id)
+        };
 
         next();
     } catch (error) {

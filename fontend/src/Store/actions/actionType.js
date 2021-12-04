@@ -4,3 +4,5 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 
 export const LOADER_START = "LOADER_START";
 export const LOADER_END = "LOADER_END";
+
+export const APPLY_TO_LEAVE = "APPLY_TO_LEAVE";

@@ -1,0 +1,60 @@
+const LEAVE_TABEL = () => [
+    [
+        {
+            id:`index`,
+            label:`Index`,
+            headerCell:true,
+            sortable:true,
+            searchable:true,
+        },
+        {
+            id:`user`,
+            label:`User`,
+            headerCell:true,
+            sortable:true,
+            searchable:true,
+        },
+        {
+            id:`applicationDate`,
+            label:`Application Date`,
+            headerCell:true,
+            sortable:true,
+            searchable:true,
+        },
+        {
+            id:`startingDate`,
+            label:`Starting Date`,
+            headerCell:true,
+            sortable:true,
+            searchable:true,
+        },
+        {
+            id:`Ending Date`,
+            label:`Ending Date`,
+            headerCell:true,
+            sortable:true,
+            searchable:true,
+        },
+        {
+            id:`type`,
+            label:`Type`,
+            headerCell:true,
+            sortable:true,
+            searchable:true,
+        },
+        {
+            id:`description`,
+            label:`Description`,
+            headerCell:true,
+            sortable:true,
+            searchable:true,
+        },
+        {
+            id:`status`,
+            label:`Status`,
+            headerCell:true,
+            sortable:true,
+            searchable:true,
+        },
+    ]
+];

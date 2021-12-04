@@ -34,8 +34,8 @@ const leaveSchema = Schema(
             type: String,
             required: true,
             validate(value) {
-                if (value.length < 5 || value > 40)
-                    throw new Error('Add minimum 5 to 40 character description')
+                if (value.length < 10 || value.length > 120)
+                    throw new Error('Add minimum 10 to 120 character description')
             }
         },
         status: {

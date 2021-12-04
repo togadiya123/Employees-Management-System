@@ -1,5 +1,7 @@
 import isEmail from "validator/es/lib/isEmail";
 import isStrongPassword from "validator/es/lib/isStrongPassword";
+import moment from "moment";
+import config from "../config";
 
 export const getFormattedResponse = (key, response) => {
     return {
@@ -33,13 +35,21 @@ export const getObjArrayFromObjOfArrayOfArray = (array) => {
     return data;
 };
 
+export const getFormObjectFromFormDataArray = (array, keyList) => {
+    const obj = {};
+    getObjArrayFromObjOfArrayOfArray(array).forEach(eachField => {
+        if (keyList.includes(eachField.id)) (obj[eachField.id] = eachField.value)
+    });
+    return obj;
+};
+
 export const getRootCSSProperty = (key) => {
     return getComputedStyle(document.querySelector(':root')).getPropertyValue(key);
 };
 
 export const getFormObject = (data, id) => getObjFromArrayById(getObjArrayFromObjOfArrayOfArray(data), id);
 
-export const commonSubmitHandler = (state, setState, e, allFieldRequirementButtonId = null, callback) => {
+export const commonSubmitHandler = (state, setState, e, allFieldRequirementButtonId = null, callback = () => {}) => {
     let data = JSON.parse(JSON.stringify(state));
     data = setAllFieldValidation(data);
     data.forEach(eachRow => eachRow.forEach(eachField => {
@@ -92,6 +102,10 @@ export const getValidationStatus = (inputtedObj) => {
                 minSymbols: 1
             })) return {isValid: false, errorText: `Fill the strong password.`};
             break;
+        case `date`:
+            return checkIsValidDate(inputtedObj.value, inputtedObj.minDate, inputtedObj.maxDate);
+        case `stringLength`:
+            return checkStringLength(inputtedObj.value, inputtedObj.minChar, inputtedObj.maxChar);
         default:
             break;
     }
@@ -136,4 +150,30 @@ export const commonValidationForSubmitButton = (data, allFieldRequirementButtonI
         }
     }));
     return data;
+};
+
+export const checkIsValidDate = (date, min, max) => {
+    if (!checkIsDateObject(date, config.DEFAULT_DATE_FORMAT)) return {
+        isValid: false,
+        errorText: 'Fill the valid date.'
+    };
+    if (min && checkIsDateObject(min, config.DEFAULT_DATE_FORMAT) && moment(min, config.DEFAULT_DATE_FORMAT) >= moment(date, config.DEFAULT_DATE_FORMAT)) return {
+        isValid: false,
+        errorText: 'Fill the later datetime of minimum dateTime.'
+    };
+    if (max && checkIsDateObject(min, config.DEFAULT_DATE_FORMAT) && moment(max, config.DEFAULT_DATE_FORMAT) < moment(date, config.DEFAULT_DATE_FORMAT)) return {
+        isValid: false,
+        errorText: 'Fill the earlier datetime of maximum dateTime.'
+    };
+    return {isValid: true, errorText: ``};
+};
+
+export const checkIsDateObject = (date, format = '') => {
+    return moment(date, format).isValid();
+};
+
+export const checkStringLength = (string, min, max) => {
+    if (string.trim().length < min) return {isValid: false, errorText: `Fill a minimum ${min} character.`};
+    if (string.trim().length > max) return {isValid: false, errorText: `Fill a maximum ${max} character.`};
+    return {isValid: true, errorText: ``};
 };

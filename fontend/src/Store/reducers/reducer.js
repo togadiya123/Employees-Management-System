@@ -1,5 +1,5 @@
 import rootState from "./rootState";
-import {GET_USER_INFO, LOADER_END, LOADER_START, LOGIN_USER, LOGOUT_USER} from "../actions/actionType";
+import {APPLY_TO_LEAVE, GET_USER_INFO, LOADER_END, LOADER_START, LOGIN_USER, LOGOUT_USER} from "../actions/actionType";
 import {getFormattedResponse} from "../../HelperFunction";
 
 const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload}) => {
@@ -58,6 +58,20 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
                     isLogIn: false,
                 }
             }
+        }
+
+        case `${APPLY_TO_LEAVE}_FETCHING`: {
+            return state;
+        }
+
+        case `${APPLY_TO_LEAVE}_SUCCESS`: {
+            state.apiResponses.push(getFormattedResponse(`${APPLY_TO_LEAVE}_SUCCESS`, payload));
+            return state;
+        }
+
+        case `${APPLY_TO_LEAVE}_FAILED` : {
+            state.apiResponses.push(getFormattedResponse(`${APPLY_TO_LEAVE}_FAILED`, payload));
+            return state;
         }
 
         case `${GET_USER_INFO}_FETCHING`: {

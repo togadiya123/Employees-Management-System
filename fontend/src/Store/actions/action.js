@@ -1,4 +1,4 @@
-import {GET_USER_INFO, LOGIN_USER, LOGOUT_USER} from "./actionType";
+import {APPLY_TO_LEAVE, GET_USER_INFO, LOGIN_USER, LOGOUT_USER} from "./actionType";
 
 export const loginUser = payload => ({
     actionType: LOGIN_USER,
@@ -23,4 +23,13 @@ export const logOutUser = () => ({
     isHttpAction: true,
     url: '/user/logOut',
     method: 'GET',
+});
+
+export const applyToLeave = payload =>({
+    actionType: APPLY_TO_LEAVE,
+    toasterString: `Try to apply a leave.`,
+    isHttpAction: true,
+    url: '/leave/applyToLeave',
+    method: 'POST',
+    body: payload,
 });

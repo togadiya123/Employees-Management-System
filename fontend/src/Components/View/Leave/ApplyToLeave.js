@@ -1,19 +1,27 @@
 import React, {useState} from "react";
 import moment from "moment";
+import {useDispatch} from "react-redux";
+import {Card, Container} from "@mui/material";
 
 import Form from "../../CommonComponents/Form";
-import {APPLY_TO_LEAVE_FORM_FIELD} from "../../../HelperFunction/staticList";
-import {Card, Container} from "@mui/material";
-import {commonBlurHandler, commonChangeHandler, commonSubmitHandler} from "../../../HelperFunction";
+import {APPLY_TO_LEAVE_FORM_FIELD, userApplyToLeaveKeyList} from "../../../HelperFunction/staticList";
+import {
+    commonBlurHandler,
+    commonChangeHandler,
+    commonSubmitHandler,
+    getFormObjectFromFormDataArray
+} from "../../../HelperFunction";
 import config from "../../../config";
+import {applyToLeave} from "../../../Store/actions/action";
 
-const ApplyToLeave = () => {
+const ApplyToLeave = ({history}) => {
 
     const [leaveFormData, setLeaveFormData] = useState(APPLY_TO_LEAVE_FORM_FIELD);
+    const dispatch = useDispatch();
 
     const applyLeaveSubmitHandler = (e) => {
         commonSubmitHandler(leaveFormData, setLeaveFormData, e, 'submit', (data) => {
-            console.log(data);
+            dispatch(applyToLeave(getFormObjectFromFormDataArray(data, userApplyToLeaveKeyList))).then(() => history.replace(`/leave`));
         });
     };
 

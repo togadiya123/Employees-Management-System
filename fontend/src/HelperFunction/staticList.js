@@ -137,7 +137,7 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
         fullWidth: true,
     }],
     [{
-        id: `leaveType`,
+        id: `type`,
         label: ``,
         type: `input`,
         fieldType: `select`,
@@ -184,7 +184,7 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
             fieldType: `datetime-local`,
             topSideLabel: `Leave Starting Date`,
             fullWidth: false,
-            validationType: [{type: `less than to`, validateWith: `id`, id: `endingDate`}],
+            validationType: `date`,
             required: true,
             value: '',
             minDate: moment().format(config.DEFAULT_DATE_FORMAT),
@@ -204,7 +204,7 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
             fieldType: `datetime-local`,
             topSideLabel: `Leave Ending Date`,
             fullWidth: false,
-            validationType: [{type: `grater than to`, validateWith: `id`, id: `startingDate`}],
+            validationType: `date`,
             required: true,
             value: '',
             minDate: moment().format(config.DEFAULT_DATE_FORMAT),
@@ -219,7 +219,7 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
         }
     ],
     [{
-        id: `leaveDescription`,
+        id: `description`,
         label: ``,
         leftSideLabel: ``,
         type: `input`,
@@ -227,7 +227,9 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
         multiline: true,
         topSideLabel: `Description`,
         fullWidth: true,
-        validationType: ``,
+        validationType: `stringLength`,
+        minChar : 10,
+        maxChar : 120,
         required: true,
         value: '',
         size: 'small',
@@ -279,3 +281,5 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
 export const FOOTER_STRING_ARRAY = [
     `All Copyright are reserved by ${config.APPLICATION_NAME} ${String.fromCharCode(9400)} ${new Date().getFullYear()}.`,
     `Powered by togadiya`];
+
+export const userApplyToLeaveKeyList = ["startingDate","endingDate","type","description"];

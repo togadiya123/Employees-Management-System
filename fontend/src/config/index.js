@@ -10,7 +10,7 @@ const config = {
     APPLICATION_NAME: process.env.APPLICATION_NAME || "Alix",
     POSITION_TYPE_I: process.env.POSITION_TYPE_I || "Admin",
     POSITION_TYPE_II: process.env.POSITION_TYPE_II || "User",
-    DEFAULT_DATE_FORMAT: process.env.DEFAULT_DATE_FORMAT || `YYYY-MM-DDTHH:MM`,
+    DEFAULT_DATE_FORMAT: process.env.DEFAULT_DATE_FORMAT || `YYYY-MM-DDThh:mm`,
 };
 
 // console.log("config", config);
