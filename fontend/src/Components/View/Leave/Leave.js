@@ -1,9 +1,50 @@
-import React from "react";
+import React, {useState} from "react";
 import {Card, Container} from "@mui/material";
 
-import Table from "../../CommonComponents/Tabel";
+import BaseTable from "../../CommonComponents/BaseTable";
+import {LEAVE_TABLE} from "./staticList";
+
 
 const Leave = () => {
+
+    const [columns, setColumns] = useState(LEAVE_TABLE());
+    const [rows, setRows] = useState([
+        [
+            {
+                id:'e',
+                value: '33',
+            },
+            {
+                id:'2',
+                value: '33',
+            },
+            {
+                id:'e3',
+                value: '33',
+            },
+            {
+                id:'e4',
+                value: '33',
+            },
+            {
+                id:'554',
+                value: '33',
+            },
+            {
+                id:'e2345',
+                value: '33',
+            },
+            {
+                id:'59954',
+                value: '33',
+            },
+            {
+                id:'e230045',
+                value: '33',
+            },
+        ]
+    ]);
+
     return <React.Fragment>
         <Container sx={{py: 2}}>
             <Card sx={{
@@ -12,7 +53,7 @@ const Leave = () => {
                 mx: `auto`,
                 boxShadow: 3,
             }}>
-                <Table/>
+                <BaseTable columns={columns} rows={rows}/>
             </Card>
         </Container>
     </React.Fragment>;

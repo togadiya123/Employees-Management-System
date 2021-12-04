@@ -13,4 +13,13 @@ const applyToLeave = async (req, res) => {
     }
 };
 
+const getLeaveList = async (req,res)=>{
+    try{
+
+    }catch (e) {
+        console.log(`Error on getLeaveList`);
+        return res.status(400).send(`Error on getLeaveList : ${e}`);
+    }
+};
+
 export default {applyToLeave};
