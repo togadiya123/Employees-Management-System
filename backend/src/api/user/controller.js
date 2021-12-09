@@ -1,4 +1,5 @@
 import responseHandler from "../../responseHandler.js";
+import {User} from "../../modal/index.js";
 
 const getUserInfo = async (req, res) => {
     try {
@@ -23,4 +24,23 @@ const logOut = async (req, res) => {
     }
 };
 
-export default {getUserInfo, logOut};
+const getAllUser = async (req, res) => {
+    try {
+        const users = await User.aggregate([
+            {$match: {positionType: {$ne : `Admin`}}},
+            {
+                $project: {
+                    firstName: 1,
+                    lastName: 1
+                }
+            }
+        ]);
+
+        return responseHandler(`successful`, res, users);
+    } catch (e) {
+        console.log(`Error on getAllUser`);
+        return res.status(400).send(`Error on getAllUser : ${e}`);
+    }
+};
+
+export default {getUserInfo, logOut, getAllUser};

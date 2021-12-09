@@ -9,9 +9,9 @@ export const toObjectId = (id) => {
 };
 
 export const getOnlyRequiredObjectKeyValue = (obj, keyArray) => {
-    const newObj = {};
-    for (const key in obj) {
-        keyArray.some(eachKey => eachKey === key) && (newObj[key] = obj[key]);
-    }
-    return newObj;
+    if (typeof obj === "object")
+        for (const key in obj) {
+            !keyArray.some(eachKey => eachKey === key) && (delete obj[key]);
+        }
+    return obj;
 };

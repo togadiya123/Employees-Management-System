@@ -1,3 +1,5 @@
+import {isNullUndefinedEmpty} from "./helperFunction.js";
+
 const RESPONSE_LIST = [
     {
         value: `invalid email`,
@@ -38,7 +40,7 @@ const RESPONSE_LIST = [
     {
         value: `token missing`,
         statusCode: 403,
-        technicalMessage: `Token not provided in header, Pass the token with 'x-access-token' or 'authorization' key in header.`,
+        technicalMessage: `Token not provided in header, Pass the token with 'authorization' key in header.`,
         message: `Token not provided in header.`,
     },
     {
@@ -46,6 +48,18 @@ const RESPONSE_LIST = [
         statusCode: 403,
         technicalMessage: `Provided token is not valid.`,
         message: `Provided token is not valid.`,
+    },
+    {
+        value: `invalid user request`,
+        statusCode: 403,
+        technicalMessage: `Request can not approve due to invalid user request.`,
+        message: `Invalid user request.`,
+    },
+    {
+        value: `invalid props`,
+        statusCode: 403,
+        technicalMessage: `Request can not approve due to invalid body data.`,
+        message: `Invalid request.`,
     },
     {
         value: `user not found`,
@@ -71,18 +85,45 @@ const RESPONSE_LIST = [
         technicalMessage: `Successfully Created Leave Application.`,
         message: `Successfully Created Leave Application.`,
     },
+    {
+        value: `route not found`,
+        statusCode: 404,
+        technicalMessage: `Can not found given route.`,
+        message: `route not found`
+    },
+    {
+        value: `unauthorized`,
+        statusCode: 400,
+        technicalMessage: `Your request is unauthorized.`,
+        message: `unauthorized request`
+    },
+    {
+        value: `succeeds get to leavesList`,
+        statusCode: 200,
+        technicalMessage: `Successfully get Leave List.`,
+        message: `Successfully get Leave List.`,
+    },
+    {
+        value: `successful`,
+        statusCode: 200,
+        technicalMessage: `Request approve successfully.`,
+        message: `Request approve successfully.`
+    }
 ];
 
 const deleteUnnecessaryValue = (data) => {
+
     data = JSON.parse(JSON.stringify(data));
-    if (data) {
-        data._id && delete data._id;
-        data.tokens && delete data.tokens;
-        data.password && delete data.password;
-        data.createdAt && delete data.createdAt;
-        data.updatedAt && delete data.updatedAt;
-        data.__v && delete data["__v"];
-    }
+    (Array.isArray(data) ? data : [data]).forEach(eachDataObject => {
+        if (eachDataObject) {
+            !isNullUndefinedEmpty(eachDataObject.tokens) && delete eachDataObject.tokens;
+            !isNullUndefinedEmpty(eachDataObject.password) && delete eachDataObject.password;
+            !isNullUndefinedEmpty(eachDataObject.createdAt) && delete eachDataObject.createdAt;
+            !isNullUndefinedEmpty(eachDataObject.updatedAt) && delete eachDataObject.updatedAt;
+            !isNullUndefinedEmpty(eachDataObject.__v) && delete eachDataObject.__v;
+        }
+    });
+
     return data;
 };
 

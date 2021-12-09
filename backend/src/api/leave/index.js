@@ -4,7 +4,7 @@ import leave from "./controller.js";
 
 const leaveRouter = express.Router();
 
-leaveRouter.route(`/getLeave`).post(leave.applyToLeave);
+leaveRouter.route(`/getLeavesList`).post(leave.getLeavesList);
 leaveRouter.route(`/applyToLeave`).post(leave.applyToLeave);
 
 export default leaveRouter;

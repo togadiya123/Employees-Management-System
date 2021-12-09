@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Card, Container} from "@mui/material";
 
 import BaseTable from "../../CommonComponents/BaseTable";
-import {LEAVE_TABLE} from "./staticList";
+import {LEAVE_TABLE} from "./utiles";
+import {getLeaveList} from "../../../Store/actions/action";
+import {useDispatch} from "react-redux";
 
 
 const Leave = () => {
@@ -11,39 +13,52 @@ const Leave = () => {
     const [rows, setRows] = useState([
         [
             {
-                id:'e',
+                id: 'e',
                 value: '33',
             },
             {
-                id:'2',
+                id: '2',
                 value: '33',
             },
             {
-                id:'e3',
+                id: 'e3',
                 value: '33',
             },
             {
-                id:'e4',
+                id: 'e4',
                 value: '33',
             },
             {
-                id:'554',
+                id: '554',
                 value: '33',
             },
             {
-                id:'e2345',
+                id: 'e2345',
                 value: '33',
             },
             {
-                id:'59954',
+                id: '59954',
                 value: '33',
             },
             {
-                id:'e230045',
+                id: 'e230045',
                 value: '33',
             },
         ]
     ]);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getLeaveList(
+            {
+                sortBy: {
+                    "updatedAt": 1
+                },
+                limit: 10
+            }
+        ));
+    }, [])
 
     return <React.Fragment>
         <Container sx={{py: 2}}>
