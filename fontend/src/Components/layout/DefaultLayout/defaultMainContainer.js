@@ -22,16 +22,16 @@ const DefaultMainContainer = ({routeList, history}) => {
     };
 
     return <Stack component={`main`}
-                  sx={{height: `100%`, width: `100%`, overflow: `auto`, ...(commonTransition(`width`))}}>
+                  sx={{height: `100%`, width: `100%`, overflowY: `auto`, ...(commonTransition(`width`))}}>
         <Breadcrumb history={history}/>
         <Container sx={{flex: `auto`, display: `flex`, py: `1rem`}}>
             <Switch>
                 {
                     formatRouteList(routeList).map(({key, route, exact, textValue, component}) => <Route key={key}
-                                                                                        path={route}
-                                                                                        exact={exact}
-                                                                                        name={textValue}
-                                                                                        component={component}/>)
+                                                                                                         path={route}
+                                                                                                         exact={exact}
+                                                                                                         name={textValue}
+                                                                                                         component={component}/>)
                 }
                 <Redirect from="/" to="/dashboard"/>
             </Switch>

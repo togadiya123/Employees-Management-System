@@ -1,8 +1,8 @@
 import React from "react";
 import {TableCell} from "@mui/material";
 
-const BaseHeaderCell = ({data}) => {
-    return <TableCell>
+const BaseHeaderCell = ({data,sx={}}) => {
+    return <TableCell sx={sx}>
         {data.label}
     </TableCell>
 };

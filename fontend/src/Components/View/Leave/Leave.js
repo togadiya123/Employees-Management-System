@@ -2,52 +2,25 @@ import React, {useEffect, useState} from "react";
 import {Card, Container} from "@mui/material";
 
 import BaseTable from "../../CommonComponents/BaseTable";
-import {LEAVE_TABLE} from "./utiles";
+import {LEAVE_TABLE, getRows} from "./utiles";
 import {getLeaveList} from "../../../Store/actions/action";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import config from "../../../config";
 
 
 const Leave = () => {
 
-    const [columns, setColumns] = useState(LEAVE_TABLE());
-    const [rows, setRows] = useState([
-        [
-            {
-                id: 'e',
-                value: '33',
-            },
-            {
-                id: '2',
-                value: '33',
-            },
-            {
-                id: 'e3',
-                value: '33',
-            },
-            {
-                id: 'e4',
-                value: '33',
-            },
-            {
-                id: '554',
-                value: '33',
-            },
-            {
-                id: 'e2345',
-                value: '33',
-            },
-            {
-                id: '59954',
-                value: '33',
-            },
-            {
-                id: 'e230045',
-                value: '33',
-            },
-        ]
-    ]);
-
     const dispatch = useDispatch();
+    const user = useSelector(state => state?.user);
+    const leave = useSelector(state => state?.pageData?.leave);
+
+    const [columns, setColumns] = useState([]);
+    const [rows, setRows] = useState([]);
+
+    useEffect(() => {
+        console.log("leave", leave);
+        columns.length && leave && leave.data && setRows(()=>getRows(columns,leave.data))
+    }, [leave])
 
     useEffect(() => {
         dispatch(getLeaveList(
@@ -57,17 +30,25 @@ const Leave = () => {
                 },
                 limit: 10
             }
-        ));
-    }, [])
+        ))
+    }, []);
+
+    useEffect(() => {
+        console.log("user");
+        user && user.positionType && setColumns(() => LEAVE_TABLE().filter(eachColumn => (user.positionType === config.POSITION_TYPE_I && eachColumn.adminView) || (user.positionType === config.POSITION_TYPE_II && eachColumn.userView)))
+    }, [user]);
+
 
     return <React.Fragment>
-        <Container sx={{py: 2}}>
+        <Container sx={{py: 2, px: {sm: 0,}}} id={"234567"}>
             <Card sx={{
                 width: `100%`,
-                maxWidth: `650px`,
+                maxWidth : `fit-content`,
                 mx: `auto`,
+                p: `1rem`,
                 boxShadow: 3,
             }}>
+                wertyhj
                 <BaseTable columns={columns} rows={rows}/>
             </Card>
         </Container>

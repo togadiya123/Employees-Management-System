@@ -1,5 +1,13 @@
 import rootState from "./rootState";
-import {APPLY_TO_LEAVE, GET_USER_INFO, LOADER_END, LOADER_START, LOGIN_USER, LOGOUT_USER} from "../actions/actionType";
+import {
+    APPLY_TO_LEAVE,
+    GET_LEAVE_LIST,
+    GET_USER_INFO,
+    LOADER_END,
+    LOADER_START,
+    LOGIN_USER,
+    LOGOUT_USER
+} from "../actions/actionType";
 import {getFormattedResponse} from "../../HelperFunction";
 
 const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload}) => {
@@ -100,6 +108,45 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         case `${GET_USER_INFO}_FAILED` : {
             localStorage.removeItem("token");
             return JSON.parse(JSON.stringify(rootState));
+        }
+
+        case `${GET_LEAVE_LIST}_FETCHING`: {
+            return {
+                ...state,
+                pageData: {
+                    ...state.pageData,
+                    leave: {
+                        leaveListTableDataFetching: true,
+                    }
+                }
+            };
+        }
+
+        case `${GET_LEAVE_LIST}_SUCCESS`: {
+            state.apiResponses.push(getFormattedResponse(`${GET_LEAVE_LIST}_SUCCESS`, payload));
+            return {
+                ...state,
+                pageData: {
+                    ...state.pageData,
+                    leave: {
+                        leaveListTableDataFetching: false,
+                        data: payload.data,
+                    }
+                }
+            };
+        }
+
+        case `${GET_LEAVE_LIST}_FAILED` : {
+            state.apiResponses.push(getFormattedResponse(`${GET_LEAVE_LIST}_FAILED`, payload));
+            return {
+                ...state,
+                pageData: {
+                    ...state.pageData,
+                    leave: {
+                        leaveListTableDataFetching: false
+                    }
+                }
+            };
         }
 
         case `${LOGOUT_USER}_FETCHING`: {
