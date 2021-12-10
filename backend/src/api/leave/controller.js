@@ -21,6 +21,9 @@ const getLeavesList = async (req, res) => {
         const {sortBy, limit, id} = obj;
         const list = await Leave.aggregate([
             {
+                $match: id ? {user: id} : {}
+            },
+            {
                 $sort: sortBy
             },
             {
