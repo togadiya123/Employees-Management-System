@@ -13,7 +13,7 @@ const DefaultLayout = ({history}) => {
 
     const [drawerStatus, setDrawerStatus] = useState({
         isOpen: false,
-        isNarrow: false,
+        isNarrow: true,
     });
     const [routeList, setRouteList] = useState([]);
 
