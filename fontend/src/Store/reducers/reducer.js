@@ -1,12 +1,6 @@
 import rootState from "./rootState";
 import {
-    APPLY_TO_LEAVE,
-    GET_LEAVE_LIST,
-    GET_USER_INFO,
-    LOADER_END,
-    LOADER_START,
-    LOGIN_USER,
-    LOGOUT_USER
+    APPLY_TO_LEAVE, GET_LEAVE_LIST, GET_LEAVE_INFO, GET_USER_INFO, LOADER_END, LOADER_START, LOGIN_USER, LOGOUT_USER
 } from "../actions/actionType";
 import {getFormattedResponse} from "../../HelperFunction";
 
@@ -20,8 +14,7 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
 
         case `_SUCCESS`: {
             return {
-                ...payload,
-                ...state,
+                ...payload, ...state,
             }
         }
 
@@ -34,10 +27,8 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
 
         case `${LOGIN_USER}_FETCHING`: {
             return {
-                ...state,
-                user: {
-                    ...state.user,
-                    logInApiFetching: true,
+                ...state, user: {
+                    ...state.user, logInApiFetching: true,
                 }
             };
         }
@@ -46,12 +37,8 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
             state.apiResponses.push(getFormattedResponse(`${LOGIN_USER}_SUCCESS`, payload));
             localStorage.setItem("token", payload.data.token);
             return {
-                ...state,
-                user: {
-                    ...state.user,
-                    logInApiFetching: false,
-                    isLogIn: true,
-                    ...payload.data
+                ...state, user: {
+                    ...state.user, logInApiFetching: false, isLogIn: true, ...payload.data
                 }
             }
         }
@@ -59,11 +46,8 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         case `${LOGIN_USER}_FAILED` : {
             state.apiResponses.push(getFormattedResponse(`${LOGIN_USER}_FAILED`, payload));
             return {
-                ...state,
-                user: {
-                    ...state.user,
-                    logInApiFetching: false,
-                    isLogIn: false,
+                ...state, user: {
+                    ...state.user, logInApiFetching: false, isLogIn: false,
                 }
             }
         }
@@ -84,10 +68,8 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
 
         case `${GET_USER_INFO}_FETCHING`: {
             return {
-                ...state,
-                user: {
-                    ...state.user,
-                    fetchingUserInformation: true,
+                ...state, user: {
+                    ...state.user, fetchingUserInformation: true,
                 }
             };
         }
@@ -95,12 +77,8 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         case `${GET_USER_INFO}_SUCCESS`: {
             state.apiResponses.push(getFormattedResponse(`${GET_USER_INFO}_SUCCESS`, payload));
             return {
-                ...state,
-                user: {
-                    ...state.user,
-                    fetchingUserInformation: false,
-                    haveUserInfo: true,
-                    ...payload.data
+                ...state, user: {
+                    ...state.user, fetchingUserInformation: false, haveUserInfo: true, ...payload.data
                 }
             }
         }
@@ -112,11 +90,9 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
 
         case `${GET_LEAVE_LIST}_FETCHING`: {
             return {
-                ...state,
-                pageData: {
-                    ...state.pageData,
-                    leave: {
-                        leaveListTableDataFetching: true,
+                ...state, pageData: {
+                    ...state.pageData, leave: {
+                        ...state.pageData.leave, leaveListTableDataFetching: true,
                     }
                 }
             };
@@ -125,12 +101,9 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         case `${GET_LEAVE_LIST}_SUCCESS`: {
             state.apiResponses.push(getFormattedResponse(`${GET_LEAVE_LIST}_SUCCESS`, payload));
             return {
-                ...state,
-                pageData: {
-                    ...state.pageData,
-                    leave: {
-                        leaveListTableDataFetching: false,
-                        data: payload.data,
+                ...state, pageData: {
+                    ...state.pageData, leave: {
+                        ...state.pageData.leave, leaveListTableDataFetching: false, data: payload.data,
                     }
                 }
             };
@@ -139,11 +112,43 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         case `${GET_LEAVE_LIST}_FAILED` : {
             state.apiResponses.push(getFormattedResponse(`${GET_LEAVE_LIST}_FAILED`, payload));
             return {
-                ...state,
-                pageData: {
-                    ...state.pageData,
-                    leave: {
-                        leaveListTableDataFetching: false
+                ...state, pageData: {
+                    ...state.pageData, leave: {
+                        ...state.pageData.leave, leaveListTableDataFetching: false
+                    }
+                }
+            };
+        }
+
+        case `${GET_LEAVE_INFO}_FETCHING`: {
+            return {
+                ...state, pageData: {
+                    ...state.pageData, leave: {
+                        ...state.pageData.leave, specificLeaveInfoFetching: true,
+                    }
+                }
+            };
+        }
+
+        case `${GET_LEAVE_INFO}_SUCCESS`: {
+            state.apiResponses.push(getFormattedResponse(`${GET_LEAVE_INFO}_SUCCESS`, payload));
+            return {
+                ...state, pageData: {
+                    ...state.pageData, leave: {
+                        ...state.pageData.leave,
+                        specificLeaveInfoFetching: false,
+                        specificLeaveInfo: payload.data[0] || {},
+                    }
+                }
+            };
+        }
+
+        case `${GET_LEAVE_INFO}_FAILED` : {
+            state.apiResponses.push(getFormattedResponse(`${GET_LEAVE_INFO}_FAILED`, payload));
+            return {
+                ...state, pageData: {
+                    ...state.pageData, leave: {
+                        ...state.pageData.leave, specificLeaveInfoFetching: false
                     }
                 }
             };
@@ -151,10 +156,8 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
 
         case `${LOGOUT_USER}_FETCHING`: {
             return {
-                ...state,
-                user: {
-                    ...state.user,
-                    logOutApiFetching: true,
+                ...state, user: {
+                    ...state.user, logOutApiFetching: true,
                 }
             };
         }
@@ -167,30 +170,24 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         case `${LOGOUT_USER}_FAILED` : {
             state.apiResponses.push(getFormattedResponse(`${LOGOUT_USER}_FAILED`, payload));
             return {
-                ...state,
-                user: {
-                    ...state.user,
-                    logOutApiFetching: false,
+                ...state, user: {
+                    ...state.user, logOutApiFetching: false,
                 }
             }
         }
 
         case `${LOADER_START}`: {
             return {
-                ...state,
-                loader: {
-                    ...state.loader,
-                    status: true
+                ...state, loader: {
+                    ...state.loader, status: true
                 }
             }
         }
 
         case `${LOADER_END}`: {
             return {
-                ...state,
-                loader: {
-                    ...state.loader,
-                    status: false
+                ...state, loader: {
+                    ...state.loader, status: false
                 }
             }
         }

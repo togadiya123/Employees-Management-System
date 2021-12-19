@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {Card, Container} from "@mui/material";
+import {Card, Container, IconButton} from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import ChromeReaderModeIcon from '@mui/icons-material/ChromeReaderMode';
 
 import BaseTable from "../../CommonComponents/BaseTable";
 import {LEAVE_TABLE, getRows} from "./utiles";
-import {getLeaveList} from "../../../Store/actions/action";
-import {useDispatch, useSelector} from "react-redux";
+import {getLeaveInfo, getLeaveList} from "../../../Store/actions/action";
 import config from "../../../config";
-
+import BaseDialog from "../../CommonComponents/BaseDialog";
+import LeaveInformationModalBody from "./LeaveInformationModalBody";
 
 const Leave = () => {
 
@@ -16,42 +18,60 @@ const Leave = () => {
 
     const [columns, setColumns] = useState([]);
     const [rows, setRows] = useState([]);
+    const [modal, setModal] = useState({
+        isOpen: false, onClose: () => {
+            setModal(e => ({...e, isOpen: false}))
+        }
+    })
+
+    const actionButtonHandler = (e) => {
+        dispatch(getLeaveInfo({taskId: e._id || ''})).then(() => {
+            console.log("leave", leave)
+            setModal(modal => ({
+                ...modal,
+                isOpen: true,
+                header: `Leave Information`,
+                body: <LeaveInformationModalBody data={leave.specificLeaveInfo || {}}/>
+            }))
+        });
+    };
 
     useEffect(() => {
-        console.log("leave", leave);
-        columns.length && leave && leave.data && setRows(()=>getRows(columns,leave.data))
+        columns.length && leave && leave.data && setRows(() => getRows(columns, leave.data, (e) => {
+            return (<IconButton
+                sx={{color: `var(--main)`}}
+                onClick={() => {
+                    actionButtonHandler(e)
+                }}
+            >
+                <ChromeReaderModeIcon/>
+            </IconButton>);
+        }))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [leave])
 
     useEffect(() => {
-        dispatch(getLeaveList(
-            {
-                sortBy: {
-                    "updatedAt": 1
-                },
-                limit: 10
-            }
-        ))
+        dispatch(getLeaveList({
+            sortBy: {
+                "updatedAt": 1
+            }, limit: 10
+        }))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
-        console.log("user");
         user && user.positionType && setColumns(() => LEAVE_TABLE().filter(eachColumn => (user.positionType === config.POSITION_TYPE_I && eachColumn.adminView) || (user.positionType === config.POSITION_TYPE_II && eachColumn.userView)))
     }, [user]);
-
 
     return <React.Fragment>
         <Container sx={{py: 2, px: {sm: 0,}}} id={"234567"}>
             <Card sx={{
-                width: `100%`,
-                maxWidth : `fit-content`,
-                mx: `auto`,
-                p: `1rem`,
-                boxShadow: 3,
+                width: `100%`, maxWidth: `fit-content`, mx: `auto`, p: `1rem`, boxShadow: 3,
             }}>
-                wertyhj
                 <BaseTable columns={columns} rows={rows}/>
             </Card>
         </Container>
+        {modal.isOpen && <BaseDialog open={modal.isOpen} {...modal}/>}
     </React.Fragment>;
 };
 

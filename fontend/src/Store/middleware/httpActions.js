@@ -22,8 +22,8 @@ const httpActions = () => next => async action => {
     const authKey = localStorage.getItem("token");
 
     next({
-        type : `${LOADER_START}`,
-        payload : {}
+        type: `${LOADER_START}`,
+        payload: {}
     });
 
     if (isHttpAction) {
@@ -52,22 +52,25 @@ const httpActions = () => next => async action => {
                 method,
             });
             const {data} = response;
-            toasterId && await toast.update(toasterId, {type: 'success', render: data.message || `Success`, ...defaultToasterOptions});
+            if(toasterId) await toast.update(toasterId, {
+                type: 'success',
+                render: data.message || `Success`, ...defaultToasterOptions
+            });
             next({
                 type: `${actionType}_SUCCESS`,
                 payload: data,
             })
         } catch (e) {
-            const {response: {data: {message}}} = e;
-            console.log('Error : got in https action\n', e, e.response);
-            toasterId && await toast.update(toasterId, {
+            const {response} = e;
+            console.error('Error : got in httpsAction');
+            if (toasterId) await toast.update(toasterId, {
                 type: 'error',
-                render: message || `Something going wrong !`,
+                render: response?.data?.message || `Something going wrong !`,
                 ...defaultToasterOptions,
             });
             next({
                 type: `${actionType}_FAILED`,
-                payload: {message, e},
+                payload: {message: response?.data?.message, e},
             });
         }
     } else {
@@ -75,8 +78,8 @@ const httpActions = () => next => async action => {
     }
 
     next({
-        type : `${LOADER_END}`,
-        payload : {}
+        type: `${LOADER_END}`,
+        payload: {}
     });
 };
 

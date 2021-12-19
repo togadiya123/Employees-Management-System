@@ -1,9 +1,15 @@
 import React from "react";
-import {TableCell} from "@mui/material";
+import {TableCell, Typography, Chip} from "@mui/material";
 
 const BaseBodyCell = ({data}) => {
     return <TableCell>
-        {data.value}
+        {
+            data.type === `chip` ?
+                <Chip label={data.value} color={data.color || `success`}/> :
+                <Typography variant={`subtitle2`} sx={{whiteSpace: `nowrap`}} align={data.align || `left`}>
+                    {data.value}
+                </Typography>
+        }
     </TableCell>
 };
 export default BaseBodyCell;

@@ -4,11 +4,11 @@ import {isNullUndefinedEmpty, toObjectId} from "../helperFunction.js";
 import responseHandler from "../responseHandler.js";
 import config from '../config/index.js';
 import {User} from "../modal/index.js";
-import {ROUTE_LIST} from "./utiles.js";
+import {matchRoute, ROUTE_LIST} from "./utiles.js";
 
 export const verifyToken = async (req, res, next) => {
     try {
-        const routeObject = ROUTE_LIST().find(obj=>obj.route===req.path);
+        const routeObject = ROUTE_LIST().find(obj=>matchRoute(obj.route,req.path));
         if(!routeObject) return responseHandler(`route not found`, res);
 
         let token = req.headers['authorization'];
@@ -26,7 +26,6 @@ export const verifyToken = async (req, res, next) => {
             $and: [
                 {
                     _id: toObjectId(req.tokenDecoded.id),
-
                 },
                 {
                     tokens: {
@@ -50,7 +49,7 @@ export const verifyToken = async (req, res, next) => {
 
         next();
     } catch (error) {
-        console.log(`Error on verifyToken: ${error}`);
+        console.log(`Error on verifyToken`);
         return res.status(400).send(`Error on verifyToken: ${error}`);
     }
 };

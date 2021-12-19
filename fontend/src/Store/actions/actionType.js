@@ -7,3 +7,4 @@ export const LOADER_END = "LOADER_END";
 
 export const APPLY_TO_LEAVE = "APPLY_TO_LEAVE";
 export const GET_LEAVE_LIST = "GET_LEAVE_LIST";
+export const GET_LEAVE_INFO = "GET_LEAVE_INFO";

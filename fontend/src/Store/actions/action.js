@@ -1,4 +1,4 @@
-import {APPLY_TO_LEAVE, GET_LEAVE_LIST, GET_USER_INFO, LOGIN_USER, LOGOUT_USER} from "./actionType";
+import {APPLY_TO_LEAVE, GET_LEAVE_INFO, GET_LEAVE_LIST, GET_USER_INFO, LOGIN_USER, LOGOUT_USER} from "./actionType";
 
 export const loginUser = payload => ({
     actionType: LOGIN_USER,
@@ -39,6 +39,15 @@ export const getLeaveList = payload =>({
     toasterString: `Try to get leave list.`,
     isHttpAction: true,
     url: '/leave/getLeavesList',
+    method: 'POST',
+    body: payload,
+});
+
+export const getLeaveInfo = payload =>({
+    actionType: GET_LEAVE_INFO,
+    toasterString: `Try to get leave Information.`,
+    isHttpAction: true,
+    url: `/leave/getLeavesList/${payload.taskId || 0}`,
     method: 'POST',
     body: payload,
 })

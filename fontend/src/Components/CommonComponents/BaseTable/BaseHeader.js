@@ -6,7 +6,7 @@ const BaseHeader = ({columns}) => {
     return <TableHead>
         <TableRow>
             {
-                columns.map(eachColumnCell => <BaseHeaderCell data={eachColumnCell} key={eachColumnCell.id} sx={{whiteSpace:`nowrap`}}/>)
+                columns.map(eachColumnCell => <BaseHeaderCell data={eachColumnCell} key={eachColumnCell.id}/>)
             }
         </TableRow>
     </TableHead>;

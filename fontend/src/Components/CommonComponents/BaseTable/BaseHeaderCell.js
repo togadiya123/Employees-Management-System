@@ -1,9 +1,11 @@
 import React from "react";
-import {TableCell} from "@mui/material";
+import {TableCell, Typography} from "@mui/material";
 
-const BaseHeaderCell = ({data,sx={}}) => {
+const BaseHeaderCell = ({data, sx = {}}) => {
     return <TableCell sx={sx}>
-        {data.label}
+        <Typography variant={`subtitle1`} sx={{whiteSpace: `nowrap`}}>
+            {data.label}
+        </Typography>
     </TableCell>
 };
 export default BaseHeaderCell;

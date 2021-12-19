@@ -15,3 +15,10 @@ export const getOnlyRequiredObjectKeyValue = (obj, keyArray) => {
         }
     return obj;
 };
+
+export const getDefinedValuesObject = (obj) => {
+    for (const key in obj) {
+        if (obj[key] === undefined) delete obj[key];
+    }
+    return obj;
+};
