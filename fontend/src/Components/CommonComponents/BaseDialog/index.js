@@ -12,7 +12,7 @@ import {
 import {HighlightOffIcon} from "../../../HelperFunction/icons";
 
 
-const BaseDialog = ({open, onClose, header, body}) => {
+const BaseDialog = ({open, onClose, header, body, action}) => {
 
     const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} children={props?.children} {...props} />;
@@ -38,8 +38,7 @@ const BaseDialog = ({open, onClose, header, body}) => {
                 {body}
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose}>Disagree</Button>
-                <Button onClick={onClose}>Agree</Button>
+                {action}
             </DialogActions>
         </Dialog>
     );

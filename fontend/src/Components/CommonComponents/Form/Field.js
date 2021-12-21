@@ -41,6 +41,8 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
     const value = isNullUndefinedEmpty(field.value) ? '' : field.value;
     const option = Array.isArray(field.option) ? field.option : [];
     const sx = isNullUndefinedEmpty(field.sx) ? {} : field.sx;
+    const leftSideLabelSx = isNullUndefinedEmpty(field.leftSideLabelSx) ? {} : field.leftSideLabelSx;
+    const leftSideLabelVariant = isNullUndefinedEmpty(field.leftSideLabelVariant) ? '' : field.leftSideLabelVariant;
     const select = field.fieldType === "select";
 
     color && (sx.color = color);
@@ -59,7 +61,9 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
         }
         {
             leftSideLabel && <Typography id={`${id}-leftSideLabel`}
+                                         variant={leftSideLabelVariant}
                                          sx={{
+                                             ...leftSideLabelSx,
                                              display: `flex`,
                                              alignItems: 'center'
                                          }}>
@@ -68,12 +72,17 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
         }
         {
             topSideLabel && <Typography id={`${id}-topSideLabel`}
-                                         sx={{
-                                             color: (theme) => error(field) ? theme.palette.error.main : 'inherit',
-                                             display: `flex`,
-                                             alignItems: 'center'
-                                         }}>
+                                        sx={{
+                                            color: (theme) => error(field) ? theme.palette.error.main : 'inherit',
+                                            display: `flex`,
+                                            alignItems: 'center'
+                                        }}>
                 {topSideLabel}
+            </Typography>
+        }
+        {
+            field.type === `readOnly` && <Typography id={`${id}-readOnly`} noWrap={true}>
+                {value}
             </Typography>
         }
         {

@@ -1,11 +1,30 @@
-import React from "react";
+import React, {useState} from "react";
 import {Stack} from "@mui/material";
+import {getLeaveInformationModalBodyFormData} from "./utiles";
+import Form from "../../CommonComponents/Form";
 
 const LeaveInformationModalBody = ({data}) => {
-    console.log("data",data);
+
+    const [LeaveInformationFormData, setLeaveInformationFormData] = useState(getLeaveInformationModalBodyFormData(data))
+
     return (
         <Stack>
-            body
+            <Stack sx={{overflowX : `auto`}}>
+                <Form
+                    formDesign={LeaveInformationFormData}
+                    onClick={() => {
+                    }}
+                    onBlur={() => {
+                    }}
+                    onChange={() => {
+                    }}
+                    onFocus={() => {
+                    }}
+                />
+            </Stack>
+            <Stack>
+
+            </Stack>
         </Stack>
     );
 };

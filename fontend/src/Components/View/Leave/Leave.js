@@ -25,13 +25,12 @@ const Leave = () => {
     })
 
     const actionButtonHandler = (e) => {
-        dispatch(getLeaveInfo({taskId: e._id || ''})).then(() => {
-            console.log("leave", leave)
+        dispatch(getLeaveInfo({taskId: e._id || ''})).then((state) => {
             setModal(modal => ({
                 ...modal,
                 isOpen: true,
                 header: `Leave Information`,
-                body: <LeaveInformationModalBody data={leave.specificLeaveInfo || {}}/>
+                body: <LeaveInformationModalBody data={state?.pageData?.leave?.specificLeaveInfo || {}}/>
             }))
         });
     };

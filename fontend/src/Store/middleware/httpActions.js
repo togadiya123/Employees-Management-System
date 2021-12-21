@@ -9,7 +9,7 @@ const defaultToasterOptions = {
     closeButton: true,
 };
 
-const httpActions = () => next => async action => {
+const httpActions = (e) => next => async action => {
     const {
         method = "GET",
         toasterString,
@@ -81,6 +81,8 @@ const httpActions = () => next => async action => {
         type: `${LOADER_END}`,
         payload: {}
     });
+
+    return e.getState();
 };
 
 export default httpActions;

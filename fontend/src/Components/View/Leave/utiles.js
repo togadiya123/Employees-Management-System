@@ -1,5 +1,6 @@
 import {isNullUndefinedEmpty} from "../../../HelperFunction";
 import moment from "moment";
+import config from "../../../config";
 
 export const LEAVE_TABLE = () => [
     {
@@ -113,4 +114,190 @@ export const getRows = (columns, data, actionCallBack = () => '') => {
         })
         return row;
     })
-}
+};
+
+export const getLeaveInformationModalBodyFormData = ({
+                                                         userFullName,
+                                                         applicationDate,
+                                                         startingDate,
+                                                         endingDate,
+                                                         description,
+                                                         status,
+                                                         type,
+                                                         statusDescription
+                                                     }) => [
+    [{
+        id: `fullName`,
+        label: ``,
+        leftSideLabel: `FullName : `,
+        leftSideLabelVariant: `subtitle1`,
+        leftSideLabelSx: {
+            fontWeight: 550,
+            minWidth: `160px`
+        },
+        type: `readOnly`,
+        fieldType: `text`,
+        validationType: ``,
+        required: true,
+        value: userFullName || '',
+        size: `small`,
+        fullWidth: true,
+        helperText: ``,
+        isValid: false,
+        isInitialValue: true,
+    }],
+    [{
+        id: `applicationDate`,
+        label: ``,
+        leftSideLabel: `Application Date :`,
+        leftSideLabelVariant: `subtitle1`,
+        leftSideLabelSx: {
+            fontWeight: 550,
+            minWidth: `160px`
+        },
+        type: `readOnly`,
+        fieldType: `datetime-local`,
+        fullWidth: false,
+        validationType: ``,
+        required: true,
+        value: moment(applicationDate).format(config.REGULAR_DATE_FORMAT) || ``,
+        size: 'small',
+        helperText: ``,
+        isValid: false,
+        isInitialValue: true,
+    }],
+    [{
+        id: `startingDate`,
+        label: ``,
+        leftSideLabel: `Starting Date : `,
+        leftSideLabelVariant: `subtitle1`,
+        leftSideLabelSx: {
+            fontWeight: 550,
+            minWidth: `160px`
+        },
+        type: `readOnly`,
+        fieldType: `datetime-local`,
+        fullWidth: false,
+        validationType: ``,
+        required: true,
+        value: moment(startingDate).format(config.REGULAR_DATE_FORMAT) || ``,
+        size: 'small',
+        helperText: ``,
+        isValid: false,
+        isInitialValue: true,
+    }],
+    [{
+        id: `endingDate`,
+        label: ``,
+        leftSideLabel: `Ending Date :`,
+        leftSideLabelVariant: `subtitle1`,
+        leftSideLabelSx: {
+            fontWeight: 550,
+            minWidth: `160px`
+        },
+        type: `readOnly`,
+        fieldType: `datetime-local`,
+        fullWidth: false,
+        validationType: ``,
+        required: true,
+        value: moment(endingDate).format(config.REGULAR_DATE_FORMAT) || ``,
+        size: 'small',
+        helperText: ``,
+        isValid: false,
+        isInitialValue: true,
+    }],
+    [{
+        id: `type`,
+        label: ``,
+        leftSideLabel: `Type : `,
+        leftSideLabelVariant: `subtitle1`,
+        leftSideLabelSx: {
+            fontWeight: 550,
+            minWidth: `160px`
+        },
+        type: `readOnly`,
+        fieldType: `text`,
+        validationType: ``,
+        required: true,
+        value: type || '',
+        size: `small`,
+        fullWidth: true,
+        helperText: ``,
+        isValid: false,
+        isInitialValue: true,
+    }],
+    [{
+        id: `description`,
+        label: ``,
+        leftSideLabel: `Description : `,
+        leftSideLabelVariant: `subtitle1`,
+        leftSideLabelSx: {
+            fontWeight: 550,
+            minWidth: `160px`
+        },
+        type: `readOnly`,
+        fieldType: `text`,
+        validationType: ``,
+        required: true,
+        value: description || '',
+        size: `small`,
+        fullWidth: true,
+        helperText: ``,
+        isValid: false,
+        isInitialValue: true,
+    }],
+    [{
+        id: `status`,
+        label: ``,
+        leftSideLabel: `Status : `,
+        leftSideLabelVariant: `subtitle1`,
+        leftSideLabelSx: {
+            fontWeight: 550,
+            minWidth: `160px`
+        },
+        type: `readOnly`,
+        fieldType: `text`,
+        validationType: ``,
+        required: true,
+        value: status || '',
+        size: `small`,
+        fullWidth: true,
+        helperText: ``,
+        isValid: false,
+        isInitialValue: true,
+    }],
+    [{
+        id: `statusDescription`,
+        label: ``,
+        leftSideLabel: `Status Description : `,
+        leftSideLabelVariant: `subtitle1`,
+        leftSideLabelSx: {
+            fontWeight: 550,
+            minWidth: `160px`
+        },
+        type: `readOnly`,
+        fieldType: `text`,
+        validationType: ``,
+        required: true,
+        value: statusDescription || '',
+        size: `small`,
+        fullWidth: true,
+        helperText: ``,
+        isValid: false,
+        isInitialValue: true,
+    }],
+];
+
+export const userEditOption = () => [`startingDate`, `endingDate`, `type`, `description`];
+
+export const actionButton = ({status,startingDate}) => [
+    {
+        id:`cancel`,
+        label : `Cancel`,
+        icon : ``,
+        color : ``,
+        isAdminAbility : false,
+        isUserAbility : true,
+        showAbleValidation : [`pending`].every(e=>e===status) && startingDate
+    }
+];
