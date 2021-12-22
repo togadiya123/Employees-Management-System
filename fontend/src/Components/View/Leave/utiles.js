@@ -1,6 +1,7 @@
 import {isNullUndefinedEmpty} from "../../../HelperFunction";
 import moment from "moment";
 import config from "../../../config";
+import {AppRegistrationIcon, CancelScheduleSendIcon, FactCheckIcon, ThumbDownIcon} from "../../../HelperFunction/icons";
 
 export const LEAVE_TABLE = () => [
     {
@@ -290,14 +291,45 @@ export const getLeaveInformationModalBodyFormData = ({
 
 export const userEditOption = () => [`startingDate`, `endingDate`, `type`, `description`];
 
-export const actionButton = ({status,startingDate}) => [
+export const actionButton = ({
+                                 status,
+                                 startingDate,
+                                 userType,
+                                 onCancelHandler,
+                                 onEditHandler,
+                                 onRejectHandler,
+                                 onApproveHandler
+                             }) => [
     {
-        id:`cancel`,
-        label : `Cancel`,
-        icon : ``,
-        color : ``,
-        isAdminAbility : false,
-        isUserAbility : true,
-        showAbleValidation : [`pending`].every(e=>e===status) && startingDate
-    }
+        id: `cancel`,
+        label: `Cancel`,
+        icon: <CancelScheduleSendIcon/>,
+        color: `error`,
+        onClick: onCancelHandler,
+        showAbleValidation: [`Pending`].every(e => e === status) && [config.POSITION_TYPE_II].some(e => e === userType) && moment().diff(startingDate, "days") < -1
+    },
+    {
+        id: `edit`,
+        label: `Edit`,
+        icon: <AppRegistrationIcon/>,
+        color: `primary`,
+        onClick: onEditHandler,
+        showAbleValidation: [`Pending`].every(e => e === status) && [config.POSITION_TYPE_II].some(e => e === userType) && moment().diff(startingDate, "days") < -1
+    },
+    {
+        id: `reject`,
+        label: `Reject`,
+        icon: <ThumbDownIcon/>,
+        color: `error`,
+        onClick: onRejectHandler,
+        showAbleValidation: [`Pending`].every(e => e === status) && [config.POSITION_TYPE_I].some(e => e === userType) && moment().diff(startingDate, "days") < 1
+    },
+    {
+        id: `approve`,
+        label: `Approve`,
+        icon: <FactCheckIcon/>,
+        color: `success`,
+        onClick: onApproveHandler,
+        showAbleValidation: [`Pending`].every(e => e === status) && [config.POSITION_TYPE_I].some(e => e === userType) && moment().diff(startingDate, "days") < 1
+    },
 ];
