@@ -13,8 +13,8 @@ const config = {
     POSITION_TYPE_I: process.env.POSITION_TYPE_I || "Admin",
     POSITION_TYPE_II: process.env.POSITION_TYPE_II || "User",
 
-    DEFAULT_DATE_FORMAT: process.env.DEFAULT_DATE_FORMAT || `YYYY-MM-DDThh:mm`,
-    REGULAR_DATE_FORMAT: process.env.REGULAR_DATE_FORMAT || `DD-MM-YYYY hh:mm:ss`,
+    DEFAULT_DATE_FORMAT: process.env.DEFAULT_DATE_FORMAT || `YYYY-MM-DDTHH:mm`,
+    REGULAR_DATE_FORMAT: process.env.REGULAR_DATE_FORMAT || `DD-MM-YYYY HH:mm:ss`,
 };
 
 // console.log("config", config);

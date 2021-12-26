@@ -2,7 +2,7 @@ import React from "react";
 import {Box, FormControl, Stack} from "@mui/material";
 import Field from "./Field";
 
-const Form = ({formDesign, onChange, onFocus, onBlur, onClick}) => {
+const Form = ({formDesign, onChange = e => e, onFocus = e => e, onBlur = e => e, onClick = e => e}) => {
     return <React.Fragment>
         <Box sx={{
             display: `flex`,

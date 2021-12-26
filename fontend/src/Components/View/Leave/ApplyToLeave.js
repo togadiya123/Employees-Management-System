@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import moment from "moment";
 import {useDispatch} from "react-redux";
 import {Card, Container} from "@mui/material";
 
@@ -10,8 +9,8 @@ import {
     commonChangeHandler,
     commonSubmitHandler,
     getFormObjectFromFormDataArray
-} from "../../../HelperFunction";
-import config from "../../../config";
+} from "../../CommonComponents/Form/utiles";
+import {minAndMaxDateSet} from "./utiles";
 import {applyToLeave} from "../../../Store/actions/action";
 
 const ApplyToLeave = ({history}) => {
@@ -66,15 +65,3 @@ const ApplyToLeave = ({history}) => {
 };
 
 export default ApplyToLeave;
-
-const minAndMaxDateSet = (data) => {
-    data.forEach(eachRow => eachRow.forEach((eachField) => {
-        if (eachField.id === `startingDate`) {
-            eachField.minDate = moment().format(config.DEFAULT_DATE_FORMAT);
-            eachField.maxDate = document.getElementById(`endingDate-input`)?.value;
-        } else if (eachField.id === `endingDate`) {
-            eachField.minDate = document.getElementById(`startingDate-input`)?.value;
-        }
-    }));
-    return data;
-};

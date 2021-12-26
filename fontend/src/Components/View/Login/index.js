@@ -11,7 +11,7 @@ import {
     commonSubmitHandler,
     getObjArrayFromObjOfArrayOfArray,
     getObjFromArrayById
-} from "../../../HelperFunction";
+} from "../../CommonComponents/Form/utiles";
 
 const Login = ({history}) => {
 

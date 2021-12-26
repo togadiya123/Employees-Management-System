@@ -188,7 +188,7 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
             required: true,
             value: '',
             minDate: moment().format(config.DEFAULT_DATE_FORMAT),
-            maxDate: ``,
+            maxDate: moment().add(5,`month`).format(config.DEFAULT_DATE_FORMAT),
             size: 'small',
             sx: {
                 maxWidth: '250px',
@@ -208,7 +208,7 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
             required: true,
             value: '',
             minDate: moment().format(config.DEFAULT_DATE_FORMAT),
-            maxDate: ``,
+            maxDate: moment().add(5,`month`).format(config.DEFAULT_DATE_FORMAT),
             size: 'small',
             sx: {
                 maxWidth: '250px',

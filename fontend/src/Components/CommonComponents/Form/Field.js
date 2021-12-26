@@ -64,8 +64,9 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
                                          variant={leftSideLabelVariant}
                                          sx={{
                                              ...leftSideLabelSx,
+                                             alignItems: 'flex-start',
                                              display: `flex`,
-                                             alignItems: 'center'
+                                             marginTop: field.type === `input` ? 0.8 : 0
                                          }}>
                 {leftSideLabel}
             </Typography>
@@ -105,7 +106,12 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
                                                  variant={variant}
                                                  fullWidth={fullWidth}
                                                  error={error(field)}
-                                                 sx={sx}
+                                                 sx={{
+                                                     ...sx,
+                                                     ".MuiFormHelperText-root": {
+                                                         maxWidth: `fit-content`
+                                                     }
+                                                 }}
                                                  onFocus={onFocus}
                                                  onChange={onChange}
                                                  onBlur={onBlur}>

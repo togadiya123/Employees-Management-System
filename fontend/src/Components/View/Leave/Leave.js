@@ -63,7 +63,7 @@ const Leave = () => {
     }, [user]);
 
     return <React.Fragment>
-        <Container sx={{py: 2, px: {sm: 0,}}} id={"234567"}>
+        <Container sx={{py: 2, px: {sm: 0,}}}>
             <Card sx={{
                 width: `100%`, maxWidth: `fit-content`, mx: `auto`, p: `1rem`, boxShadow: 3,
             }}>

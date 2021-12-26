@@ -26,7 +26,7 @@ const BaseDialog = ({open, onClose, header, body, action}) => {
         >
             <DialogTitle>
                 <Stack direction={`row`} justifyContent={`space-between`} gap={1}>
-                    <Typography variant={`inherit`} sx={{display: `flex`, alignItems: `center`}}>
+                    <Typography variant={`inherit`} sx={{display: `flex`, alignItems: `center`}} fontWeight={550}>
                         {header}
                     </Typography>
                     <IconButton onClick={onClose} color={`error`} sx={{display: `flex`, alignItems: `center`}}>

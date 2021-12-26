@@ -1,7 +1,15 @@
 import {isNullUndefinedEmpty} from "../../../HelperFunction";
 import moment from "moment";
 import config from "../../../config";
-import {AppRegistrationIcon, CancelScheduleSendIcon, FactCheckIcon, ThumbDownIcon} from "../../../HelperFunction/icons";
+import {
+    PlaylistAddCheckIcon,
+    AppRegistrationIcon,
+    CancelScheduleSendIcon,
+    DangerousIcon,
+    FactCheckIcon,
+    ThumbDownIcon
+} from "../../../HelperFunction/icons";
+import {getObjArrayFromObjOfArrayOfArray} from "../../CommonComponents/Form/utiles";
 
 export const LEAVE_TABLE = () => [
     {
@@ -144,8 +152,8 @@ export const getLeaveInformationModalBodyFormData = ({
         size: `small`,
         fullWidth: true,
         helperText: ``,
-        isValid: false,
-        isInitialValue: true,
+        isValid: true,
+        isInitialValue: false,
     }],
     [{
         id: `applicationDate`,
@@ -164,8 +172,8 @@ export const getLeaveInformationModalBodyFormData = ({
         value: moment(applicationDate).format(config.REGULAR_DATE_FORMAT) || ``,
         size: 'small',
         helperText: ``,
-        isValid: false,
-        isInitialValue: true,
+        isValid: true,
+        isInitialValue: false,
     }],
     [{
         id: `startingDate`,
@@ -179,13 +187,15 @@ export const getLeaveInformationModalBodyFormData = ({
         type: `readOnly`,
         fieldType: `datetime-local`,
         fullWidth: false,
-        validationType: ``,
+        validationType: `date`,
         required: true,
         value: moment(startingDate).format(config.REGULAR_DATE_FORMAT) || ``,
+        minDate: moment().format(config.DEFAULT_DATE_FORMAT),
+        maxDate: moment(endingDate).format(config.DEFAULT_DATE_FORMAT),
         size: 'small',
         helperText: ``,
-        isValid: false,
-        isInitialValue: true,
+        isValid: true,
+        isInitialValue: false,
     }],
     [{
         id: `endingDate`,
@@ -199,13 +209,15 @@ export const getLeaveInformationModalBodyFormData = ({
         type: `readOnly`,
         fieldType: `datetime-local`,
         fullWidth: false,
-        validationType: ``,
+        validationType: `date`,
         required: true,
         value: moment(endingDate).format(config.REGULAR_DATE_FORMAT) || ``,
+        minDate: moment(startingDate).format(config.DEFAULT_DATE_FORMAT),
+        maxDate: moment().add(3, `month`).format(config.DEFAULT_DATE_FORMAT),
         size: 'small',
         helperText: ``,
-        isValid: false,
-        isInitialValue: true,
+        isValid: true,
+        isInitialValue: false,
     }],
     [{
         id: `type`,
@@ -217,15 +229,37 @@ export const getLeaveInformationModalBodyFormData = ({
             minWidth: `160px`
         },
         type: `readOnly`,
-        fieldType: `text`,
+        fieldType: `select`,
         validationType: ``,
         required: true,
         value: type || '',
+        option: [
+            {
+                id: `Privilege Leave`,
+                label: `Privilege Leave`,
+                value: `Privilege Leave`,
+            },
+            {
+                id: `Sick Leave`,
+                label: `Sick Leave`,
+                value: `Sick Leave`,
+            },
+            {
+                id: `Compensatory Leave`,
+                label: `Compensatory Leave`,
+                value: `Compensatory Leave`,
+            },
+            {
+                id: `Less of pay Leave`,
+                label: `Less of pay Leave`,
+                value: `Less of pay Leave`,
+            },
+        ],
         size: `small`,
         fullWidth: true,
         helperText: ``,
-        isValid: false,
-        isInitialValue: true,
+        isValid: true,
+        isInitialValue: false,
     }],
     [{
         id: `description`,
@@ -238,14 +272,17 @@ export const getLeaveInformationModalBodyFormData = ({
         },
         type: `readOnly`,
         fieldType: `text`,
-        validationType: ``,
+        validationType: `stringLength`,
+        multiline: true,
+        minChar: 10,
+        maxChar: 120,
         required: true,
         value: description || '',
         size: `small`,
         fullWidth: true,
         helperText: ``,
-        isValid: false,
-        isInitialValue: true,
+        isValid: true,
+        isInitialValue: false,
     }],
     [{
         id: `status`,
@@ -264,8 +301,8 @@ export const getLeaveInformationModalBodyFormData = ({
         size: `small`,
         fullWidth: true,
         helperText: ``,
-        isValid: false,
-        isInitialValue: true,
+        isValid: true,
+        isInitialValue: false,
     }],
     [{
         id: `statusDescription`,
@@ -284,19 +321,73 @@ export const getLeaveInformationModalBodyFormData = ({
         size: `small`,
         fullWidth: true,
         helperText: ``,
-        isValid: false,
-        isInitialValue: true,
+        isValid: true,
+        isInitialValue: false,
     }],
 ];
 
-export const userEditOption = () => [`startingDate`, `endingDate`, `type`, `description`];
+export const userEditOption = () => [
+    {
+        fieldId: `startingDate`,
+        editType: `input`,
+        dataKey: `startingDate`,
+        format: (e) => moment(e, config.REGULAR_DATE_FORMAT).format(config.DEFAULT_DATE_FORMAT),
+        dataKeyValueFormat: (e) => moment(e).format(config.DEFAULT_DATE_FORMAT),
+    },
+    {
+        fieldId: `endingDate`,
+        editType: `input`,
+        dataKey: `endingDate`,
+        format: (e) => moment(e, config.REGULAR_DATE_FORMAT).format(config.DEFAULT_DATE_FORMAT),
+        dataKeyValueFormat: (e) => moment(e).format(config.DEFAULT_DATE_FORMAT),
+    },
+    {
+        fieldId: `type`,
+        editType: `input`,
+        dataKey: `type`,
+    },
+    {
+        fieldId: `description`,
+        editType: `input`,
+        dataKey: `description`,
+    }];
+
+export const setLeaveModalDataToEditForm = (formData) => {
+    const data = JSON.parse(JSON.stringify(formData));
+    return data.map(eachRow => eachRow.map(eachField => {
+        const userFieldObject = (userEditOption() || []).find(obj => obj.fieldId === eachField.id)
+        return userFieldObject ? {
+            ...eachField,
+            type: userFieldObject.editType,
+            value: userFieldObject.format ? userFieldObject.format(eachField.value) : eachField.value
+        } : eachField;
+    }))
+};
+
+export const checkChangedDataValue = (formData, originalData) => {
+    let obj = {isChanged: false, changedValue: []}
+    getObjArrayFromObjOfArrayOfArray(formData).forEach(eachField => {
+        const editObj = userEditOption().find(eachObj => eachObj.fieldId === eachField.id)
+        if (editObj && eachField.value !== (editObj.dataKeyValueFormat ? editObj.dataKeyValueFormat(originalData[editObj.dataKey]) : originalData[editObj.dataKey])) {
+            obj = {
+                ...obj,
+                isChanged: true,
+                changedValue: [...obj.changedValue, {field: editObj.dataKey, value: eachField.value}]
+            }
+        }
+    })
+    return obj;
+};
 
 export const actionButton = ({
                                  status,
                                  startingDate,
+                                 openActionMode,
                                  userType,
                                  onCancelHandler,
                                  onEditHandler,
+                                 onEditCancelHandler,
+                                 onEditSaveHandler,
                                  onRejectHandler,
                                  onApproveHandler
                              }) => [
@@ -306,7 +397,7 @@ export const actionButton = ({
         icon: <CancelScheduleSendIcon/>,
         color: `error`,
         onClick: onCancelHandler,
-        showAbleValidation: [`Pending`].every(e => e === status) && [config.POSITION_TYPE_II].some(e => e === userType) && moment().diff(startingDate, "days") < -1
+        showAbleValidation: openActionMode === `` && [`Pending`].every(e => e === status) && [config.POSITION_TYPE_II].some(e => e === userType) && moment().diff(startingDate, "days") < -1
     },
     {
         id: `edit`,
@@ -314,7 +405,23 @@ export const actionButton = ({
         icon: <AppRegistrationIcon/>,
         color: `primary`,
         onClick: onEditHandler,
-        showAbleValidation: [`Pending`].every(e => e === status) && [config.POSITION_TYPE_II].some(e => e === userType) && moment().diff(startingDate, "days") < -1
+        showAbleValidation: openActionMode === `` && [`Pending`].every(e => e === status) && [config.POSITION_TYPE_II].some(e => e === userType) && moment().diff(startingDate, "days") < -1
+    },
+    {
+        id: `cancel`,
+        label: `Cancel`,
+        icon: <DangerousIcon/>,
+        color: `error`,
+        onClick: onEditCancelHandler,
+        showAbleValidation: openActionMode === `edit`
+    },
+    {
+        id: `save`,
+        label: `Save`,
+        icon: <PlaylistAddCheckIcon/>,
+        color: `primary`,
+        onClick: onEditSaveHandler,
+        showAbleValidation: openActionMode === `edit`
     },
     {
         id: `reject`,
@@ -322,7 +429,7 @@ export const actionButton = ({
         icon: <ThumbDownIcon/>,
         color: `error`,
         onClick: onRejectHandler,
-        showAbleValidation: [`Pending`].every(e => e === status) && [config.POSITION_TYPE_I].some(e => e === userType) && moment().diff(startingDate, "days") < 1
+        showAbleValidation: openActionMode === `` && [`Pending`].every(e => e === status) && [config.POSITION_TYPE_I].some(e => e === userType) && moment().diff(startingDate, "days") < 1
     },
     {
         id: `approve`,
@@ -330,6 +437,18 @@ export const actionButton = ({
         icon: <FactCheckIcon/>,
         color: `success`,
         onClick: onApproveHandler,
-        showAbleValidation: [`Pending`].every(e => e === status) && [config.POSITION_TYPE_I].some(e => e === userType) && moment().diff(startingDate, "days") < 1
+        showAbleValidation: openActionMode === `` && [`Pending`].every(e => e === status) && [config.POSITION_TYPE_I].some(e => e === userType) && moment().diff(startingDate, "days") < 1
     },
 ];
+
+export const minAndMaxDateSet = (data) => {
+    data.forEach(eachRow => eachRow.forEach((eachField) => {
+        if (eachField.id === `startingDate`) {
+            eachField.minDate = moment().format(config.DEFAULT_DATE_FORMAT);
+            eachField.maxDate = document.getElementById(`endingDate-input`)?.value;
+        } else if (eachField.id === `endingDate`) {
+            eachField.minDate = document.getElementById(`startingDate-input`)?.value;
+        }
+    }));
+    return data;
+};
