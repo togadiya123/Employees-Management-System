@@ -1,12 +1,6 @@
 import React from "react";
 import {
-    Dialog,
-    DialogTitle,
-    IconButton,
-    DialogContent,
-    DialogActions,
-    Button,
-    Slide, Stack, Typography
+    Dialog, DialogTitle, IconButton, DialogContent, DialogActions, Button, Slide, Stack, Typography
 } from "@mui/material";
 
 import {HighlightOffIcon} from "../../../HelperFunction/icons";
@@ -18,9 +12,13 @@ const BaseDialog = ({open, onClose, header, body, action}) => {
         return <Slide direction="up" ref={ref} children={props?.children} {...props} />;
     });
 
-    return (
-        <Dialog
+    return (<Dialog
             open={open}
+            sx={{
+                '.MuiDialog-paper': {
+                    borderRadius: 2
+                }
+            }}
             TransitionComponent={Transition}
             keepMounted
         >
@@ -29,9 +27,10 @@ const BaseDialog = ({open, onClose, header, body, action}) => {
                     <Typography variant={`inherit`} sx={{display: `flex`, alignItems: `center`}} fontWeight={550}>
                         {header}
                     </Typography>
-                    <IconButton onClick={onClose} color={`error`} sx={{display: `flex`, alignItems: `center`}}>
-                        <HighlightOffIcon/>
-                    </IconButton>
+                    {onClose &&
+                        <IconButton onClick={onClose} color={`error`} sx={{display: `flex`, alignItems: `center`}}>
+                            <HighlightOffIcon/>
+                        </IconButton>}
                 </Stack>
             </DialogTitle>
             <DialogContent>
@@ -40,7 +39,6 @@ const BaseDialog = ({open, onClose, header, body, action}) => {
             <DialogActions>
                 {action}
             </DialogActions>
-        </Dialog>
-    );
+        </Dialog>);
 };
 export default BaseDialog

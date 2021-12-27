@@ -1,26 +1,27 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {toast} from "react-toastify";
 import {Button, Stack} from "@mui/material";
 
+import BaseDialog from "../../CommonComponents/BaseDialog";
+import {BodyOfSimpleModal} from "../../CommonComponents/BaseDialog/utiles";
+import Form from "../../CommonComponents/Form";
 import {
-    actionButton, checkChangedDataValue,
+    actionButton,
+    checkChangedDataValue,
     getLeaveInformationModalBodyFormData,
     minAndMaxDateSet,
     setLeaveModalDataToEditForm,
 } from "./utiles";
-import Form from "../../CommonComponents/Form";
-import {
-    commonBlurHandler,
-    commonChangeHandler,
-} from "../../CommonComponents/Form/utiles";
-import {toast} from "react-toastify";
+import {commonBlurHandler, commonChangeHandler} from "../../CommonComponents/Form/utiles";
+import {LEAVE_ACTION_MODAL_BODY} from "./staticList";
 
 const LeaveInformationModalBody = ({data}) => {
 
     const [LeaveInformationFormData, setLeaveInformationFormData] = useState(getLeaveInformationModalBodyFormData(data))
-    const [leaveModal, setLeaveModal] = useState({mode: ``,});
+    const [leaveModal, setLeaveModal] = useState({mode: ``, childModal: {isOpen: false}});
     const dispatch = useDispatch();
-    const userType = useSelector(store => store.user.positionType);
+    const user = useSelector(store => store.user);
 
     const onChangeHandler = (e) => commonChangeHandler(LeaveInformationFormData, setLeaveInformationFormData, e, ``, (formData, id) => {
         if (id === `startingDate-input`) formData = minAndMaxDateSet(formData);
@@ -32,34 +33,51 @@ const LeaveInformationModalBody = ({data}) => {
     });
     const onBlurHandler = (e) => commonBlurHandler(LeaveInformationFormData, setLeaveInformationFormData, e, ``);
 
-    const onCancelHandler = () => {
-
+    const setChildModal = (id, negativeOnClick, positiveOnClick) => {
+        const obj = LEAVE_ACTION_MODAL_BODY(id, negativeOnClick, positiveOnClick, user.firstName, data.userFullName)
+        setLeaveModal(e => ({
+            ...e, childModal: {
+                isOpen: true,
+                header: obj?.header,
+                body: <BodyOfSimpleModal bodyText={obj?.bodyText} buttons={obj?.button}/>
+            }
+        }));
     };
 
+    const commonCloseChildModalAction = () => {
+        setLeaveModal(e => JSON.parse(JSON.stringify({...e, childModal: {...e.childModal, isOpen: false}})));
+    };
+    const commonCancelEditAction = () => {
+        setLeaveInformationFormData(getLeaveInformationModalBodyFormData(data));
+        setLeaveModal(e => JSON.parse(JSON.stringify({...e, mode: ``})));
+    }
+
+    const onCancelHandler = () => {
+        setChildModal(`cancelLeave`, commonCloseChildModalAction, () => {
+        })
+    };
     const onEditHandler = (event) => {
-        setLeaveModal((e) => ({...e, mode: event.target.id}));
+        setLeaveModal(e => JSON.parse(JSON.stringify({...e, mode: event.target.id})));
         setLeaveInformationFormData((data) => setLeaveModalDataToEditForm(data))
     };
     const onEditCancelHandler = () => {
-        setLeaveInformationFormData(getLeaveInformationModalBodyFormData(data));
-        setLeaveModal((e) => ({...e, mode: ``}));
+        leaveModal?.changedValue?.isChanged ? setChildModal(`cancelLeaveEdit`, commonCloseChildModalAction, commonCancelEditAction) : commonCancelEditAction();
     }
-    const onEditSaveHandler = (e) => {
-        if (leaveModal.changedValue && leaveModal.changedValue.isChanged && leaveModal.changedValue.changedValue.length) {
-            setLeaveInformationFormData(getLeaveInformationModalBodyFormData(data));
-            setLeaveModal((e) => ({...e, mode: ``}));
-        } else
-            toast.info(`First you required some changes on leave application`);
+    const onEditSaveHandler = () => {
+        leaveModal?.changedValue?.isChanged ? setChildModal(`saveLeaveEdit`, commonCloseChildModalAction, () => {
+        }) : toast.info(`First you required some changes on leave application`);
     }
 
     const onRejectHandler = () => {
-
+        setChildModal(`rejectLeaveApplication`, commonCloseChildModalAction, () => {
+        })
     };
     const onApproveHandler = () => {
-
+        setChildModal(`approveLeaveApplication`, commonCloseChildModalAction, () => {
+        })
     };
 
-    return (
+    return (<React.Fragment>
         <Stack gap={1}>
             <Stack sx={{overflowX: `auto`}}>
                 <Form
@@ -71,34 +89,33 @@ const LeaveInformationModalBody = ({data}) => {
             <Stack>
             </Stack>
             <Stack direction={`row`} gap={2} paddingX={3}>
-                {
-                    actionButton({
-                        ...data,
-                        openActionMode: leaveModal.mode || ``,
-                        userType,
-                        onCancelHandler,
-                        onEditHandler,
-                        onEditCancelHandler,
-                        onEditSaveHandler,
-                        onRejectHandler,
-                        onApproveHandler
-                    }).filter(eachButton => eachButton.showAbleValidation).map(({id, label, color, icon, onClick}) =>
-                        <Button
-                            id={id}
-                            key={id}
-                            startIcon={icon}
-                            variant={`contained`}
-                            color={color}
-                            sx={{flex: 1}}
-                            onClick={onClick}
-                        >
-                            {label}
-                        </Button>
-                    )
-                }
+                {actionButton({
+                    ...data,
+                    openActionMode: leaveModal.mode || ``,
+                    userType: user.positionType,
+                    onCancelHandler,
+                    onEditHandler,
+                    onEditCancelHandler,
+                    onEditSaveHandler,
+                    onRejectHandler,
+                    onApproveHandler
+                }).filter(eachButton => eachButton.showAbleValidation).map(({
+                                                                                id, label, color, icon, onClick
+                                                                            }) => <Button
+                    id={id}
+                    key={id}
+                    startIcon={icon}
+                    variant={`contained`}
+                    color={color}
+                    sx={{flex: 1}}
+                    onClick={onClick}
+                >
+                    {label}
+                </Button>)}
             </Stack>
         </Stack>
-    );
+        {leaveModal.childModal.isOpen && <BaseDialog open={leaveModal.childModal.isOpen} {...leaveModal.childModal}/>}
+    </React.Fragment>);
 };
 
 export default LeaveInformationModalBody;

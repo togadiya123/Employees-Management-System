@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Card, Container, IconButton} from "@mui/material";
+import {Card, Container, IconButton, Stack, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import ChromeReaderModeIcon from '@mui/icons-material/ChromeReaderMode';
 
@@ -52,7 +52,7 @@ const Leave = () => {
     useEffect(() => {
         dispatch(getLeaveList({
             sortBy: {
-                "updatedAt": 1
+                "updatedAt": -1
             }, limit: 10
         }))
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,9 +65,14 @@ const Leave = () => {
     return <React.Fragment>
         <Container sx={{py: 2, px: {sm: 0,}}}>
             <Card sx={{
-                width: `100%`, maxWidth: `fit-content`, mx: `auto`, p: `1rem`, boxShadow: 3,
+                width: `100%`, maxWidth: `fit-content`, mx: `auto`, p: 3, boxShadow: 3,
             }}>
-                <BaseTable columns={columns} rows={rows}/>
+                <Stack>
+                    <Typography variant={`h5`} fontWeight={650} color={`var(--main)`}>Leave</Typography>
+                </Stack>
+                <Stack padding={2}>
+                    <BaseTable columns={columns} rows={rows}/>
+                </Stack>
             </Card>
         </Container>
         {modal.isOpen && <BaseDialog open={modal.isOpen} {...modal}/>}

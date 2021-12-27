@@ -1,14 +1,30 @@
-:root{
-  --main: #3F51B5;
-  --secondary : #121212;
-  --white: #fff;
-  --white15 : #ffffff15;
-  --white25: #ffffff25;
-  --white70: #FFFFFF70;
+:root {
+    --main: #192673;
+    --mainHover: #0c1964;
+    --white70: #FFFFFF70;
 }
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+::-webkit-scrollbar {
+    width: 0.3rem;
+    height: 0.3rem;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 10px 0 grey;
+    border-radius: 30px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--main);
+    border-radius: 30px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--mainHover);
 }
