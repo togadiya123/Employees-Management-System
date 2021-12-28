@@ -32,6 +32,22 @@ export const ROUTE_LIST = () => [{
         admin: false, user: true
     }
 }, {
+    route: `/cancelLeave`, eligibility: {
+        admin: false, user: true
+    }
+}, {
+    route: `/editLeave`, eligibility: {
+        admin: false, user: true
+    }
+}, {
+    route: `/rejectLeave`, eligibility: {
+        admin: true, user: false
+    }
+}, {
+    route: `/approveLeave`, eligibility: {
+        admin: true, user: false
+    }
+}, {
     route: `/getLeavesList`, eligibility: {
         admin: true, user: true
     }

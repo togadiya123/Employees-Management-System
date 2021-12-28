@@ -4,7 +4,7 @@ import {
 } from "../actions/actionType";
 import {getFormattedResponse} from "../../HelperFunction";
 
-const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload}) => {
+const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload, actionType}) => {
     switch (type) {
         case `_FETCHING`: {
             return {
@@ -25,6 +25,13 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
             }
         }
 
+        case `API_RESPONSES` : {
+            return {
+                ...state,
+                apiResponses: [...state.apiResponses, getFormattedResponse(actionType, payload)]
+            }
+        }
+
         case `${LOGIN_USER}_FETCHING`: {
             return {
                 ...state, user: {
@@ -34,7 +41,6 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         }
 
         case `${LOGIN_USER}_SUCCESS`: {
-            state.apiResponses.push(getFormattedResponse(`${LOGIN_USER}_SUCCESS`, payload));
             localStorage.setItem("token", payload.data.token);
             return {
                 ...state, user: {
@@ -44,7 +50,6 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         }
 
         case `${LOGIN_USER}_FAILED` : {
-            state.apiResponses.push(getFormattedResponse(`${LOGIN_USER}_FAILED`, payload));
             return {
                 ...state, user: {
                     ...state.user, logInApiFetching: false, isLogIn: false,
@@ -57,12 +62,10 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         }
 
         case `${APPLY_TO_LEAVE}_SUCCESS`: {
-            state.apiResponses.push(getFormattedResponse(`${APPLY_TO_LEAVE}_SUCCESS`, payload));
             return state;
         }
 
         case `${APPLY_TO_LEAVE}_FAILED` : {
-            state.apiResponses.push(getFormattedResponse(`${APPLY_TO_LEAVE}_FAILED`, payload));
             return state;
         }
 
@@ -75,7 +78,6 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         }
 
         case `${GET_USER_INFO}_SUCCESS`: {
-            state.apiResponses.push(getFormattedResponse(`${GET_USER_INFO}_SUCCESS`, payload));
             return {
                 ...state, user: {
                     ...state.user, fetchingUserInformation: false, haveUserInfo: true, ...payload.data
@@ -99,7 +101,6 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         }
 
         case `${GET_LEAVE_LIST}_SUCCESS`: {
-            state.apiResponses.push(getFormattedResponse(`${GET_LEAVE_LIST}_SUCCESS`, payload));
             return {
                 ...state, pageData: {
                     ...state.pageData, leave: {
@@ -110,7 +111,6 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         }
 
         case `${GET_LEAVE_LIST}_FAILED` : {
-            state.apiResponses.push(getFormattedResponse(`${GET_LEAVE_LIST}_FAILED`, payload));
             return {
                 ...state, pageData: {
                     ...state.pageData, leave: {
@@ -131,7 +131,6 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         }
 
         case `${GET_LEAVE_INFO}_SUCCESS`: {
-            state.apiResponses.push(getFormattedResponse(`${GET_LEAVE_INFO}_SUCCESS`, payload));
             return {
                 ...state, pageData: {
                     ...state.pageData, leave: {
@@ -144,7 +143,6 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         }
 
         case `${GET_LEAVE_INFO}_FAILED` : {
-            state.apiResponses.push(getFormattedResponse(`${GET_LEAVE_INFO}_FAILED`, payload));
             return {
                 ...state, pageData: {
                     ...state.pageData, leave: {
@@ -168,7 +166,6 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload})
         }
 
         case `${LOGOUT_USER}_FAILED` : {
-            state.apiResponses.push(getFormattedResponse(`${LOGOUT_USER}_FAILED`, payload));
             return {
                 ...state, user: {
                     ...state.user, logOutApiFetching: false,

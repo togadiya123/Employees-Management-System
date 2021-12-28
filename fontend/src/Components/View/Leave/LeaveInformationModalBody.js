@@ -15,6 +15,7 @@ import {
 } from "./utiles";
 import {commonBlurHandler, commonChangeHandler} from "../../CommonComponents/Form/utiles";
 import {LEAVE_ACTION_MODAL_BODY} from "./staticList";
+import {cancelLeave} from "../../../Store/actions/action";
 
 const LeaveInformationModalBody = ({data}) => {
 
@@ -54,6 +55,7 @@ const LeaveInformationModalBody = ({data}) => {
 
     const onCancelHandler = () => {
         setChildModal(`cancelLeave`, commonCloseChildModalAction, () => {
+            dispatch(cancelLeave({leaveApplicationId: data._id}))
         })
     };
     const onEditHandler = (event) => {

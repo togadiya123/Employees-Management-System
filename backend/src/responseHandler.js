@@ -104,6 +104,12 @@ const RESPONSE_LIST = [
         message: `Successfully get Leave List.`,
     },
     {
+        value: `undefined leave application id`,
+        statusCode: 400,
+        technicalMessage: `Request not proceed due to undefined leave application id.`,
+        message: `Pass the leave application id as "leaveApplicationId" key value in body.`,
+    },
+    {
         value: `successful`,
         statusCode: 200,
         technicalMessage: `Request approve successfully.`,

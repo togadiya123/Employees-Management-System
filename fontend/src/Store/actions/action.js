@@ -1,4 +1,12 @@
-import {APPLY_TO_LEAVE, GET_LEAVE_INFO, GET_LEAVE_LIST, GET_USER_INFO, LOGIN_USER, LOGOUT_USER} from "./actionType";
+import {
+    APPLY_TO_LEAVE, APPROVE_LEAVE,
+    CANCEL_LEAVE, EDIT_LEAVE,
+    GET_LEAVE_INFO,
+    GET_LEAVE_LIST,
+    GET_USER_INFO,
+    LOGIN_USER,
+    LOGOUT_USER, REJECT_LEAVE
+} from "./actionType";
 
 export const loginUser = payload => ({
     actionType: LOGIN_USER,
@@ -25,7 +33,7 @@ export const logOutUser = () => ({
     method: 'GET',
 });
 
-export const applyToLeave = payload =>({
+export const applyToLeave = payload => ({
     actionType: APPLY_TO_LEAVE,
     toasterString: `Try to apply a leave.`,
     isHttpAction: true,
@@ -34,7 +42,7 @@ export const applyToLeave = payload =>({
     body: payload,
 });
 
-export const getLeaveList = payload =>({
+export const getLeaveList = payload => ({
     actionType: GET_LEAVE_LIST,
     toasterString: `Try to get leave list.`,
     isHttpAction: true,
@@ -43,11 +51,47 @@ export const getLeaveList = payload =>({
     body: payload,
 });
 
-export const getLeaveInfo = payload =>({
+export const getLeaveInfo = payload => ({
     actionType: GET_LEAVE_INFO,
     toasterString: `Try to get leave Information.`,
     isHttpAction: true,
     url: `/leave/getLeavesList/${payload.taskId || 0}`,
+    method: 'POST',
+    body: payload,
+})
+
+export const cancelLeave = payload => ({
+    actionType: CANCEL_LEAVE,
+    toasterString: `Try to cancel leave application.`,
+    isHttpAction: true,
+    url: '/leave/cancelLeave',
+    method: 'POST',
+    body: payload,
+});
+
+export const editLeave = payload => ({
+    actionType: EDIT_LEAVE,
+    toasterString: `Try to changes on leave application.`,
+    isHttpAction: true,
+    url: `/leave/editLeave`,
+    method: 'POST',
+    body: payload,
+})
+
+export const rejectLeave = payload => ({
+    actionType: REJECT_LEAVE,
+    toasterString: `Try to reject a leave application.`,
+    isHttpAction: true,
+    url: '/leave/rejectLeave',
+    method: 'POST',
+    body: payload,
+});
+
+export const approveLeave = payload => ({
+    actionType: APPROVE_LEAVE,
+    toasterString: `Try to approve a leave application.`,
+    isHttpAction: true,
+    url: `/leave/approveLeave`,
     method: 'POST',
     body: payload,
 })

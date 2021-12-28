@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "../../config";
 import {toast} from "react-toastify";
-import {LOADER_END, LOADER_START} from "../actions/actionType";
+import {API_RESPONSES, LOADER_END, LOADER_START} from "../actions/actionType";
 
 const defaultToasterOptions = {
     isLoading: false,
@@ -52,14 +52,19 @@ const httpActions = (e) => next => async action => {
                 method,
             });
             const {data} = response;
-            if(toasterId) await toast.update(toasterId, {
+            if (toasterId) await toast.update(toasterId, {
                 type: 'success',
                 render: data.message || `Success`, ...defaultToasterOptions
             });
             next({
+                type: API_RESPONSES,
+                payload: data,
+                actionType: `${actionType}_SUCCESS`,
+            });
+            next({
                 type: `${actionType}_SUCCESS`,
                 payload: data,
-            })
+            });
         } catch (e) {
             const {response} = e;
             console.error('Error : got in httpsAction');
@@ -68,6 +73,11 @@ const httpActions = (e) => next => async action => {
                 render: response?.data?.message || `Something going wrong !`,
                 ...defaultToasterOptions,
             });
+            next({
+                type: API_RESPONSES,
+                payload: {message: response?.data, e},
+                actionType: `${actionType}_FAILED`,
+            })
             next({
                 type: `${actionType}_FAILED`,
                 payload: {message: response?.data?.message, e},
