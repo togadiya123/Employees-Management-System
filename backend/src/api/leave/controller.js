@@ -1,7 +1,14 @@
 import {Leave} from "../../modal/index.js";
 import {getDefinedValuesObject, getOnlyRequiredObjectKeyValue, toObjectId} from "../../helperFunction.js";
 import responseHandler from "../../responseHandler.js";
-import {cancelLeaveKeyList, userApplyToLeaveKeyList} from "../../staticList.js";
+import {
+    approveLeaveKeyList,
+    cancelLeaveKeyList,
+    editLeaveKeyList,
+    editLeaveValueKeyList,
+    rejectLeaveKeyList,
+    userApplyToLeaveKeyList
+} from "../../staticList.js";
 import {getLeaveListTableFormatObject} from "./utiles.js";
 
 const applyToLeave = async (req, res) => {
@@ -74,13 +81,13 @@ const cancelLeave = async (req, res) => {
 
         if (!_id)
             return responseHandler(`undefined leave application id`, res);
-        const response = await Leave.updateOne({
+        await Leave.updateOne({
             user: toObjectId(req.tokenDecoded.id),
             _id,
             status: `Pending`
-        }, {status: `Canceled`,statusDescription:`Canceled by user.`})
-        console.log(response);
-        return responseHandler(`succeeds apply to leave`, res);
+        }, {status: `Canceled`, statusDescription: `Canceled by user.`})
+
+        return responseHandler(`succeeds cancel to leave`, res);
     } catch (e) {
         console.log(`Error on applyToLeave`);
         return res.status(400).send(`Error on applyToLeave : ${e}`);
@@ -89,7 +96,23 @@ const cancelLeave = async (req, res) => {
 
 const editLeave = async (req, res) => {
     try {
-        return responseHandler(`succeeds apply to leave`, res);
+        let {leaveApplicationId: _id, changedValue} = getOnlyRequiredObjectKeyValue(req.body, editLeaveKeyList);
+
+        if (!_id || !changedValue)
+            return responseHandler(`undefined leave application id`, res);
+
+        console.log(changedValue);
+        changedValue = getOnlyRequiredObjectKeyValue(changedValue, editLeaveValueKeyList);
+
+        console.log(changedValue);
+
+        await Leave.updateOne({
+            user: toObjectId(req.tokenDecoded.id),
+            _id,
+            status: `Pending`
+        }, changedValue)
+
+        return responseHandler(`succeeds edit to leave`, res);
     } catch (e) {
         console.log(`Error on applyToLeave`);
         return res.status(400).send(`Error on applyToLeave : ${e}`);
@@ -98,7 +121,17 @@ const editLeave = async (req, res) => {
 
 const rejectLeave = async (req, res) => {
     try {
-        return responseHandler(`succeeds apply to leave`, res);
+        const {leaveApplicationId: _id, userId: user} = getOnlyRequiredObjectKeyValue(req.body, rejectLeaveKeyList);
+
+        if (!_id || !user)
+            return responseHandler(`undefined leave application id`, res);
+        await Leave.updateOne({
+            user: toObjectId(user),
+            _id: toObjectId(_id),
+            status: `Pending`
+        }, {status: `Rejected`, statusDescription: `Rejected by admin.`})
+
+        return responseHandler(`succeeds rejected to leave`, res);
     } catch (e) {
         console.log(`Error on applyToLeave`);
         return res.status(400).send(`Error on applyToLeave : ${e}`);
@@ -107,7 +140,17 @@ const rejectLeave = async (req, res) => {
 
 const approveLeave = async (req, res) => {
     try {
-        return responseHandler(`succeeds apply to leave`, res);
+        const {leaveApplicationId: _id, userId: user} = getOnlyRequiredObjectKeyValue(req.body, approveLeaveKeyList);
+
+        if (!_id || !user)
+            return responseHandler(`undefined leave application id`, res);
+        await Leave.updateOne({
+            user: toObjectId(user),
+            _id: toObjectId(_id),
+            status: `Pending`
+        }, {status: `Approved`, statusDescription: `Approved by admin.`})
+
+        return responseHandler(`succeeds approved to leave`, res);
     } catch (e) {
         console.log(`Error on applyToLeave`);
         return res.status(400).send(`Error on applyToLeave : ${e}`);

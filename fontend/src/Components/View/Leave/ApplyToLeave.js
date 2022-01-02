@@ -24,14 +24,13 @@ const ApplyToLeave = ({history}) => {
         });
     };
 
-    const onFocusHandler = (e) => {
-    };
     const onClickHandler = (e) => {
         switch (e.target.id) {
             case `submit-button`:
                 applyLeaveSubmitHandler(e);
                 break;
-            case ``:
+            case `cancel-button`:
+                history.push(`/leave`);
                 break;
             default:
                 break;
@@ -55,7 +54,6 @@ const ApplyToLeave = ({history}) => {
                 boxShadow: 3,
             }}>
                 <Form formDesign={leaveFormData}
-                      onFocus={onFocusHandler}
                       onClick={onClickHandler}
                       onChange={onChangeHandler}
                       onBlur={onBlurHandler}/>

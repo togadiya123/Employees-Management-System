@@ -7,6 +7,7 @@ import FactCheckIcon from '@mui/icons-material/FactCheck';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import DangerousIcon from '@mui/icons-material/Dangerous';
+import ParkIcon from '@mui/icons-material/Park';
 
 export {
     CloseIcon,
@@ -17,5 +18,6 @@ export {
     FactCheckIcon,
     ThumbDownIcon,
     PlaylistAddCheckIcon,
-    DangerousIcon
+    DangerousIcon,
+    ParkIcon,
 };

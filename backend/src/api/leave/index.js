@@ -8,8 +8,8 @@ leaveRouter.route(`/getLeavesList`).post(leave.getLeavesList);
 leaveRouter.route(`/getLeavesList/:taskId`).post(leave.getLeavesList);
 leaveRouter.route(`/applyToLeave`).post(leave.applyToLeave);
 leaveRouter.route(`/cancelLeave`).post(leave.cancelLeave);
-leaveRouter.route(`/editLeave`).post(leave.cancelLeave);
-leaveRouter.route(`/approveLeave`).post(leave.cancelLeave);
-leaveRouter.route(`/rejectLeave`).post(leave.cancelLeave);
+leaveRouter.route(`/editLeave`).post(leave.editLeave);
+leaveRouter.route(`/approveLeave`).post(leave.approveLeave);
+leaveRouter.route(`/rejectLeave`).post(leave.rejectLeave);
 
 export default leaveRouter;

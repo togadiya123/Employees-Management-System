@@ -86,6 +86,30 @@ const RESPONSE_LIST = [
         message: `Successfully Created Leave Application.`,
     },
     {
+        value: `succeeds cancel to leave`,
+        statusCode: 200,
+        technicalMessage: `Successfully Canceled Leave Application.`,
+        message: `Leave Application Canceled.`,
+    },
+    {
+        value: `succeeds edit to leave`,
+        statusCode: 200,
+        technicalMessage: `Successfully Add changes on Leave Application.`,
+        message: `Leave Application Edited`,
+    },
+    {
+        value: `succeeds rejected to leave`,
+        statusCode: 200,
+        technicalMessage: `Successfully Rejected a Leave Application.`,
+        message: `Leave Application Rejected.`,
+    },
+    {
+        value: `succeeds approved to leave`,
+        statusCode: 200,
+        technicalMessage: `Successfully Approved a Leave Application.`,
+        message: `Leave Application Approved.`,
+    },
+    {
         value: `route not found`,
         statusCode: 404,
         technicalMessage: `Can not found given route.`,

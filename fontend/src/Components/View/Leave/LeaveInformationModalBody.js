@@ -15,7 +15,7 @@ import {
 } from "./utiles";
 import {commonBlurHandler, commonChangeHandler} from "../../CommonComponents/Form/utiles";
 import {LEAVE_ACTION_MODAL_BODY} from "./staticList";
-import {cancelLeave} from "../../../Store/actions/action";
+import {approveLeave, cancelLeave, editLeave, rejectLeave} from "../../../Store/actions/action";
 
 const LeaveInformationModalBody = ({data}) => {
 
@@ -67,15 +67,18 @@ const LeaveInformationModalBody = ({data}) => {
     }
     const onEditSaveHandler = () => {
         leaveModal?.changedValue?.isChanged ? setChildModal(`saveLeaveEdit`, commonCloseChildModalAction, () => {
+            dispatch(editLeave({leaveApplicationId: data._id, changedValue: leaveModal?.changedValue?.formattedChangedValue}))
         }) : toast.info(`First you required some changes on leave application`);
     }
 
     const onRejectHandler = () => {
         setChildModal(`rejectLeaveApplication`, commonCloseChildModalAction, () => {
+            dispatch(rejectLeave({leaveApplicationId: data._id, userId: data.user}))
         })
     };
     const onApproveHandler = () => {
         setChildModal(`approveLeaveApplication`, commonCloseChildModalAction, () => {
+            dispatch(approveLeave({leaveApplicationId: data._id, userId: data.user}))
         })
     };
 

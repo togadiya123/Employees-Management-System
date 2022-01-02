@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Card, Container, IconButton, Stack, Typography} from "@mui/material";
+import {Button, Card, Container, IconButton, Stack, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import ChromeReaderModeIcon from '@mui/icons-material/ChromeReaderMode';
 
@@ -9,8 +9,9 @@ import {getLeaveInfo, getLeaveList} from "../../../Store/actions/action";
 import config from "../../../config";
 import BaseDialog from "../../CommonComponents/BaseDialog";
 import LeaveInformationModalBody from "./LeaveInformationModalBody";
+import {ParkIcon} from "../../../HelperFunction/icons";
 
-const Leave = () => {
+const Leave = ({history}) => {
 
     const dispatch = useDispatch();
     const user = useSelector(state => state?.user);
@@ -70,13 +71,38 @@ const Leave = () => {
                 <Stack>
                     <Typography variant={`h5`} fontWeight={650} color={`var(--main)`}>Leave</Typography>
                 </Stack>
+                {
+                    user.positionType === config.POSITION_TYPE_II &&
+                    <Stack sx={{alignItems: `flex-end`}}>
+                        <Button
+                            startIcon={<ParkIcon/>}
+                            sx={{
+                                backgroundColor: `var(--main) !important`,
+                                color: `white`,
+                                paddingX: 4,
+                                '&:hover': {
+                                    backgroundColor: `var(--mainHover) !important`,
+                                    boxShadow: 4,
+                                }
+                            }}
+                            onClick={() => {
+                                history.push(`leave/applyToLeave`)
+                            }}
+                        >
+                            Apply to Leave
+                        </Button>
+                    </Stack>
+                }
                 <Stack padding={2}>
                     <BaseTable columns={columns} rows={rows}/>
                 </Stack>
             </Card>
         </Container>
-        {modal.isOpen && <BaseDialog open={modal.isOpen} {...modal}/>}
-    </React.Fragment>;
+        {
+            modal.isOpen && <BaseDialog open={modal.isOpen} {...modal}/>
+        }
+    </React.Fragment>
+        ;
 };
 
 export default Leave;

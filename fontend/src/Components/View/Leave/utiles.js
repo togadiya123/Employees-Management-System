@@ -116,8 +116,9 @@ export const getRows = (columns, data, actionCallBack = () => '') => {
             obj.type = eachColumns.type;
             if (eachColumns.id === `status`) {
                 obj.value === `Pending` && (obj.color = `info`)
-                obj.value === `Approve` && (obj.color = `success`)
-                obj.value === `Reject` && (obj.color = `error`)
+                obj.value === `Approved` && (obj.color = `success`)
+                obj.value === `Canceled` && (obj.color = `error`)
+                obj.value === `Rejected` && (obj.color = `error`)
             }
             row.push(obj);
         })
@@ -365,14 +366,18 @@ export const setLeaveModalDataToEditForm = (formData) => {
 };
 
 export const checkChangedDataValue = (formData, originalData) => {
-    let obj = {isChanged: false, changedValue: []}
+    let obj = {isChanged: false, changedValue: [], formattedChangedValue: {}}
     getObjArrayFromObjOfArrayOfArray(formData).forEach(eachField => {
         const editObj = userEditOption().find(eachObj => eachObj.fieldId === eachField.id)
         if (editObj && eachField.value !== (editObj.dataKeyValueFormat ? editObj.dataKeyValueFormat(originalData[editObj.dataKey]) : originalData[editObj.dataKey])) {
             obj = {
                 ...obj,
                 isChanged: true,
-                changedValue: [...obj.changedValue, {field: editObj.dataKey, value: eachField.value}]
+                changedValue: [...obj.changedValue, {field: editObj.dataKey, value: eachField.value}],
+                formattedChangedValue: {
+                    ...obj.formattedChangedValue,
+                    [editObj.dataKey]: eachField.value,
+                }
             }
         }
     })
