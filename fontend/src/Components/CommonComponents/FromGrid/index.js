@@ -7,6 +7,7 @@ const FromGrid = ({formData, onChange = e => e, onFocus = e => e, onBlur = e => 
         <React.Fragment>
             <Box sx={{
                 display: `grid`,
+                gridTemplateColumns: `repeat(12, 1fr)`,
                 gap: 2,
                 padding: 2,
             }} component={'form'}>
