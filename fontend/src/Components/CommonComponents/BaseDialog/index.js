@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    Dialog, DialogTitle, IconButton, DialogContent, DialogActions, Button, Slide, Stack, Typography
+    Dialog, DialogTitle, IconButton, DialogContent, DialogActions, Slide, Stack, Typography
 } from "@mui/material";
 
 import {HighlightOffIcon} from "../../../HelperFunction/icons";
