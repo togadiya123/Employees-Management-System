@@ -2,7 +2,7 @@ import React from "react";
 import {Stack, Box, FormControl} from "@mui/material";
 import Field from "../Form/Field";
 
-const FromGrid = ({formData, onChange = e => e, onFocus = e => e, onBlur = e => e, onClick = e => e}) => {
+const FromGrid = ({formData, onChange = e => e, onFocus = e => e, onBlur = e => e, onClick = e => e,formSx={}}) => {
     return (
         <React.Fragment>
             <Box sx={{
@@ -10,6 +10,7 @@ const FromGrid = ({formData, onChange = e => e, onFocus = e => e, onBlur = e => 
                 gridTemplateColumns: `repeat(12, 1fr)`,
                 gap: 2,
                 padding: 2,
+                ...formSx
             }} component={'form'}>
                 {
                     Array.isArray(formData) && formData.map(
