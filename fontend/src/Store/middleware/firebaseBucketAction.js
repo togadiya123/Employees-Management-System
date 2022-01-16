@@ -1,7 +1,7 @@
 import { getApp,initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
-const firebaseBucketAction = e => next => action => {
+const firebaseBucketAction = e => next =>async action => {
 
     const {
         method = "GET",
@@ -13,8 +13,6 @@ const firebaseBucketAction = e => next => action => {
         type,
         body,
     } = action;
-
-    console.log("in");
 
     if (isFirebaseBucketAction) {
 
@@ -36,6 +34,8 @@ const firebaseBucketAction = e => next => action => {
     } else {
         next(action)
     }
+
+    return e.getState();
 };
 
 

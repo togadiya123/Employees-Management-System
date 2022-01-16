@@ -13,16 +13,13 @@ const Profile = () => {
 
     const [profile, setProfile] = useState([]);
 
-    console.log({profile});
-
-
     useEffect(() => {
 
         dispatch(uploadImageProfile());
 
-        dispatch(getUserInfo()).then(({user})=>{
+        dispatch(getUserInfo()).then(({user}) => {
             user.haveUserInfo &&
-            setProfile(()=>GET_PROFILE_FORM_DATA(user))
+            setProfile(() => GET_PROFILE_FORM_DATA(user))
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

@@ -9,8 +9,7 @@ import firebaseBucketAction from "./middleware/firebaseBucketAction";
 
 const store = createStore(
     reducer,
-    // composeWithDevTools(applyMiddleware(ReduxThunk, firebaseBucketAction, httpActions))
-    composeWithDevTools(applyMiddleware(ReduxThunk, httpActions))
+    composeWithDevTools(applyMiddleware(ReduxThunk, firebaseBucketAction, httpActions))
 );
 
 export default store;
