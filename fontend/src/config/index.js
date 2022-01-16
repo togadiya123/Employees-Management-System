@@ -2,8 +2,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+
 const config = {
     BACKEND_BASE_API_URL: process.env.BACKEND_BASE_API_URL || "http://localhost:8080/",
+    // BACKEND_BASE_API_URL: process.env.BACKEND_BASE_API_URL || "http://192.168.208.168:8080/",
     // BACKEND_BASE_API_URL: process.env.BACKEND_BASE_API_URL || "http://192.168.43.168:8080/",
     // BACKEND_BASE_API_URL: process.env.BACKEND_BASE_API_URL || "http://192.168.0.184:8080/",
     // BACKEND_BASE_API_URL: process.env.BACKEND_BASE_API_URL || "http://192.168.57.168:8080/",
