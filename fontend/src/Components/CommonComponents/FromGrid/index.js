@@ -21,6 +21,7 @@ const FromGrid = ({formData, onChange = e => e, onFocus = e => e, onBlur = e => 
                             <FormControl id={`${eachFromField.id}-formControl`}
                                          sx={{
                                              flexDirection: eachFromField.leftSideLabel ? 'row' : 'column',
+                                             height: `100%`,
                                              gap: (theme) => theme.spacing(eachFromField.leftSideLabel ? 2 : 1)
                                          }}>
                                 <Field field={eachFromField}

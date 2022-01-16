@@ -1,4 +1,18 @@
-export const GET_PROFILE_FORM_DATA = ({firstName,lastName,designation,qualification,positionType,emailId,phoneNumber,avatar,dateOfBirth,dateOfJoin,status}) => [
+import {Avatar} from "@mui/material";
+
+export const GET_PROFILE_FORM_DATA = ({
+                                          firstName,
+                                          lastName,
+                                          designation,
+                                          qualification,
+                                          positionType,
+                                          emailId,
+                                          phoneNumber,
+                                          avatar,
+                                          dateOfBirth,
+                                          dateOfJoin,
+                                          status
+                                      }) => [
     {
         id: `firstName`,
         label: ``,
@@ -17,10 +31,17 @@ export const GET_PROFILE_FORM_DATA = ({firstName,lastName,designation,qualificat
         gridRow: `1`,
     },
     {
-        id: `firstName`,
+        id: `avatar`,
         label: ``,
-        value: `Name`,
-        // type: `input`,
+        value: avatar,
+        type: `imageUpload`,
+        fieldSx: {
+            type: `profile`,
+            avatarSx: {
+                width: `150px`,
+                height: `150px`,
+            }
+        },
         gridColumn: `9 / 13`,
         gridRow: `1 / 4`,
     },
