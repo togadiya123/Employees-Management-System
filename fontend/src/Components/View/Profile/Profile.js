@@ -5,7 +5,7 @@ import {Card, Container, Stack, Typography} from "@mui/material";
 import HorizontalLine from "../../CommonComponents/HorizontalLine";
 import FromGrid from "../../CommonComponents/FromGrid";
 import {GET_PROFILE_FORM_DATA} from "./Profile.utiles";
-import {getUserInfo} from "../../../Store/actions/action";
+import {getUserInfo, uploadImageProfile} from "../../../Store/actions/action";
 
 const Profile = () => {
 
@@ -17,6 +17,9 @@ const Profile = () => {
 
 
     useEffect(() => {
+
+        dispatch(uploadImageProfile());
+
         dispatch(getUserInfo()).then(({user})=>{
             user.haveUserInfo &&
             setProfile(()=>GET_PROFILE_FORM_DATA(user))

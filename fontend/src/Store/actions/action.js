@@ -5,11 +5,11 @@ import {
     GET_LEAVE_LIST,
     GET_USER_INFO,
     LOGIN_USER,
-    LOGOUT_USER, REJECT_LEAVE
+    LOGOUT_USER, REJECT_LEAVE, UPLOAD_IMAGE_PROFILE
 } from "./actionType";
 
 export const loginUser = payload => ({
-    actionType: LOGIN_USER,
+    type: LOGIN_USER,
     toasterString: `Waiting for Login Response.`,
     isHttpAction: true,
     url: '/auth/logIn',
@@ -18,7 +18,7 @@ export const loginUser = payload => ({
 });
 
 export const getUserInfo = () => ({
-    actionType: GET_USER_INFO,
+    type: GET_USER_INFO,
     toasterString: `Waiting for User Information.`,
     isHttpAction: true,
     url: '/user/getUserInfo',
@@ -26,7 +26,7 @@ export const getUserInfo = () => ({
 });
 
 export const logOutUser = () => ({
-    actionType: LOGOUT_USER,
+    type: LOGOUT_USER,
     toasterString: `Waiting for Logout Response.`,
     isHttpAction: true,
     url: '/user/logOut',
@@ -34,7 +34,7 @@ export const logOutUser = () => ({
 });
 
 export const applyToLeave = payload => ({
-    actionType: APPLY_TO_LEAVE,
+    type: APPLY_TO_LEAVE,
     toasterString: `Try to apply a leave.`,
     isHttpAction: true,
     url: '/leave/applyToLeave',
@@ -43,7 +43,7 @@ export const applyToLeave = payload => ({
 });
 
 export const getLeaveList = payload => ({
-    actionType: GET_LEAVE_LIST,
+    type: GET_LEAVE_LIST,
     toasterString: `Try to get leave list.`,
     isHttpAction: true,
     url: '/leave/getLeavesList',
@@ -52,7 +52,7 @@ export const getLeaveList = payload => ({
 });
 
 export const getLeaveInfo = payload => ({
-    actionType: GET_LEAVE_INFO,
+    type: GET_LEAVE_INFO,
     toasterString: `Try to get leave Information.`,
     isHttpAction: true,
     url: `/leave/getLeavesList/${payload.taskId || 0}`,
@@ -61,7 +61,7 @@ export const getLeaveInfo = payload => ({
 })
 
 export const cancelLeave = payload => ({
-    actionType: CANCEL_LEAVE,
+    type: CANCEL_LEAVE,
     toasterString: `Try to cancel leave application.`,
     isHttpAction: true,
     url: '/leave/cancelLeave',
@@ -70,7 +70,7 @@ export const cancelLeave = payload => ({
 });
 
 export const editLeave = payload => ({
-    actionType: EDIT_LEAVE,
+    type: EDIT_LEAVE,
     toasterString: `Try to changes on leave application.`,
     isHttpAction: true,
     url: `/leave/editLeave`,
@@ -79,7 +79,7 @@ export const editLeave = payload => ({
 })
 
 export const rejectLeave = payload => ({
-    actionType: REJECT_LEAVE,
+    type: REJECT_LEAVE,
     toasterString: `Try to reject a leave application.`,
     isHttpAction: true,
     url: '/leave/rejectLeave',
@@ -88,10 +88,18 @@ export const rejectLeave = payload => ({
 });
 
 export const approveLeave = payload => ({
-    actionType: APPROVE_LEAVE,
+    type: APPROVE_LEAVE,
     toasterString: `Try to approve a leave application.`,
     isHttpAction: true,
     url: `/leave/approveLeave`,
     method: 'POST',
+    body: payload,
+})
+
+export const uploadImageProfile = payload => ({
+    type: UPLOAD_IMAGE_PROFILE,
+    toasterString: `Try to upload a profile picture.`,
+    isHttpAction: false,
+    isFirebaseBucketAction: true,
     body: payload,
 })
