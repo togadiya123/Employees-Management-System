@@ -1,33 +1,44 @@
-import { getApp,initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import {initializeApp} from "firebase/app";
+import {getStorage} from "firebase/storage";
 
-const firebaseBucketAction = e => next =>async action => {
+const firebaseBucketAction = e => next => async action => {
 
     const {
-        method = "GET",
-        toasterString,
-        url,
-        isHttpAction,
         isFirebaseBucketAction,
-        headers,
-        type,
         body,
     } = action;
 
     if (isFirebaseBucketAction) {
 
-        // const firebaseConfig = {
-        //     apiKey: 'AIzaSyCPY00eOb4Gi-Tti9BJ_CW6vyH5gLMkjjo',
-        //     // authDomain: '<your-auth-domain>',
-        //     // databaseURL: '<your-database-url>',
-        //     storageBucket: 'gs://employee-management-system-b67.appspot.com/'
-        // }
+        const firebaseConfig = {
+            apiKey: "AIzaSyCPY00eOb4Gi-Tti9BJ_CW6vyH5gLMkjjo",
+            authDomain: "employee-management-system-b67.firebaseapp.com",
+            projectId: "employee-management-system-b67",
+            storageBucket: "employee-management-system-b67.appspot.com",
+            messagingSenderId: "576094404869",
+            appId: "1:576094404869:web:9c2966f426982974f6b76c",
+            measurementId: "G-V17SWQVZYM"
+        };
 
-        // const initializeAppData = initializeApp(firebaseConfig)
-        // const firebaseApp = getApp();
-        // const storage = getStorage();
+        initializeApp(firebaseConfig);
+        const storage = getStorage()
 
-        // console.log({storage});
+        try {
+            const action = storage.ref(`profile/${body.useId || `common`}/${body.fileObj.name}`).put(body.fileObj);
+            action.on(
+                "upload profile picture",
+                () => {
+                },
+                error => {
+                    console.log(error)
+                },
+                response =>{
+                    console.log(response)
+                }
+            );
+        } catch (e) {
+            console.log("Get error in the firebaseBucket : ", e)
+        }
 
         next(action)
 

@@ -15,7 +15,7 @@ const Profile = () => {
 
     useEffect(() => {
 
-        dispatch(uploadImageProfile());
+        // dispatch(uploadImageProfile());
 
         dispatch(getUserInfo()).then(({user}) => {
             user.haveUserInfo &&
