@@ -4,58 +4,92 @@ import isStrongPassword from "validator/es/lib/isStrongPassword";
 import {checkIsDateObject, isNullUndefinedEmpty} from "../../../HelperFunction";
 import config from "../../../config";
 
-export const commonBlurHandler = (state, setState, e, allFieldRequirementButtonId = null) => {
+export const commonBlurHandler = (state, setState, e, allFieldRequirementButtonId = null, isGridFrom) => {
     const data = JSON.parse(JSON.stringify(state));
     const {target: {id, name}} = e;
-    data.forEach(eachRow => eachRow.forEach(eachField => {
-        if (`${eachField.id}-${eachField.type}` === (id || name)) {
-            eachField.isInitialValue = false;
-            const {isValid, errorText} = getValidationStatus(eachField);
-            eachField.isValid = isValid;
-            eachField.errorText = errorText;
-        }
-    }));
-    setState(() => commonValidationForSubmitButton(data, allFieldRequirementButtonId));
+    isGridFrom ?
+        data.forEach(eachField => {
+            if (`${eachField.id}-${eachField.type}` === (id || name)) {
+                eachField.isInitialValue = false;
+                const {isValid, errorText} = getValidationStatus(eachField);
+                eachField.isValid = isValid;
+                eachField.errorText = errorText;
+            }
+        }) :
+        data.forEach(eachRow => eachRow.forEach(eachField => {
+            if (`${eachField.id}-${eachField.type}` === (id || name)) {
+                eachField.isInitialValue = false;
+                const {isValid, errorText} = getValidationStatus(eachField);
+                eachField.isValid = isValid;
+                eachField.errorText = errorText;
+            }
+        }));
+    setState(() => commonValidationForSubmitButton(data, allFieldRequirementButtonId, isGridFrom));
 };
 
-export const commonChangeHandler = (state = [], setState = (e) => e, e = {}, allFieldRequirementButtonId = null, callback = (e) => e) => {
+export const commonChangeHandler = (state = [], setState = (e) => e, e = {}, allFieldRequirementButtonId = null, isGridFrom, callback = (e) => e) => {
     let data = JSON.parse(JSON.stringify(state));
     const {target: {id, name}} = e;
-    data.forEach(eachRow => eachRow.forEach(eachField => {
-        if (`${eachField.id}-${eachField.type}` === (id || name)) {
-            eachField.value = e.target.value;
+    isGridFrom ?
+        data.forEach(eachField => {
+            if (`${eachField.id}-${eachField.type}` === (id || name)) {
+                eachField.value = e.target.value;
+                const {isValid, errorText} = getValidationStatus(eachField);
+                eachField.isValid = isValid;
+                eachField.errorText = errorText;
+            }
+        }) :
+        data.forEach(eachRow => eachRow.forEach(eachField => {
+            if (`${eachField.id}-${eachField.type}` === (id || name)) {
+                eachField.value = e.target.value;
+                const {isValid, errorText} = getValidationStatus(eachField);
+                eachField.isValid = isValid;
+                eachField.errorText = errorText;
+            }
+        }));
+    data = callback(data, id || name) || data;
+    setState(() => commonValidationForSubmitButton(data, allFieldRequirementButtonId, isGridFrom));
+};
+
+export const commonSubmitHandler = (state, setState, e, allFieldRequirementButtonId = null, isGridFrom, callback = e => e) => {
+    let data = JSON.parse(JSON.stringify(state));
+    data = setAllFieldValidation(data, isGridFrom);
+    isGridFrom ?
+        data.forEach(eachField => {
+            if (`${eachField.id}-${eachField.type}` === e.target.id) {
+                const {isValid, errorText} = getAllFieldRequirementValidation(data);
+                eachField.isValid = isValid;
+                eachField.errorText = errorText;
+                eachField.isInitialValue = false;
+            }
+        }) :
+        data.forEach(eachRow => eachRow.forEach(eachField => {
+            if (`${eachField.id}-${eachField.type}` === e.target.id) {
+                const {isValid, errorText} = getAllFieldRequirementValidation(data);
+                eachField.isValid = isValid;
+                eachField.errorText = errorText;
+                eachField.isInitialValue = false;
+            }
+        }));
+    setState(() => data);
+    allFieldRequirementButtonId &&
+    getObjFromArrayById(isGridFrom ? data : getObjArrayFromObjOfArrayOfArray(data), allFieldRequirementButtonId)?.isValid && callback(data);
+};
+
+export const setAllFieldValidation = (data, isGridFrom) => {
+    isGridFrom ?
+        data.forEach(eachField => {
             const {isValid, errorText} = getValidationStatus(eachField);
             eachField.isValid = isValid;
             eachField.errorText = errorText;
-        }
-    }));
-    data = callback(data, id || name);
-    setState(() => commonValidationForSubmitButton(data, allFieldRequirementButtonId));
-};
-
-export const commonSubmitHandler = (state, setState, e, allFieldRequirementButtonId = null, callback = () => {
-}) => {
-    let data = JSON.parse(JSON.stringify(state));
-    data = setAllFieldValidation(data);
-    data.forEach(eachRow => eachRow.forEach(eachField => {
-        if (`${eachField.id}-${eachField.type}` === e.target.id) {
-            const {isValid, errorText} = getAllFieldRequirementValidation(data);
+            eachField.isInitialValue = false;
+        }) :
+        data.forEach(eachRow => eachRow.forEach(eachField => {
+            const {isValid, errorText} = getValidationStatus(eachField);
             eachField.isValid = isValid;
             eachField.errorText = errorText;
             eachField.isInitialValue = false;
-        }
-    }));
-    setState(() => data);
-    allFieldRequirementButtonId && getObjFromArrayById(getObjArrayFromObjOfArrayOfArray(data), allFieldRequirementButtonId)?.isValid && callback(data);
-};
-
-export const setAllFieldValidation = (data) => {
-    data.forEach(eachRow => eachRow.forEach(eachField => {
-        const {isValid, errorText} = getValidationStatus(eachField);
-        eachField.isValid = isValid;
-        eachField.errorText = errorText;
-        eachField.isInitialValue = false;
-    }));
+        }));
     return data;
 };
 
@@ -84,14 +118,25 @@ export const getValidationStatus = (inputtedObj) => {
     return {isValid, errorText};
 };
 
-export const commonValidationForSubmitButton = (data, allFieldRequirementButtonId) => {
-    allFieldRequirementButtonId && data.forEach(eachRow => eachRow.forEach(eachField => {
-        if (`${eachField.id}-${eachField.type}` === allFieldRequirementButtonId && !eachField.isInitialValue) {
-            const {isValid, errorText} = getAllFieldRequirementValidation(data);
-            eachField.isValid = isValid;
-            eachField.errorText = errorText;
-        }
-    }));
+export const commonValidationForSubmitButton = (data, allFieldRequirementButtonId, isGridFrom) => {
+    allFieldRequirementButtonId &&
+    (
+        isGridFrom ?
+            data.forEach(eachField => {
+                if (`${eachField.id}-${eachField.type}` === allFieldRequirementButtonId && !eachField.isInitialValue) {
+                    const {isValid, errorText} = getAllFieldRequirementValidation(data);
+                    eachField.isValid = isValid;
+                    eachField.errorText = errorText;
+                }
+            }) :
+            data.forEach(eachRow => eachRow.forEach(eachField => {
+                if (`${eachField.id}-${eachField.type}` === allFieldRequirementButtonId && !eachField.isInitialValue) {
+                    const {isValid, errorText} = getAllFieldRequirementValidation(data);
+                    eachField.isValid = isValid;
+                    eachField.errorText = errorText;
+                }
+            }))
+    );
     return data;
 };
 

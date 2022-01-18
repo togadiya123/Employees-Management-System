@@ -6,12 +6,16 @@ import HorizontalLine from "../../CommonComponents/HorizontalLine";
 import FromGrid from "../../CommonComponents/FromGrid";
 import {GET_PROFILE_FORM_DATA} from "./Profile.utiles";
 import {getUserInfo, uploadImageProfile} from "../../../Store/actions/action";
+import {commonBlurHandler, commonChangeHandler} from "../../CommonComponents/Form/utiles";
 
 const Profile = () => {
 
     const dispatch = useDispatch();
 
     const [profile, setProfile] = useState([]);
+
+    const onChangeHandler = (e) => commonChangeHandler(profile, setProfile, e, ``,true, e => e);
+    const onBlurHandler = (e) => commonBlurHandler(profile, setProfile, e, ``,true);
 
     useEffect(() => {
 
@@ -48,7 +52,12 @@ const Profile = () => {
                         </Typography>
                     </Stack>
                     <HorizontalLine/>
-                    <FromGrid formData={profile} formSx={{rowGap: 3}}/>
+                    <FromGrid
+                        formData={profile}
+                        formSx={{rowGap: 3}}
+                        onBlur={onBlurHandler}
+                        onChange={onChangeHandler}
+                    />
                 </Card>
             </Container>
         </React.Fragment>

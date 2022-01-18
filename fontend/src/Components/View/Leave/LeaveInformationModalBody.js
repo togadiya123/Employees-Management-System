@@ -24,7 +24,7 @@ const LeaveInformationModalBody = ({data}) => {
     const dispatch = useDispatch();
     const user = useSelector(store => store.user);
 
-    const onChangeHandler = (e) => commonChangeHandler(LeaveInformationFormData, setLeaveInformationFormData, e, ``, (formData, id) => {
+    const onChangeHandler = (e) => commonChangeHandler(LeaveInformationFormData, setLeaveInformationFormData, e, ``,false, (formData, id) => {
         if (id === `startingDate-input`) formData = minAndMaxDateSet(formData);
         if (id === `endingDate-input`) formData = minAndMaxDateSet(formData);
         setLeaveModal(e => JSON.parse(JSON.stringify({
