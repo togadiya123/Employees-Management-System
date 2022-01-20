@@ -14,3 +14,5 @@ export const CANCEL_LEAVE = "CANCEL_LEAVE";
 export const EDIT_LEAVE = "EDIT_LEAVE";
 export const REJECT_LEAVE = "REJECT_LEAVE";
 export const APPROVE_LEAVE = "APPROVE_LEAVE";
+
+export const UPLOAD_IMAGE_PROFILE = "UPLOAD_IMAGE_PROFILE"

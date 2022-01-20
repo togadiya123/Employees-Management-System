@@ -10,6 +10,7 @@ import {
     Typography
 } from "@mui/material";
 import {isNullUndefinedEmpty} from "../../../HelperFunction";
+import ImageUpload from "../Fields/ImageUplord/ImageUpload";
 
 const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
 
@@ -147,6 +148,15 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
                                                onClick={onClick}>
                 {childText}
             </Button>
+        }
+        {
+            field.type === `imageUpload` && <ImageUpload id={id}
+                                                         fieldSx={field.fieldSx}
+                                                         field={field}
+                                                         onChange={onChange}
+                                                         onFocus={onFocus}
+                                                         onBlur={onBlur}
+                                                         onClick={onClick}/>
         }
         {
             (field.type === `button`) && error(field) && errorText && <FormHelperText id={`${id}-errorHelperText`}

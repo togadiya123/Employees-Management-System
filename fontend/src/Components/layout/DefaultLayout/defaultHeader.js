@@ -12,7 +12,7 @@ import config from "../../../config";
 import {Search, SearchIconWrapper, StyledInputBase} from "../../CommonComponents";
 import {logOutUser} from "../../../Store/actions/action";
 
-const DefaultHeader = ({setDrawerStatus}) => {
+const DefaultHeader = ({setDrawerStatus, history}) => {
 
     const dispatch = useDispatch();
 
@@ -49,6 +49,8 @@ const DefaultHeader = ({setDrawerStatus}) => {
             icon: <AccountCircle/>,
             size: "large",
             onClickHandler: () => {
+                setAccountMenu(e => ({...e, isOpen: false}));
+                history.replace("/profile");
             },
             edge: "start",
             badge: 0,

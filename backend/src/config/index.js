@@ -8,6 +8,9 @@ const config = {
     },
     port: process.env.PLATFORM_PORT,
     JWTSecret: process.env.JWT_SECRET,
+    user: {
+        profileUrl : process.env.PROFILE_DEFAULT_URL
+    }
 };
 
 export default config;
