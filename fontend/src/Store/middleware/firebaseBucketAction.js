@@ -40,10 +40,10 @@ const firebaseBucketAction = e => next => async action => {
             console.log("Get error in the firebaseBucket : ", e)
         }
 
-        next(action)
+        await next(action)
 
     } else {
-        next(action)
+        await next(action)
     }
 
     return e.getState();

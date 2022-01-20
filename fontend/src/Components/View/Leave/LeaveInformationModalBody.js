@@ -54,17 +54,16 @@ const LeaveInformationModalBody = ({data}) => {
 
     /** Common Actions **/
 
-    // get updated leave data after the action
+        // get updated leave data after the action
     const getUpdatedLeaveData = () => {
             dispatch(getLeaveInfo({taskId: data._id || ''})).then((state) => {
-                console.log(state?.pageData?.leave?.specificLeaveInfo);
-                console.log(getLeaveInformationModalBodyFormData(state?.pageData?.leave?.specificLeaveInfo || {}))
-                setLeaveInformationFormData(() => getLeaveInformationModalBodyFormData(state?.pageData?.leave?.specificLeaveInfo || {}))
-            });
+                    setLeaveInformationFormData(() => getLeaveInformationModalBodyFormData(state?.pageData?.leave?.specificLeaveInfo || {}))
+                }
+            );
         };
 
     const commonCloseChildModalAction = () => {
-        setLeaveModal(e => JSON.parse(JSON.stringify({...e, childModal: {...e.childModal, isOpen: false}})));
+        setLeaveModal({mode: ``, childModal: {isOpen: false}});
     };
     const commonCancelEditAction = () => {
         setLeaveInformationFormData(getLeaveInformationModalBodyFormData(data));
@@ -108,7 +107,10 @@ const LeaveInformationModalBody = ({data}) => {
 
     const onRejectHandler = () => {
         setChildModal(`rejectLeaveApplication`, commonCloseChildModalAction, () => {
-            dispatch(rejectLeave({leaveApplicationId: data._id, userId: data.user}))
+            dispatch(rejectLeave({leaveApplicationId: data._id, userId: data.user})).then(() => {
+                getUpdatedLeaveData()
+                commonCloseChildModalAction()
+            })
         })
     };
 
@@ -116,7 +118,10 @@ const LeaveInformationModalBody = ({data}) => {
 
     const onApproveHandler = () => {
         setChildModal(`approveLeaveApplication`, commonCloseChildModalAction, () => {
-            dispatch(approveLeave({leaveApplicationId: data._id, userId: data.user}))
+            dispatch(approveLeave({leaveApplicationId: data._id, userId: data.user})).then(() => {
+                commonCloseChildModalAction()
+                getUpdatedLeaveData()
+            })
         })
     };
 
