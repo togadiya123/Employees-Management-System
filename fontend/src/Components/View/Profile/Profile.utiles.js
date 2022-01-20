@@ -28,7 +28,7 @@ export const GET_PROFILE_FORM_DATA = ({
         type: `input`,
         isValid: true,
         isInitialValue: false,
-        errorText : ``,
+        errorText: ``,
         fieldType: `text`,
         size: `small`,
         gridColumn: `1 / 9`,
@@ -46,7 +46,7 @@ export const GET_PROFILE_FORM_DATA = ({
                 height: `150px`,
             }
         },
-        errorText : ``,
+        errorText: ``,
         gridColumn: `9 / 13`,
         gridRow: `1 / 4`,
     },
@@ -65,7 +65,7 @@ export const GET_PROFILE_FORM_DATA = ({
         type: `input`,
         isValid: true,
         isInitialValue: false,
-        errorText : ``,
+        errorText: ``,
         fieldType: `text`,
         size: `small`,
         gridColumn: `1 / 9`,
@@ -84,9 +84,16 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: emailId,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                "text-fill-color": `var(--default)`
+            }
+        },
         isValid: true,
         isInitialValue: false,
-        errorText : ``,
+        errorText: ``,
         size: `small`,
         gridColumn: `1 / 7`,
         gridRow: `4 / 5`,
@@ -104,9 +111,16 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: phoneNumber,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                "text-fill-color": `var(--default)`
+            }
+        },
         isValid: true,
         isInitialValue: false,
-        errorText : ``,
+        errorText: ``,
         size: `small`,
         gridColumn: `7 / 13`,
         gridRow: `4 / 5`,
@@ -124,9 +138,16 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: dateOfJoin,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                "text-fill-color": `var(--default)`
+            }
+        },
         isValid: true,
         isInitialValue: false,
-        errorText : ``,
+        errorText: ``,
         size: `small`,
         gridColumn: `1 / 7`,
         gridRow: `6 / 7`,
@@ -144,9 +165,16 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: dateOfBirth,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                "text-fill-color": `var(--default)`
+            }
+        },
         isValid: true,
         isInitialValue: false,
-        errorText : ``,
+        errorText: ``,
         size: `small`,
         gridColumn: `7 / 13`,
         gridRow: `6 / 7`,
@@ -164,9 +192,16 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: designation,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                "text-fill-color": `var(--default)`
+            }
+        },
         isValid: true,
         isInitialValue: false,
-        errorText : ``,
+        errorText: ``,
         size: `small`,
         gridColumn: `1 / 6`,
         gridRow: `3 / 4`,
@@ -184,9 +219,16 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: qualification,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                "text-fill-color": `var(--default)`
+            }
+        },
         isValid: true,
         isInitialValue: false,
-        errorText : ``,
+        errorText: ``,
         size: `small`,
         gridColumn: `5 / 10`,
         gridRow: `5 / 6`,
@@ -204,9 +246,16 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: status,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                "text-fill-color": `var(--default)`
+            }
+        },
         isValid: true,
         isInitialValue: false,
-        errorText : ``,
+        errorText: ``,
         size: `small`,
         gridColumn: `1 / 5`,
         gridRow: `5 / 6`,
@@ -224,9 +273,16 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: `20`,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                "text-fill-color": `var(--default)`
+            }
+        },
         isValid: true,
         isInitialValue: false,
-        errorText : ``,
+        errorText: ``,
         size: `small`,
         gridColumn: `10 / 13`,
         gridRow: `5 / 6`,
@@ -244,9 +300,16 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: positionType,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                "text-fill-color": `var(--default)`
+            }
+        },
         isValid: true,
         isInitialValue: false,
-        errorText : ``,
+        errorText: ``,
         size: `small`,
         gridColumn: `6 / 9`,
         gridRow: `3 / 4`,

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
-import {Card, Container, Stack, Typography} from "@mui/material";
+import {Button, Card, Container, Stack, Typography} from "@mui/material";
 
 import HorizontalLine from "../../CommonComponents/HorizontalLine";
 import FromGrid from "../../CommonComponents/FromGrid";
@@ -58,6 +58,9 @@ const Profile = () => {
                         onBlur={onBlurHandler}
                         onChange={onChangeHandler}
                     />
+                    <Button>
+                        Save
+                    </Button>
                 </Card>
             </Container>
         </React.Fragment>
