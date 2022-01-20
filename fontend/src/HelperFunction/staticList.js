@@ -7,7 +7,7 @@ import WorkOffIcon from '@mui/icons-material/WorkOff';
 import PersonIcon from '@mui/icons-material/Person';
 
 import config from "../config";
-import {ApplyToLeave, Attendance, Dashboard, Employee, Leave, Salary} from "../Components/View";
+import {ApplyToLeave, Attendance, Dashboard, Employee, Leave, Salary,Profile} from "../Components/View";
 
 export const ROUTE_LIST = () => [
     {
@@ -19,7 +19,20 @@ export const ROUTE_LIST = () => [
         isButton: true,
         haveAdminView: true,
         haveUserView: true,
+        haveViewInDrawer: true,
         component: Dashboard,
+    },
+    {
+        key: "profile",
+        textValue: "Profile",
+        route: '/profile',
+        exact: true,
+        icon: <DashboardIcon/>,
+        isButton: true,
+        haveAdminView: true,
+        haveUserView: true,
+        haveViewInDrawer: false,
+        component: Profile,
     },
     {
         key: "attendance",
@@ -30,6 +43,7 @@ export const ROUTE_LIST = () => [
         isButton: true,
         haveAdminView: true,
         haveUserView: true,
+        haveViewInDrawer: true,
         component: Attendance,
     },
     {
@@ -41,6 +55,7 @@ export const ROUTE_LIST = () => [
         isButton: true,
         haveAdminView: true,
         haveUserView: true,
+        haveViewInDrawer: true,
         component: Leave,
         subRoute: [
             {
@@ -52,6 +67,7 @@ export const ROUTE_LIST = () => [
                 isButton: true,
                 haveAdminView: false,
                 haveUserView: true,
+                haveViewInDrawer: true,
                 component: ApplyToLeave,
             }
         ]
@@ -65,6 +81,7 @@ export const ROUTE_LIST = () => [
         isButton: true,
         haveAdminView: true,
         haveUserView: true,
+        haveViewInDrawer: true,
         component: Salary,
     },
     {
@@ -76,6 +93,7 @@ export const ROUTE_LIST = () => [
         isButton: true,
         haveAdminView: true,
         haveUserView: false,
+        haveViewInDrawer: true,
         component: Employee,
     },
 ];

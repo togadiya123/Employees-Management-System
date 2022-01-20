@@ -44,20 +44,31 @@ const DefaultDrawer = ({routeList, drawerStatus, setDrawerStatus, history}) => {
             }}>
             <Box>
                 <List disablePadding>
-                    {routeList.map(eachListItem => <ListItem key={eachListItem.key}
-                                                             button={eachListItem.isButton}
-                                                             selected={history.location.pathname.startsWith(eachListItem.route)}
-                                                             onClick={() => {
-                                                                 history.replace(eachListItem.route || '/')
-                                                             }}
-                                                             sx={{
-                                                                 px: {xs: 2.75, sm: 2.75},
-                                                                 py: {xs: 1.25, sm: 1.25}
-                                                             }}>
-                            <ListItemIcon sx={{minWidth: "46px"}}>{eachListItem.icon}</ListItemIcon>
-                            <ListItemText primary={eachListItem.textValue}/>
-                        </ListItem>
-                    )}
+                    {
+                        routeList.filter(
+                            e => e.haveViewInDrawer).map(
+                            eachListItem => <ListItem
+                                key={eachListItem.key}
+                                button={eachListItem.isButton}
+                                selected={history.location.pathname.startsWith(eachListItem.route)}
+                                onClick={() => {
+                                    history.replace(eachListItem.route || '/')
+                                }}
+                                sx={{
+                                    px: {
+                                        xs: 2.75,
+                                        sm: 2.75
+                                    },
+                                    py: {
+                                        xs: 1.25,
+                                        sm: 1.25
+                                    }
+                                }}>
+                                <ListItemIcon sx={{minWidth: "46px"}}>{eachListItem.icon}</ListItemIcon>
+                                <ListItemText primary={eachListItem.textValue}/>
+                            </ListItem>
+                        )
+                    }
                 </List>
                 <List sx={{
                     padding: 0,

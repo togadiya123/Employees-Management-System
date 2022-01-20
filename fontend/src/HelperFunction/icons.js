@@ -8,6 +8,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 import ParkIcon from '@mui/icons-material/Park';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
 export {
     CloseIcon,
@@ -20,4 +21,5 @@ export {
     PlaylistAddCheckIcon,
     DangerousIcon,
     ParkIcon,
+    PhotoCameraIcon,
 };

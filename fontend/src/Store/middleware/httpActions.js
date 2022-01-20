@@ -10,13 +10,14 @@ const defaultToasterOptions = {
 };
 
 const httpActions = (e) => next => async action => {
+
     const {
         method = "GET",
         toasterString,
         url,
         isHttpAction,
         headers,
-        actionType,
+        type,
         body,
     } = action;
     const authKey = localStorage.getItem("token");
@@ -30,7 +31,7 @@ const httpActions = (e) => next => async action => {
         let toasterId;
         toasterString && (toasterId = await toast.loading(toasterString || `Waiting for Response`));
         next({
-            type: `${actionType}_FETCHING`,
+            type: `${type}_FETCHING`,
             payload: {},
         });
         const baseURL = config.BACKEND_BASE_API_URL;
@@ -59,10 +60,10 @@ const httpActions = (e) => next => async action => {
             next({
                 type: API_RESPONSES,
                 payload: data,
-                actionType: `${actionType}_SUCCESS`,
+                actionType: `${type}_SUCCESS`,
             });
             next({
-                type: `${actionType}_SUCCESS`,
+                type: `${type}_SUCCESS`,
                 payload: data,
             });
         } catch (e) {
@@ -76,10 +77,10 @@ const httpActions = (e) => next => async action => {
             next({
                 type: API_RESPONSES,
                 payload: {message: response?.data, e},
-                actionType: `${actionType}_FAILED`,
+                actionType: `${type}_FAILED`,
             })
             next({
-                type: `${actionType}_FAILED`,
+                type: `${type}_FAILED`,
                 payload: {message: response?.data?.message, e},
             });
         }

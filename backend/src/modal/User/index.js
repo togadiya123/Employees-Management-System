@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import config from "../../config/index.js";
 
 const {Schema} = mongoose;
 
@@ -66,7 +67,8 @@ const userSchema = Schema(
         },
         avatar: {
             required: true,
-            type: Buffer
+            type: Schema.Types.String,
+            default: config.user.profileUrl,
         },
         dateOfBirth: {
             type: Date,
@@ -78,7 +80,7 @@ const userSchema = Schema(
         },
         status: {
             type: String,
-            enum: ['Active','DeActive',`Pending`],
+            enum: ['Active', 'DeActive', `Pending`],
             required: true,
         },
         tokens: [{
