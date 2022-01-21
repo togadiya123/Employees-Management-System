@@ -10,6 +10,15 @@ const ImageUpload = ({fieldSx = {}, field, id, onFocus, onBlur, onClick, onChang
         imageInputUseRef.current.click()
     };
 
+    const onChangeHandler = (e) => {
+        onChange({
+            target: {
+                id: e.target.id,
+                value: e.target.files[0],
+            }
+        })
+    };
+
     return (
         <React.Fragment>
             <Stack flex={1} justifyContent={`center`} alignItems={`center`}>
@@ -19,9 +28,9 @@ const ImageUpload = ({fieldSx = {}, field, id, onFocus, onBlur, onClick, onChang
                     id={id}
                     inputProps={{
                         ref: imageInputUseRef,
-                        accept: "image/jpg,image/jpeg,image/png"
+                        accept: "image/jpg,image/jpeg,image/png",
                     }}
-                    onChange={onChange}
+                    onChange={onChangeHandler}
                 />
                 {
                     (fieldSx.type === `profile` || !fieldSx.type) &&

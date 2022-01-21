@@ -1,4 +1,6 @@
 import {Avatar} from "@mui/material";
+import moment from "moment";
+import config from "../../../config";
 
 export const GET_PROFILE_FORM_DATA = ({
                                           firstName,
@@ -88,7 +90,7 @@ export const GET_PROFILE_FORM_DATA = ({
         sx: {
             ".Mui-disabled": {
                 color: `var(--default)`,
-                "text-fill-color": `var(--default)`
+                WebkitTextFillColor: `var(--default)`
             }
         },
         isValid: true,
@@ -115,7 +117,7 @@ export const GET_PROFILE_FORM_DATA = ({
         sx: {
             ".Mui-disabled": {
                 color: `var(--default)`,
-                "text-fill-color": `var(--default)`
+                WebkitTextFillColor: `var(--default)`
             }
         },
         isValid: true,
@@ -136,13 +138,13 @@ export const GET_PROFILE_FORM_DATA = ({
             minWidth: `95px`,
         },
         fullWidth: true,
-        value: dateOfJoin,
+        value: moment(dateOfJoin).format(config.REGULAR_DATE_FORMAT),
         type: `input`,
         disabled: true,
         sx: {
             ".Mui-disabled": {
                 color: `var(--default)`,
-                "text-fill-color": `var(--default)`
+                WebkitTextFillColor: `var(--default)`
             }
         },
         isValid: true,
@@ -163,13 +165,13 @@ export const GET_PROFILE_FORM_DATA = ({
             minWidth: `fit-content`,
         },
         fullWidth: true,
-        value: dateOfBirth,
+        value: moment(dateOfBirth).format(config.REGULAR_DATE_FORMAT),
         type: `input`,
         disabled: true,
         sx: {
             ".Mui-disabled": {
                 color: `var(--default)`,
-                "text-fill-color": `var(--default)`
+                WebkitTextFillColor: `var(--default)`
             }
         },
         isValid: true,
@@ -196,7 +198,7 @@ export const GET_PROFILE_FORM_DATA = ({
         sx: {
             ".Mui-disabled": {
                 color: `var(--default)`,
-                "text-fill-color": `var(--default)`
+                WebkitTextFillColor: `var(--default)`
             }
         },
         isValid: true,
@@ -223,7 +225,7 @@ export const GET_PROFILE_FORM_DATA = ({
         sx: {
             ".Mui-disabled": {
                 color: `var(--default)`,
-                "text-fill-color": `var(--default)`
+                WebkitTextFillColor: `var(--default)`
             }
         },
         isValid: true,
@@ -250,7 +252,7 @@ export const GET_PROFILE_FORM_DATA = ({
         sx: {
             ".Mui-disabled": {
                 color: `var(--default)`,
-                "text-fill-color": `var(--default)`
+                WebkitTextFillColor: `var(--default)`
             }
         },
         isValid: true,
@@ -277,7 +279,7 @@ export const GET_PROFILE_FORM_DATA = ({
         sx: {
             ".Mui-disabled": {
                 color: `var(--default)`,
-                "text-fill-color": `var(--default)`
+                WebkitTextFillColor: `var(--default)`
             }
         },
         isValid: true,
@@ -304,7 +306,7 @@ export const GET_PROFILE_FORM_DATA = ({
         sx: {
             ".Mui-disabled": {
                 color: `var(--default)`,
-                "text-fill-color": `var(--default)`
+                WebkitTextFillColor: `var(--default)`
             }
         },
         isValid: true,
@@ -315,3 +317,5 @@ export const GET_PROFILE_FORM_DATA = ({
         gridRow: `3 / 4`,
     },
 ]
+
+export const editableFieldName = () => [`firstName`, `lastName`, `avatar`];

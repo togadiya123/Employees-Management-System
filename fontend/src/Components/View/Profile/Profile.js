@@ -4,7 +4,7 @@ import {Button, Card, Container, Stack, Typography} from "@mui/material";
 
 import HorizontalLine from "../../CommonComponents/HorizontalLine";
 import FromGrid from "../../CommonComponents/FromGrid";
-import {GET_PROFILE_FORM_DATA} from "./Profile.utiles";
+import {editableFieldName, GET_PROFILE_FORM_DATA} from "./Profile.utiles";
 import {getUserInfo, uploadImageProfile} from "../../../Store/actions/action";
 import {commonBlurHandler, commonChangeHandler} from "../../CommonComponents/Form/utiles";
 
@@ -13,17 +13,39 @@ const Profile = () => {
     const dispatch = useDispatch();
 
     const [profile, setProfile] = useState([]);
+    const [changedProfileData, setChangedProfileData] = useState({changedValue: [], originalData: {}})
 
-    const onChangeHandler = (e) => commonChangeHandler(profile, setProfile, e, ``,true, e => e);
-    const onBlurHandler = (e) => commonBlurHandler(profile, setProfile, e, ``,true);
+    const onChangeHandler = (e) => commonChangeHandler(profile, setProfile, e, ``, true, (formData, id) => {
+
+        console.log(formData.find(e => e.id === `avatar`).value);
+
+        if (id === `avatar-imageUpload`)
+            dispatch(uploadImageProfile({
+                fileObj: formData.find(e => e.id === `avatar`).value,
+                userId: changedProfileData.originalData._id
+            }))
+        setChangedProfileData((e) => ({
+            ...e,
+            changedValue: formData.filter(
+                eachField => (editableFieldName().includes(eachField.id) && eachField.value !== e.originalData[eachField.id])).map(
+                e => ({
+                    key: e.id,
+                    value: e.value,
+                }))
+        }))
+        return formData;
+    });
+    const onBlurHandler = (e) => commonBlurHandler(profile, setProfile, e, ``, true);
 
     useEffect(() => {
 
         // dispatch(uploadImageProfile());
 
         dispatch(getUserInfo()).then(({user}) => {
-            user.haveUserInfo &&
-            setProfile(() => GET_PROFILE_FORM_DATA(user))
+            if (user.haveUserInfo) {
+                setProfile(() => GET_PROFILE_FORM_DATA(user))
+                setChangedProfileData((e) => ({...e, originalData: user}))
+            }
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

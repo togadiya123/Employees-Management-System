@@ -101,5 +101,6 @@ export const uploadImageProfile = payload => ({
     toasterString: `Try to upload a profile picture.`,
     isHttpAction: false,
     isFirebaseBucketAction: true,
+    path: `profile/${payload.userId}`,
     body: payload,
 })
