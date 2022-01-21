@@ -5,6 +5,7 @@ const firebaseBucketAction = e => next => async action => {
 
     const {
         isFirebaseBucketAction,
+        path,
         body,
     } = action;
 
@@ -21,10 +22,10 @@ const firebaseBucketAction = e => next => async action => {
         };
 
         initializeApp(firebaseConfig);
-        const storage = getStorage()
+        const storage = getStorage();
 
         try {
-            const action = storage.ref(`profile/${body.useId || `common`}/${body.fileObj.name}`).put(body.fileObj);
+            const action = storage.ref(`${path || `common`}/${body.fileObj.name}`).put(body.fileObj);
             action.on(
                 "upload profile picture",
                 () => {
