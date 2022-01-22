@@ -22,12 +22,13 @@ const httpActions = (e) => next => async action => {
     } = action;
     const authKey = localStorage.getItem("token");
 
-    next({
-        type: `${LOADER_START}`,
-        payload: {}
-    });
-
     if (isHttpAction) {
+
+        next({
+            type: `${LOADER_START}`,
+            payload: {}
+        });
+
         let toasterId;
         toasterString && (toasterId = await toast.loading(toasterString || `Waiting for Response`));
         next({
@@ -84,14 +85,15 @@ const httpActions = (e) => next => async action => {
                 payload: {message: response?.data?.message, e},
             });
         }
+
+        next({
+            type: `${LOADER_END}`,
+            payload: {}
+        });
+
     } else {
         next(action);
     }
-
-    next({
-        type: `${LOADER_END}`,
-        payload: {}
-    });
 
     return e.getState();
 };
