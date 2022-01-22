@@ -27,7 +27,7 @@ export const commonBlurHandler = (state, setState, e, allFieldRequirementButtonI
     setState(() => commonValidationForSubmitButton(data, allFieldRequirementButtonId, isGridFrom));
 };
 
-export const commonChangeHandler = (state = [], setState = (e) => e, e = {}, allFieldRequirementButtonId = null, isGridFrom, callback = (e) => e) => {
+export const commonChangeHandler = async (state = [], setState = (e) => e, e = {}, allFieldRequirementButtonId = null, isGridFrom, callback = (e) => e) => {
     let data = JSON.parse(JSON.stringify(state));
     const {target: {id, name}} = e;
     isGridFrom ?
@@ -47,7 +47,7 @@ export const commonChangeHandler = (state = [], setState = (e) => e, e = {}, all
                 eachField.errorText = errorText;
             }
         }));
-    data = callback(data, id || name) || data;
+    data = await callback(data, id || name) || data;
     setState(() => commonValidationForSubmitButton(data, allFieldRequirementButtonId, isGridFrom));
 };
 

@@ -15,15 +15,14 @@ const Profile = () => {
     const [profile, setProfile] = useState([]);
     const [changedProfileData, setChangedProfileData] = useState({changedValue: [], originalData: {}})
 
-    const onChangeHandler = (e) => commonChangeHandler(profile, setProfile, e, ``, true, (formData, id) => {
-
-        console.log(formData.find(e => e.id === `avatar`).value);
-
+    const onChangeHandler = (e) => commonChangeHandler(profile, setProfile, e, ``, true, async (formData, id) => {
         if (id === `avatar-imageUpload`)
-            dispatch(uploadImageProfile({
+            await dispatch(uploadImageProfile({
                 fileObj: formData.find(e => e.id === `avatar`).value,
                 userId: changedProfileData.originalData._id
-            }))
+            })).then((state) => {
+                formData = formData.map(e => e.id === `avatar` ? {...e, value: state?.pageData?.profile?.fileUrl} : e);
+            })
         setChangedProfileData((e) => ({
             ...e,
             changedValue: formData.filter(
@@ -38,9 +37,6 @@ const Profile = () => {
     const onBlurHandler = (e) => commonBlurHandler(profile, setProfile, e, ``, true);
 
     useEffect(() => {
-
-        // dispatch(uploadImageProfile());
-
         dispatch(getUserInfo()).then(({user}) => {
             if (user.haveUserInfo) {
                 setProfile(() => GET_PROFILE_FORM_DATA(user))
