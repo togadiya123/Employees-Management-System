@@ -59,4 +59,8 @@ export const ROUTE_LIST = () => [{
     route: `/logOut`, eligibility: {
         admin: true, user: true
     }
+}, {
+    route: `/updateUserInfo`, eligibility: {
+        admin: true, user: true
+    }
 },];

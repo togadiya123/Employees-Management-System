@@ -8,7 +8,7 @@ import {
     LOADER_START,
     LOGIN_USER,
     LOGOUT_USER,
-    UPLOAD_IMAGE_PROFILE
+    UPLOAD_IMAGE_PROFILE, UPDATE_PROFILE
 } from "../actions/actionType";
 import {getFormattedResponse} from "../../HelperFunction";
 
@@ -106,6 +106,16 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload, 
                     profile: {
                         ...payload
                     }
+                }
+            }
+        }
+
+        case `${UPDATE_PROFILE}_SUCCESS`: {
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    ...payload.data,
                 }
             }
         }

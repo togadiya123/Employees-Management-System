@@ -5,7 +5,7 @@ import {Button, Card, Container, Stack, Typography} from "@mui/material";
 import HorizontalLine from "../../CommonComponents/HorizontalLine";
 import FromGrid from "../../CommonComponents/FromGrid";
 import {editableFieldName, GET_PROFILE_FORM_DATA} from "./Profile.utiles";
-import {getUserInfo, uploadImageProfile} from "../../../Store/actions/action";
+import {getUserInfo, updateProfile, uploadImageProfile} from "../../../Store/actions/action";
 import {commonBlurHandler, commonChangeHandler} from "../../CommonComponents/Form/utiles";
 
 const Profile = () => {
@@ -14,6 +14,15 @@ const Profile = () => {
 
     const [profile, setProfile] = useState([]);
     const [changedProfileData, setChangedProfileData] = useState({changedValue: [], originalData: {}})
+
+    const updateUserProfile = async () => {
+        await dispatch(updateProfile({obj: changedProfileData.changedValue})).then((state) => {
+            setChangedProfileData(() => ({
+                changedValue: [],
+                originalData: state?.user
+            }));
+        })
+    };
 
     const onChangeHandler = (e) => commonChangeHandler(profile, setProfile, e, ``, true, async (formData, id) => {
         if (id === `avatar-imageUpload`)
@@ -54,9 +63,9 @@ const Profile = () => {
                         width: `100%`,
                         maxWidth: `800px`,
                         mx: `auto`,
-                        p: 3,
+                        p: {xs: 1, sm: 3},
                         boxShadow: 3,
-                        gap: 1,
+                        gap: 1.5,
                         display: `flex`,
                         flexDirection: `column`
                     }}
@@ -76,7 +85,24 @@ const Profile = () => {
                         onBlur={onBlurHandler}
                         onChange={onChangeHandler}
                     />
-                    <Button>
+                    <Button
+                        variant="contained"
+                        disabled={changedProfileData.changedValue.length === 0}
+                        sx={{
+                            width: `250px`,
+                            maxWidth: `100%`,
+                            backgroundColor: `var(--main)`,
+                            alignSelf: `center`,
+                            "&:hover": {
+                                backgroundColor: `var(--mainHover)`,
+                            },
+                            "&:disabled": {
+                                color: `white`,
+                                backgroundColor: `var(--mainBlur)`,
+                            }
+                        }}
+                        onClick={updateUserProfile}
+                    >
                         Save
                     </Button>
                 </Card>

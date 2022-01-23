@@ -24,7 +24,7 @@ const DefaultMainContainer = ({routeList, history}) => {
     return <Stack component={`main`}
                   sx={{height: `100%`, width: `100%`, overflowY: `auto`, ...(commonTransition(`width`))}}>
         <Breadcrumb history={history}/>
-        <Container sx={{flex: `auto`, display: `flex`, py: `1rem`}}>
+        <Container sx={{flex: `auto`, display: `flex`, py: {xs: 0, sm: 3}, px: {xs: 0, sm: 3}}}>
             <Switch>
                 {
                     formatRouteList(routeList).map(({key, route, exact, textValue, component}) => <Route key={key}
