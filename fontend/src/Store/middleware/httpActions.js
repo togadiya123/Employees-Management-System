@@ -24,14 +24,14 @@ const httpActions = (e) => next => async action => {
 
     if (isHttpAction) {
 
-        next({
+        await next({
             type: `${LOADER_START}`,
             payload: {}
         });
 
         let toasterId;
         toasterString && (toasterId = await toast.loading(toasterString || `Waiting for Response`));
-        next({
+        await next({
             type: `${type}_FETCHING`,
             payload: {},
         });
@@ -58,12 +58,12 @@ const httpActions = (e) => next => async action => {
                 type: 'success',
                 render: data.message || `Success`, ...defaultToasterOptions
             });
-            next({
+            await next({
                 type: API_RESPONSES,
                 payload: data,
                 actionType: `${type}_SUCCESS`,
             });
-            next({
+            await next({
                 type: `${type}_SUCCESS`,
                 payload: data,
             });
@@ -75,24 +75,24 @@ const httpActions = (e) => next => async action => {
                 render: response?.data?.message || `Something going wrong !`,
                 ...defaultToasterOptions,
             });
-            next({
+            await next({
                 type: API_RESPONSES,
                 payload: {message: response?.data, e},
                 actionType: `${type}_FAILED`,
             })
-            next({
+            await next({
                 type: `${type}_FAILED`,
                 payload: {message: response?.data?.message, e},
             });
         }
 
-        next({
+        await next({
             type: `${LOADER_END}`,
             payload: {}
         });
 
     } else {
-        next(action);
+        await next(action);
     }
 
     return e.getState();
