@@ -16,7 +16,7 @@ export const ROUTE_LIST = () => [{
         admin: true, user: false
     }
 }, {
-    route: `/getAllUser`, eligibility: {
+    route: `/getUsersList`, eligibility: {
         admin: true, user: false
     }
 }, {

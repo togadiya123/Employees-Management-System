@@ -45,13 +45,9 @@ const logOut = async (req, res) => {
     }
 };
 
-const getAllUser = async (req, res) => {
+const getUsersList = async (req, res) => {
     try {
-        const users = await User.aggregate([{$match: {positionType: {$ne: `Admin`}}}, {
-            $project: {
-                firstName: 1, lastName: 1
-            }
-        }]);
+        const users = await User.find();
 
         return responseHandler(`successful`, res, users);
     } catch (e) {
@@ -60,4 +56,4 @@ const getAllUser = async (req, res) => {
     }
 };
 
-export default {getUserInfo, updateUserInfo, logOut, getAllUser};
+export default {getUserInfo, updateUserInfo, logOut, getUsersList};
