@@ -21,13 +21,13 @@ const firebaseBucketAction = e => next => async action => {
 
     if (isFirebaseBucketAction) {
 
-        next({
+        await next({
             type: `${LOADER_START}`,
             payload: {}
         });
         let toasterId;
         toasterString && (toasterId = await toast.loading(toasterString || `Waiting for Response`));
-        next({
+        await next({
             type: `${type}_FETCHING`,
             payload: {},
         });
@@ -50,14 +50,14 @@ const firebaseBucketAction = e => next => async action => {
             await uploadBytes(storageReference, body.fileObj).then(async (uploadResult) => {
                 const fileUrl = await getDownloadURL(ref(storage, uploadResult.metadata.fullPath))
 
-                next({
+                await next({
                     type: `${type}_SUCCESS`,
                     payload: {
                         fileUrl,
                         uploadResult
                     }
                 });
-                next({
+                await next({
                     type: API_RESPONSES,
                     payload: {
                         fileUrl,
@@ -74,11 +74,11 @@ const firebaseBucketAction = e => next => async action => {
         } catch (e) {
             console.log("Get error in the firebaseBucket : ", e)
 
-            next({
+            await next({
                 type: `${type}_FAILED`,
                 payload: {message: e?.response?.data?.message, e}
             });
-            next({
+            await next({
                 type: API_RESPONSES,
                 payload: {message: e?.response?.data, e},
                 actionType: `${type}_FAILED`,
@@ -90,13 +90,13 @@ const firebaseBucketAction = e => next => async action => {
             });
         }
 
-        next({
+        await next({
             type: `${LOADER_END}`,
             payload: {}
         });
 
     } else {
-        next(action)
+        await next(action)
     }
 
     return e.getState();
