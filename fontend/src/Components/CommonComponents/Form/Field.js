@@ -33,6 +33,8 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
     const align = isNullUndefinedEmpty(field.align) ? '' : field.align;
     const errorText = isNullUndefinedEmpty(field.errorText) ? '' : field.errorText;
     const size = isNullUndefinedEmpty(field.size) ? '' : field.size;
+    const readOnly = isNullUndefinedEmpty(field.readOnly) ? false : field.readOnly;
+    const disabled = isNullUndefinedEmpty(field.disabled    ) ? false : field.disabled;
     const variant = isNullUndefinedEmpty(field.variant) ? `outlined` : field.variant;
     const fullWidth = isNullUndefinedEmpty(field.fullWidth) ? false : field.fullWidth;
     const multiline = isNullUndefinedEmpty(field.multiline) ? false : field.multiline;
@@ -97,6 +99,8 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
                                                  select={select}
                                                  value={value}
                                                  size={size}
+                                                 readOnly={readOnly}
+                                                 disabled={disabled}
                                                  multiline={multiline}
                                                  minRows={2}
                                                  inputProps={{

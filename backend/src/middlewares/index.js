@@ -44,7 +44,6 @@ export const verifyToken = async (req, res, next) => {
 
         req.body = {
             ...req.body,
-            user: toObjectId(req.tokenDecoded.id)
         };
 
         next();

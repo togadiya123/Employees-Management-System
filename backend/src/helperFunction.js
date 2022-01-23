@@ -16,6 +16,16 @@ export const getOnlyRequiredObjectKeyValue = (obj, keyArray) => {
     return obj;
 };
 
+export const getObjFromKeyValueObjectArray = (array) => {
+    const obj = {};
+    Array.isArray(array) && array.forEach(e => {
+        if (e.key && e.value) {
+            obj[e.key] = e.value;
+        }
+    });
+    return obj;
+};
+
 export const getDefinedValuesObject = (obj) => {
     for (const key in obj) {
         if (obj[key] === undefined) delete obj[key];

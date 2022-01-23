@@ -1,13 +1,22 @@
 import React, {useRef} from "react";
-import {TextField, Badge, Avatar, IconButton, Stack} from "@mui/material";
+import {TextField, Avatar, IconButton, Stack} from "@mui/material";
 import {PhotoCameraIcon} from "../../../../HelperFunction/icons";
 
-const ImageUpload = ({fieldSx = {}, field, id, onFocus, onBlur, onClick, onChange}) => {
+const ImageUpload = ({fieldSx = {}, field, id, onChange}) => {
 
     const imageInputUseRef = useRef(null);
 
     const pictureUploadButtonClickHandler = () => {
         imageInputUseRef.current.click()
+    };
+
+    const onChangeHandler = (e) => {
+        onChange({
+            target: {
+                id: e.target.id,
+                value: e.target.files[0],
+            }
+        })
     };
 
     return (
@@ -19,9 +28,9 @@ const ImageUpload = ({fieldSx = {}, field, id, onFocus, onBlur, onClick, onChang
                     id={id}
                     inputProps={{
                         ref: imageInputUseRef,
-                        accept: "image/jpg,image/jpeg,image/png"
+                        accept: "image/jpg,image/jpeg,image/png",
                     }}
-                    onChange={onChange}
+                    onChange={onChangeHandler}
                 />
                 {
                     (fieldSx.type === `profile` || !fieldSx.type) &&
@@ -51,8 +60,8 @@ const ImageUpload = ({fieldSx = {}, field, id, onFocus, onBlur, onClick, onChang
                                     onClick={pictureUploadButtonClickHandler}
                                     sx={{
                                         position: `absolute`,
-                                        right: 6,
-                                        bottom: 6,
+                                        right: 9,
+                                        bottom: 9,
                                         backgroundColor: `var(--main)`,
                                         '&:hover': {
                                             backgroundColor: `var(--mainHover)`,

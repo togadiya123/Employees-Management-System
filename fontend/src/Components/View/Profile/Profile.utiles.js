@@ -1,4 +1,5 @@
-import {Avatar} from "@mui/material";
+import moment from "moment";
+import config from "../../../config";
 
 export const GET_PROFILE_FORM_DATA = ({
                                           firstName,
@@ -11,7 +12,7 @@ export const GET_PROFILE_FORM_DATA = ({
                                           avatar,
                                           dateOfBirth,
                                           dateOfJoin,
-                                          status
+                                          status,
                                       }) => [
     {
         id: `firstName`,
@@ -26,9 +27,13 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: firstName,
         type: `input`,
+        isValid: true,
+        isInitialValue: false,
+        errorText: ``,
+        fieldType: `text`,
         size: `small`,
-        gridColumn: `1 / 9`,
-        gridRow: `1`,
+        gridColumn: {xs: `1 / 13`, md: `1 / 9`, xl: `1 / 9`},
+        gridRow: {xs: `4 / 5`, md: `1 / 2`, xl: `1 / 2`},
     },
     {
         id: `avatar`,
@@ -42,8 +47,9 @@ export const GET_PROFILE_FORM_DATA = ({
                 height: `150px`,
             }
         },
-        gridColumn: `9 / 13`,
-        gridRow: `1 / 4`,
+        errorText: ``,
+        gridColumn: {xs: `1 / 13`, md: `9 / 13`, xl: `9 / 13`},
+        gridRow: {xs: `1 / 4`, md: `1 / 4`, xl: `1 / 4`},
     },
     {
         id: `lastName`,
@@ -58,9 +64,13 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: lastName,
         type: `input`,
+        isValid: true,
+        isInitialValue: false,
+        errorText: ``,
+        fieldType: `text`,
         size: `small`,
-        gridColumn: `1 / 9`,
-        gridRow: `2 / 3`,
+        gridColumn: {xs: `1 / 13`, md: `1 / 9`, xl: `1 / 9`},
+        gridRow: {xs: `5 / 6`, md: `2 / 3`, xl: `2 / 3`},
     },
     {
         id: `email`,
@@ -75,9 +85,19 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: emailId,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                WebkitTextFillColor: `var(--default)`
+            }
+        },
+        isValid: true,
+        isInitialValue: false,
+        errorText: ``,
         size: `small`,
-        gridColumn: `1 / 7`,
-        gridRow: `4 / 5`,
+        gridColumn: {xs: `1 / 13`, md: `1 / 7`, xl: `1 / 7`},
+        gridRow: {xs: `8 / 9`, md: `4 / 5`, xl: `4 / 5`},
     },
     {
         id: `phoneNumber`,
@@ -92,9 +112,19 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: phoneNumber,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                WebkitTextFillColor: `var(--default)`
+            }
+        },
+        isValid: true,
+        isInitialValue: false,
+        errorText: ``,
         size: `small`,
-        gridColumn: `7 / 13`,
-        gridRow: `4 / 5`,
+        gridColumn: {xs: `1 / 13`, md: `7 / 13`, xl: `7 / 13`},
+        gridRow: {xs: `9 / 10`, md: `4 / 5`, xl: `4 / 5`},
     },
     {
         id: `dataOfJoin`,
@@ -107,11 +137,21 @@ export const GET_PROFILE_FORM_DATA = ({
             minWidth: `95px`,
         },
         fullWidth: true,
-        value: dateOfJoin,
+        value: moment(dateOfJoin).format(config.REGULAR_DATE_FORMAT),
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                WebkitTextFillColor: `var(--default)`
+            }
+        },
+        isValid: true,
+        isInitialValue: false,
+        errorText: ``,
         size: `small`,
-        gridColumn: `1 / 7`,
-        gridRow: `6 / 7`,
+        gridColumn: {xs: `1 / 13`, md: `1 / 7`, xl: `1 / 7`},
+        gridRow: {xs: `13 / 14`, md: `6 / 7`, xl: `6 / 7`},
     },
     {
         id: `dateOfBirth`,
@@ -124,11 +164,21 @@ export const GET_PROFILE_FORM_DATA = ({
             minWidth: `fit-content`,
         },
         fullWidth: true,
-        value: dateOfBirth,
+        value: moment(dateOfBirth).format(config.REGULAR_DATE_FORMAT),
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                WebkitTextFillColor: `var(--default)`
+            }
+        },
+        isValid: true,
+        isInitialValue: false,
+        errorText: ``,
         size: `small`,
-        gridColumn: `7 / 13`,
-        gridRow: `6 / 7`,
+        gridColumn: {xs: `1 / 13`, md: `7 / 13`, xl: `7 / 13`},
+        gridRow: {xs: `14 / 15`, md: `6 / 7`, xl: `6 / 7`},
     },
     {
         id: `designation`,
@@ -143,9 +193,19 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: designation,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                WebkitTextFillColor: `var(--default)`
+            }
+        },
+        isValid: true,
+        isInitialValue: false,
+        errorText: ``,
         size: `small`,
-        gridColumn: `1 / 6`,
-        gridRow: `3 / 4`,
+        gridColumn: {xs: `1 / 13`, md: `1 / 6`, xl: `1 / 6`},
+        gridRow: {xs: `6 / 7`, md: `3 / 4`, xl: `3 / 4`},
     },
     {
         id: `qualification`,
@@ -160,9 +220,19 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: qualification,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                WebkitTextFillColor: `var(--default)`
+            }
+        },
+        isValid: true,
+        isInitialValue: false,
+        errorText: ``,
         size: `small`,
-        gridColumn: `5 / 10`,
-        gridRow: `5 / 6`,
+        gridColumn: {xs: `1 / 13`, md: `5 / 10`, xl: `5 / 10`},
+        gridRow: {xs: `11 / 12`, md: `5 / 6`, xl: `5 / 6`},
     },
     {
         id: `status`,
@@ -177,9 +247,19 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: status,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                WebkitTextFillColor: `var(--default)`
+            }
+        },
+        isValid: true,
+        isInitialValue: false,
+        errorText: ``,
         size: `small`,
-        gridColumn: `1 / 5`,
-        gridRow: `5 / 6`,
+        gridColumn: {xs: `1 / 13`, md: `1 / 5`, xl: `1 / 5`},
+        gridRow: {xs: `10 / 11`, md: `5 / 6`, xl: `5 / 6`},
     },
     {
         id: `age`,
@@ -194,9 +274,19 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: `20`,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                WebkitTextFillColor: `var(--default)`
+            }
+        },
+        isValid: true,
+        isInitialValue: false,
+        errorText: ``,
         size: `small`,
-        gridColumn: `10 / 13`,
-        gridRow: `5 / 6`,
+        gridColumn: {xs: `1 / 13`, md: `10 / 13`, xl: `10 / 13`},
+        gridRow: {xs: `12 / 13`, md: `5 / 6`, xl: `5 / 6`},
     },
     {
         id: `type`,
@@ -211,8 +301,20 @@ export const GET_PROFILE_FORM_DATA = ({
         fullWidth: true,
         value: positionType,
         type: `input`,
+        disabled: true,
+        sx: {
+            ".Mui-disabled": {
+                color: `var(--default)`,
+                WebkitTextFillColor: `var(--default)`
+            }
+        },
+        isValid: true,
+        isInitialValue: false,
+        errorText: ``,
         size: `small`,
-        gridColumn: `6 / 9`,
-        gridRow: `3 / 4`,
+        gridColumn: {xs: `1 / 13`, md: `6 / 9`, xl: `6 / 9`},
+        gridRow: {xs: `7 / 8`, md: `3 / 4`, xl: `3 / 4`},
     },
 ]
+
+export const editableFieldName = () => [`firstName`, `lastName`, `avatar`];

@@ -21,7 +21,7 @@ const Login = ({history}) => {
     const {user} = useSelector(store => store);
 
     const logInSubmitHandler = (e) => {
-        commonSubmitHandler(loginFormFields, setLoginFormFields, e, 'logIn', (data) => {
+        commonSubmitHandler(loginFormFields, setLoginFormFields, e, 'logIn', false,(data) => {
             dispatch(loginUser({
                 emailId: getObjFromArrayById(getObjArrayFromObjOfArrayOfArray(data), 'email')?.value,
                 password: getObjFromArrayById(getObjArrayFromObjOfArrayOfArray(data), 'password')?.value

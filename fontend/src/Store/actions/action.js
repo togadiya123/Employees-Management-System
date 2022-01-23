@@ -5,7 +5,7 @@ import {
     GET_LEAVE_LIST,
     GET_USER_INFO,
     LOGIN_USER,
-    LOGOUT_USER, REJECT_LEAVE, UPLOAD_IMAGE_PROFILE
+    LOGOUT_USER, REJECT_LEAVE, UPDATE_PROFILE, UPLOAD_IMAGE_PROFILE
 } from "./actionType";
 
 export const loginUser = payload => ({
@@ -101,5 +101,15 @@ export const uploadImageProfile = payload => ({
     toasterString: `Try to upload a profile picture.`,
     isHttpAction: false,
     isFirebaseBucketAction: true,
+    path: `profile/${payload.userId}`,
     body: payload,
-})
+});
+
+export const updateProfile = payload => ({
+    type: UPDATE_PROFILE,
+    toasterString: `Try to update profile.`,
+    isHttpAction: true,
+    url: `/user/updateUserInfo`,
+    method: 'PATCH',
+    body: payload,
+});
