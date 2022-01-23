@@ -31,7 +31,7 @@ const httpActions = (e) => next => async action => {
 
         let toasterId;
         toasterString && (toasterId = await toast.loading(toasterString || `Waiting for Response`));
-        next({
+        await next({
             type: `${type}_FETCHING`,
             payload: {},
         });
