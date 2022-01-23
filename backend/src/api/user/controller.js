@@ -1,5 +1,7 @@
 import responseHandler from "../../responseHandler.js";
 import {User} from "../../modal/index.js";
+import {getObjFromKeyValueObjectArray, getOnlyRequiredObjectKeyValue, toObjectId} from "../../helperFunction.js";
+import {updateUserInfoKeyList} from "./utiles.js";
 
 const getUserInfo = async (req, res) => {
     try {
@@ -7,6 +9,25 @@ const getUserInfo = async (req, res) => {
     } catch (e) {
         console.log(`Error on GetUserInfo`);
         return res.status(400).send(`Error on GetUserInfo : ${e}`);
+    }
+};
+
+const updateUserInfo = async (req, res) => {
+    try {
+
+        const obj = getOnlyRequiredObjectKeyValue(getObjFromKeyValueObjectArray(req.body.obj), updateUserInfoKeyList);
+
+        const user = await User.findOneAndUpdate({
+            _id: toObjectId(req.tokenDecoded.id),
+        }, {$set: obj}, {
+            new: true
+        });
+
+        return responseHandler(`update user info success`, res, user);
+
+    } catch (e) {
+        console.log(`Error on updateUserInfo`);
+        return res.status(400).send(`Error on updateUserInfo : ${e}`);
     }
 };
 
@@ -26,15 +47,11 @@ const logOut = async (req, res) => {
 
 const getAllUser = async (req, res) => {
     try {
-        const users = await User.aggregate([
-            {$match: {positionType: {$ne : `Admin`}}},
-            {
-                $project: {
-                    firstName: 1,
-                    lastName: 1
-                }
+        const users = await User.aggregate([{$match: {positionType: {$ne: `Admin`}}}, {
+            $project: {
+                firstName: 1, lastName: 1
             }
-        ]);
+        }]);
 
         return responseHandler(`successful`, res, users);
     } catch (e) {
@@ -43,4 +60,4 @@ const getAllUser = async (req, res) => {
     }
 };
 
-export default {getUserInfo, logOut, getAllUser};
+export default {getUserInfo, updateUserInfo, logOut, getAllUser};

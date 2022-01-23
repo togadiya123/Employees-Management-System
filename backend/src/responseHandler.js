@@ -128,6 +128,12 @@ const RESPONSE_LIST = [
         message: `Successfully get Leave List.`,
     },
     {
+        value: `update user info success`,
+        statusCode: 200,
+        technicalMessage: `Successfully update given profile info.`,
+        message: `Successfully update user profile.`,
+    },
+    {
         value: `undefined leave application id`,
         statusCode: 400,
         technicalMessage: `Request not proceed due to undefined leave application id.`,

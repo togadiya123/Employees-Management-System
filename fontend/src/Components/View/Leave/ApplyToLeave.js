@@ -19,7 +19,7 @@ const ApplyToLeave = ({history}) => {
     const dispatch = useDispatch();
 
     const applyLeaveSubmitHandler = (e) => {
-        commonSubmitHandler(leaveFormData, setLeaveFormData, e, 'submit', (data) => {
+        commonSubmitHandler(leaveFormData, setLeaveFormData, e, 'submit', false, (data) => {
             dispatch(applyToLeave(getFormObjectFromFormDataArray(data, userApplyToLeaveKeyList))).then(() => history.replace(`/leave`));
         });
     };
@@ -37,7 +37,7 @@ const ApplyToLeave = ({history}) => {
         }
     };
 
-    const onChangeHandler = (e) => commonChangeHandler(leaveFormData, setLeaveFormData, e, `submit-button`, (data, id) => {
+    const onChangeHandler = (e) => commonChangeHandler(leaveFormData, setLeaveFormData, e, `submit-button`, false, (data, id) => {
         if (id === `startingDate-input`) data = minAndMaxDateSet(data);
         if (id === `endingDate-input`) data = minAndMaxDateSet(data);
         return data;

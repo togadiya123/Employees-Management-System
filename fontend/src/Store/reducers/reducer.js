@@ -1,6 +1,14 @@
 import rootState from "./rootState";
 import {
-    APPLY_TO_LEAVE, GET_LEAVE_LIST, GET_LEAVE_INFO, GET_USER_INFO, LOADER_END, LOADER_START, LOGIN_USER, LOGOUT_USER
+    APPLY_TO_LEAVE,
+    GET_LEAVE_LIST,
+    GET_LEAVE_INFO,
+    GET_USER_INFO,
+    LOADER_END,
+    LOADER_START,
+    LOGIN_USER,
+    LOGOUT_USER,
+    UPLOAD_IMAGE_PROFILE, UPDATE_PROFILE
 } from "../actions/actionType";
 import {getFormattedResponse} from "../../HelperFunction";
 
@@ -88,6 +96,28 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload, 
         case `${GET_USER_INFO}_FAILED` : {
             localStorage.removeItem("token");
             return JSON.parse(JSON.stringify(rootState));
+        }
+
+        case `${UPLOAD_IMAGE_PROFILE}_SUCCESS`: {
+            return {
+                ...state,
+                pageData: {
+                    ...state.pageData,
+                    profile: {
+                        ...payload
+                    }
+                }
+            }
+        }
+
+        case `${UPDATE_PROFILE}_SUCCESS`: {
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    ...payload.data,
+                }
+            }
         }
 
         case `${GET_LEAVE_LIST}_FETCHING`: {
