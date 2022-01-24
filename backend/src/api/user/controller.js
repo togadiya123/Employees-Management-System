@@ -56,4 +56,15 @@ const getUsersList = async (req, res) => {
     }
 };
 
-export default {getUserInfo, updateUserInfo, logOut, getUsersList};
+const getEmployeeInfo = async (req, res) => {
+    try {
+        const user = await User.findOne({_id: req.body.employeeId});
+
+        return responseHandler(`successful`, res, user);
+    } catch (e) {
+        console.log(`Error on getEmployeeInfo`);
+        return res.status(400).send(`Error on getEmployeeInfo : ${e}`);
+    }
+};
+
+export default {getUserInfo, updateUserInfo, logOut, getUsersList, getEmployeeInfo};

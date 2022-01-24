@@ -10,7 +10,8 @@ import {
     LOGOUT_USER,
     UPLOAD_IMAGE_PROFILE,
     UPDATE_PROFILE,
-    GET_USERS_LIST
+    GET_USERS_LIST,
+    GET_EMPLOYEE_INFO
 } from "../actions/actionType";
 import {getFormattedResponse} from "../../HelperFunction";
 
@@ -127,6 +128,17 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload, 
                 ...state, pageData: {
                     ...state.pageData, employee: {
                         ...state.pageData.employee, data: payload.data,
+                    }
+                }
+            };
+        }
+
+        case `${GET_EMPLOYEE_INFO}_SUCCESS`: {
+            return {
+                ...state, pageData: {
+                    ...state.pageData, employee: {
+                        ...state.pageData.employee,
+                        specificLeaveInfo: payload.data || {},
                     }
                 }
             };

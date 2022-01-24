@@ -1,12 +1,13 @@
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
-import {getUsersList} from "../../../Store/actions/action";
+import {getEmployeeInfo, getUsersList} from "../../../Store/actions/action";
 import {getRows} from "../Leave/utiles";
 import {Card, Container, IconButton, Stack, Typography} from "@mui/material";
 import ChromeReaderModeIcon from "@mui/icons-material/ChromeReaderMode";
 import BaseTable from "../../CommonComponents/BaseTable";
 import BaseDialog from "../../CommonComponents/BaseDialog";
 import {EMPLOYEE_TABLE} from "./utiles";
+import EmployeeInformationModalBody from "./EmployeeInformationModalBody";
 
 const Employee = () => {
 
@@ -22,14 +23,14 @@ const Employee = () => {
     })
 
     const actionButtonHandler = (e) => {
-        // dispatch(getLeaveInfo({taskId: e._id || ''})).then((state) => {
-        //     setModal(modal => ({
-        //         ...modal,
-        //         isOpen: true,
-        //         header: `Leave Information`,
-        //         body: <LeaveInformationModalBody data={state?.pageData?.leave?.specificLeaveInfo || {}}/>
-        //     }))
-        // });
+        dispatch(getEmployeeInfo({employeeId: e._id || ''})).then((state) => {
+            setModal(modal => ({
+                ...modal,
+                isOpen: true,
+                header: `Employee Information`,
+                body: <EmployeeInformationModalBody data={state?.pageData?.employee?.specificLeaveInfo || {}}/>
+            }))
+        });
     };
 
     useEffect(() => {

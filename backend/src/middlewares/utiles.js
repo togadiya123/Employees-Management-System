@@ -20,6 +20,10 @@ export const ROUTE_LIST = () => [{
         admin: true, user: false
     }
 }, {
+    route: `/getEmployeeInfo`, eligibility: {
+        admin: true, user: false
+    }
+}, {
     route: `/logIn`, eligibility: {
         admin: true, user: true
     }

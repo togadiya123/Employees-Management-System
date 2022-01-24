@@ -1,6 +1,7 @@
 import {
     APPLY_TO_LEAVE, APPROVE_LEAVE,
     CANCEL_LEAVE, EDIT_LEAVE,
+    GET_EMPLOYEE_INFO,
     GET_LEAVE_INFO,
     GET_LEAVE_LIST,
     GET_USER_INFO,
@@ -123,6 +124,15 @@ export const getUsersList = payload => ({
     toasterString: `Try to get users list.`,
     isHttpAction: true,
     url: '/user/getUsersList',
+    method: 'POST',
+    body: payload,
+});
+
+export const getEmployeeInfo = payload => ({
+    type: GET_EMPLOYEE_INFO,
+    toasterString: `Try to get employee information.`,
+    isHttpAction: true,
+    url: `/user/getEmployeeInfo`,
     method: 'POST',
     body: payload,
 });
