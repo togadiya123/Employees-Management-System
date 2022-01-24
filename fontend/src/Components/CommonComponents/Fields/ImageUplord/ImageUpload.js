@@ -2,7 +2,7 @@ import React, {useRef} from "react";
 import {TextField, Avatar, IconButton, Stack} from "@mui/material";
 import {PhotoCameraIcon} from "../../../../HelperFunction/icons";
 
-const ImageUpload = ({fieldSx = {}, field, id, onChange}) => {
+const ImageUpload = ({fieldSx = {}, disabled = false, field, id, onChange}) => {
 
     const imageInputUseRef = useRef(null);
 
@@ -22,16 +22,19 @@ const ImageUpload = ({fieldSx = {}, field, id, onChange}) => {
     return (
         <React.Fragment>
             <Stack flex={1} justifyContent={`center`} alignItems={`center`}>
-                <TextField
-                    type={`file`}
-                    sx={{display: `none`}}
-                    id={id}
-                    inputProps={{
-                        ref: imageInputUseRef,
-                        accept: "image/jpg,image/jpeg,image/png",
-                    }}
-                    onChange={onChangeHandler}
-                />
+                {
+                    !disabled &&
+                    <TextField
+                        type={`file`}
+                        sx={{display: `none`}}
+                        id={id}
+                        inputProps={{
+                            ref: imageInputUseRef,
+                            accept: "image/jpg,image/jpeg,image/png",
+                        }}
+                        onChange={onChangeHandler}
+                    />
+                }
                 {
                     (fieldSx.type === `profile` || !fieldSx.type) &&
                     (
@@ -53,24 +56,26 @@ const ImageUpload = ({fieldSx = {}, field, id, onChange}) => {
                                         ...(fieldSx.avatarSx || {})
                                     }}
                                 />
-                                <IconButton
-                                    aria-label="upload picture"
-                                    component="span"
-                                    size={`small`}
-                                    onClick={pictureUploadButtonClickHandler}
-                                    sx={{
-                                        position: `absolute`,
-                                        right: 9,
-                                        bottom: 9,
-                                        backgroundColor: `var(--main)`,
-                                        '&:hover': {
-                                            backgroundColor: `var(--mainHover)`,
-                                        },
-                                        color: `white`,
-                                    }}
-                                >
-                                    <PhotoCameraIcon fontSize={`small`}/>
-                                </IconButton>
+                                {
+                                    !disabled && <IconButton
+                                        aria-label="upload picture"
+                                        component="span"
+                                        size={`small`}
+                                        onClick={pictureUploadButtonClickHandler}
+                                        sx={{
+                                            position: `absolute`,
+                                            right: 9,
+                                            bottom: 9,
+                                            backgroundColor: `var(--main)`,
+                                            '&:hover': {
+                                                backgroundColor: `var(--mainHover)`,
+                                            },
+                                            color: `white`,
+                                        }}
+                                    >
+                                        <PhotoCameraIcon fontSize={`small`}/>
+                                    </IconButton>
+                                }
                             </Stack>
                         </Stack>
                     )

@@ -157,6 +157,7 @@ const Field = ({field, onChange, onBlur, onFocus, onClick}) => {
             field.type === `imageUpload` && <ImageUpload id={id}
                                                          fieldSx={field.fieldSx}
                                                          field={field}
+                                                         disabled={disabled}
                                                          onChange={onChange}
                                                          onFocus={onFocus}
                                                          onBlur={onBlur}
