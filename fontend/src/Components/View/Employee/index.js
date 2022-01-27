@@ -1,5 +1,3 @@
-const Employee = () => {
-    return "Employee";
-};
+import Employee from "./Employee";
 
-export default Employee;
+export {Employee};

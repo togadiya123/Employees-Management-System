@@ -1,6 +1,6 @@
 import Attendance from "./Attendance";
 import Dashboard from "./Dashboard";
-import Employee from "./Employee";
+import {Employee} from "./Employee";
 import ForgotPassword from "./ForgotPassword";
 import {Leave, ApplyToLeave} from "./Leave";
 import {Profile} from "./Profile";

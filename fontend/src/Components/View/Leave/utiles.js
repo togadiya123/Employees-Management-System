@@ -105,13 +105,15 @@ export const getRows = (columns, data, actionCallBack = () => '') => {
                     ++index :
                     eachColumns.id === `user` ?
                         eachRowData.userFullName || `` :
-                        eachColumns.id === `action` ?
-                            actionCallBack(eachRowData) :
-                            isNullUndefinedEmpty(eachRowData[eachColumns.id]) ?
-                                '' :
-                                eachColumns.type === `date` ?
-                                    moment(eachRowData[eachColumns.id]).format(`DD/MM/YYYY`) :
-                                    eachRowData[eachColumns.id];
+                        eachColumns.type === `image` ?
+                            eachRowData.avatar :
+                            eachColumns.id === `action` ?
+                                actionCallBack(eachRowData) :
+                                isNullUndefinedEmpty(eachRowData[eachColumns.id]) ?
+                                    '' :
+                                    eachColumns.type === `date` ?
+                                        moment(eachRowData[eachColumns.id]).format(`DD/MM/YYYY`) :
+                                        eachRowData[eachColumns.id];
             obj.align = (eachColumns.type === `date` || eachColumns.type === `number`) ? `right` : `left`;
             obj.type = eachColumns.type;
             if (eachColumns.id === `status`) {

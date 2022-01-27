@@ -45,13 +45,9 @@ const logOut = async (req, res) => {
     }
 };
 
-const getAllUser = async (req, res) => {
+const getUsersList = async (req, res) => {
     try {
-        const users = await User.aggregate([{$match: {positionType: {$ne: `Admin`}}}, {
-            $project: {
-                firstName: 1, lastName: 1
-            }
-        }]);
+        const users = await User.find();
 
         return responseHandler(`successful`, res, users);
     } catch (e) {
@@ -60,4 +56,15 @@ const getAllUser = async (req, res) => {
     }
 };
 
-export default {getUserInfo, updateUserInfo, logOut, getAllUser};
+const getEmployeeInfo = async (req, res) => {
+    try {
+        const user = await User.findOne({_id: req.body.employeeId});
+
+        return responseHandler(`successful`, res, user);
+    } catch (e) {
+        console.log(`Error on getEmployeeInfo`);
+        return res.status(400).send(`Error on getEmployeeInfo : ${e}`);
+    }
+};
+
+export default {getUserInfo, updateUserInfo, logOut, getUsersList, getEmployeeInfo};
