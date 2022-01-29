@@ -7,7 +7,8 @@ import WorkOffIcon from '@mui/icons-material/WorkOff';
 import PersonIcon from '@mui/icons-material/Person';
 
 import config from "../config";
-import {ApplyToLeave, Attendance, Dashboard, Employee, Leave, Salary,Profile} from "../Components/View";
+import {ApplyToLeave, Attendance, Dashboard, Employee, Leave, Salary, Profile, Chat} from "../Components/View";
+import {ForumIcon} from "./icons";
 
 export const ROUTE_LIST = () => [
     {
@@ -96,6 +97,18 @@ export const ROUTE_LIST = () => [
         haveViewInDrawer: true,
         component: Employee,
     },
+    {
+        key: "chat",
+        textValue: "Chat",
+        route: '/chat',
+        exact: true,
+        icon: <ForumIcon/>,
+        isButton: true,
+        haveAdminView: true,
+        haveUserView: true,
+        haveViewInDrawer: true,
+        component: Chat,
+    },
 ];
 
 
@@ -137,7 +150,7 @@ export const LOGIN_FORM_FIELD = [
         variant: `contained`,
         size: 'large',
         helperText: ``,
-        fullWidth:true,
+        fullWidth: true,
         isValid: false,
         isInitialValue: true,
     }],
@@ -206,7 +219,7 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
             required: true,
             value: '',
             minDate: moment().format(config.DEFAULT_DATE_FORMAT),
-            maxDate: moment().add(5,`month`).format(config.DEFAULT_DATE_FORMAT),
+            maxDate: moment().add(5, `month`).format(config.DEFAULT_DATE_FORMAT),
             size: 'small',
             sx: {
                 maxWidth: '250px',
@@ -226,7 +239,7 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
             required: true,
             value: '',
             minDate: moment().format(config.DEFAULT_DATE_FORMAT),
-            maxDate: moment().add(5,`month`).format(config.DEFAULT_DATE_FORMAT),
+            maxDate: moment().add(5, `month`).format(config.DEFAULT_DATE_FORMAT),
             size: 'small',
             sx: {
                 maxWidth: '250px',
@@ -246,8 +259,8 @@ export const APPLY_TO_LEAVE_FORM_FIELD = [
         topSideLabel: `Description`,
         fullWidth: true,
         validationType: `stringLength`,
-        minChar : 10,
-        maxChar : 120,
+        minChar: 10,
+        maxChar: 120,
         required: true,
         value: '',
         size: 'small',
@@ -300,4 +313,4 @@ export const FOOTER_STRING_ARRAY = [
     `All Copyright are reserved by ${config.APPLICATION_NAME} ${String.fromCharCode(9400)} ${new Date().getFullYear()}.`,
     `Powered by togadiya`];
 
-export const userApplyToLeaveKeyList = ["startingDate","endingDate","type","description"];
+export const userApplyToLeaveKeyList = ["startingDate", "endingDate", "type", "description"];
