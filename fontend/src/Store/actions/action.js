@@ -2,6 +2,7 @@ import {
     APPLY_TO_LEAVE, APPROVE_LEAVE,
     CANCEL_LEAVE, EDIT_LEAVE,
     GET_EMPLOYEE_INFO,
+    GET_EMPLOYEE_LIST_FOR_CHAT,
     GET_LEAVE_INFO,
     GET_LEAVE_LIST,
     GET_USER_INFO,
@@ -126,6 +127,14 @@ export const getUsersList = payload => ({
     url: '/user/getUsersList',
     method: 'POST',
     body: payload,
+});
+
+export const getAllEmployeeListForChat = () => ({
+    type: GET_EMPLOYEE_LIST_FOR_CHAT,
+    toasterString: `Try to get employeeList list.`,
+    isHttpAction: true,
+    url: '/user/getAllEmployeeListForChat',
+    method: 'GET',
 });
 
 export const getEmployeeInfo = payload => ({

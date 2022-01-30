@@ -67,4 +67,8 @@ export const ROUTE_LIST = () => [{
     route: `/updateUserInfo`, eligibility: {
         admin: true, user: true
     }
+}, {
+    route: `/getAllEmployeeListForChat`, eligibility: {
+        admin: true, user: true
+    }
 },];
