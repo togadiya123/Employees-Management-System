@@ -10,6 +10,7 @@ import DangerousIcon from '@mui/icons-material/Dangerous';
 import ParkIcon from '@mui/icons-material/Park';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import ForumIcon from '@mui/icons-material/Forum';
+import QuickreplyIcon from '@mui/icons-material/Quickreply';
 
 export {
     CloseIcon,
@@ -24,4 +25,5 @@ export {
     ParkIcon,
     ForumIcon,
     PhotoCameraIcon,
+    QuickreplyIcon
 };

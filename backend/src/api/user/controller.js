@@ -58,7 +58,7 @@ const getUsersList = async (req, res) => {
 
 const getAllEmployeeListForChat = async (req, res) => {
     try {
-        const users = await User.find({}, {firstName: 1, lastName: 1, designation: 1, positionType: 1});
+        const users = await User.find({}, {firstName: 1, lastName: 1, designation: 1, positionType: 1, avatar: 1});
 
         return responseHandler(`successful`, res, users);
     } catch (e) {

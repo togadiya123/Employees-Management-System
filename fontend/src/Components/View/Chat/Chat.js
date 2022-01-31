@@ -13,7 +13,7 @@ const Chat = () => {
                 <Card
                     sx={{
                         width: `100%`,
-                        maxWidth: `1200px`,
+                        maxWidth: `1000px`,
                         height: `100%`,
                         mx: `auto`,
                         boxShadow: 3,
