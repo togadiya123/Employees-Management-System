@@ -6,7 +6,6 @@ import ChatContainer from "./components/ChatContainer/ChatContainer";
 const Chat = () => {
 
 
-
     return (
         <React.Fragment>
             <Container sx={{py: 2, px: {sm: 0}}}>

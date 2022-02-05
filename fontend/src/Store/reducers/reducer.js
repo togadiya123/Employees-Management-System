@@ -12,7 +12,8 @@ import {
     UPDATE_PROFILE,
     GET_USERS_LIST,
     GET_EMPLOYEE_INFO,
-    GET_EMPLOYEE_LIST_FOR_CHAT
+    GET_EMPLOYEE_LIST_FOR_CHAT,
+    SET_CHAT_SELECTION
 } from "../actions/actionType";
 import {getFormattedResponse} from "../../HelperFunction";
 
@@ -146,12 +147,23 @@ const reducer = (state = JSON.parse(JSON.stringify(rootState)), {type, payload, 
         }
 
         case `${GET_EMPLOYEE_LIST_FOR_CHAT}_SUCCESS`: {
-
             return {
                 ...state, pageData: {
                     ...state.pageData, chat: {
                         ...state.pageData.chat,
                         employeesList: payload.data || {},
+                    }
+                }
+            };
+        }
+
+        case `${SET_CHAT_SELECTION}`: {
+            return {
+                ...state, pageData: {
+                    ...state.pageData, chat: {
+                        ...state.pageData.chat,
+                        selectedChat: {...payload} || {},
+                        chatSelected : true,
                     }
                 }
             };

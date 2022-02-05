@@ -9,7 +9,7 @@ import {
     GET_USERS_LIST,
     LOGIN_USER,
     LOGOUT_USER,
-    REJECT_LEAVE,
+    REJECT_LEAVE, SET_CHAT_SELECTION,
     UPDATE_PROFILE,
     UPLOAD_IMAGE_PROFILE
 } from "./actionType";
@@ -144,4 +144,10 @@ export const getEmployeeInfo = payload => ({
     url: `/user/getEmployeeInfo`,
     method: 'POST',
     body: payload,
+});
+
+export const chatSelection = payload => ({
+    type : SET_CHAT_SELECTION,
+    toasterString : null,
+    payload,
 });

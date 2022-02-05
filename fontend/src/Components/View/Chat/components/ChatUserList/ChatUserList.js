@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Icon, Stack, Typography} from "@mui/material";
-import {getAllEmployeeListForChat} from "../../../../../Store/actions/action";
+import {chatSelection, getAllEmployeeListForChat} from "../../../../../Store/actions/action";
 import {useDispatch, useSelector} from "react-redux";
 import UserNameHeader from "./components/UserNameHeader/UserNameHeader";
 import {QuickreplyIcon} from "../../../../../HelperFunction/icons";
@@ -10,6 +10,11 @@ const ChatUserList = () => {
     const dispatch = useDispatch();
 
     const employees = useSelector(store => store?.pageData?.chat?.employeesList) || []
+    const selectedChat = useSelector(store => store?.pageData?.chat?.selectedChat) || []
+
+    const userSelection = (data) => {
+        dispatch(chatSelection(data))
+    };
 
     useEffect(() => {
         dispatch(getAllEmployeeListForChat())
@@ -19,10 +24,10 @@ const ChatUserList = () => {
     return (
         <Stack
             width={{xs: `100%`, sm: `280px`}}
-            gap={1}
-            padding={2}
+            boxShadow={2}
         >
-            <Stack direction={"row"} gap={2} alignItems={`center`}>
+            <Stack direction={"row"} gap={2} alignItems={`center`} sx={{backgroundColor: `var(--mainXBlur)`}}
+                   padding={`14px 14px`} boxShadow={2}>
                 <Icon>
                     <QuickreplyIcon sx={{color: `var(--mainBlur)`}}/>
                 </Icon>
@@ -30,11 +35,14 @@ const ChatUserList = () => {
                     {`Direct`}
                 </Typography>
             </Stack>
-            <Stack>
+            <Stack padding={`8px 0`} sx={{backgroundColor: `var(--mainLBlur)`}} flex={1}>
                 {
                     Array.isArray(employees) ?
                         employees.map(
                             eachEmployee => <UserNameHeader
+                                onClick={userSelection}
+                                padding={`5px 12px`}
+                                isSelected={selectedChat._id === eachEmployee._id}
                                 key={eachEmployee._id}
                                 data={eachEmployee}/>
                         ) :

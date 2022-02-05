@@ -11,6 +11,7 @@ import ParkIcon from '@mui/icons-material/Park';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import ForumIcon from '@mui/icons-material/Forum';
 import QuickreplyIcon from '@mui/icons-material/Quickreply';
+import SendIcon from '@mui/icons-material/Send';
 
 export {
     CloseIcon,
@@ -23,6 +24,7 @@ export {
     PlaylistAddCheckIcon,
     DangerousIcon,
     ParkIcon,
+    SendIcon,
     ForumIcon,
     PhotoCameraIcon,
     QuickreplyIcon

@@ -15,8 +15,13 @@ export const loader = {
 export const leave = {
     leaveListTableDataFetching: false,
     specificLeaveInfoFetching: false
-}
+};
+
+export const chat = {
+    chatSelected: false
+};
 
 export const pageData = {
     leave,
-}
+    chat
+};
