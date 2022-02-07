@@ -1,12 +1,18 @@
 import React from 'react';
 import {Stack} from "@mui/material";
 import UserNameHeader from "../../../ChatUserList/components/UserNameHeader/UserNameHeader";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import ChatInputBox from "./components/ChatInputBox/ChatInputBox";
+import {sendMessage} from "../../../../../../../Store/actions/action";
 
 const ChatBoxContainer = ({}) => {
 
-    const selectedChat = useSelector(store => store.pageData.chat.selectedChat) || {}
+    const dispatch = useDispatch();
+    const selectedChat = useSelector(store => store.pageData.chat.selectedChat) || {};
+
+    const sendMessageHandler = () => {
+        dispatch(sendMessage({}))
+    }
 
     return (
         <Stack flex={1}>
@@ -23,7 +29,7 @@ const ChatBoxContainer = ({}) => {
 
             </Stack>
             <Stack sx={{backgroundColor: `var(--mainLBlur)`}} padding={`8px 20px`}>
-                <ChatInputBox data={selectedChat}/>
+                <ChatInputBox data={selectedChat} onSend={sendMessageHandler}/>
             </Stack>
         </Stack>
     );

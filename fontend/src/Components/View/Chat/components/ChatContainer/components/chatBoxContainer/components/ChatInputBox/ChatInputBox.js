@@ -1,28 +1,49 @@
-import React from 'react';
-import {IconButton, Stack, styled} from "@mui/material";
+import React, {useState} from 'react';
+import {IconButton, Stack, styled, TextField} from "@mui/material";
 
 import {SendIcon} from "../../../../../../../../../HelperFunction/icons";
 
-const ChatInputBox = ({data}) => {
+const ChatInputBox = ({data, onSend = e => e}) => {
 
-    const Input = styled('input')(({}) => (
-        {
-            fontSize: 16,
-            padding: `10px`,
-            backgroundColor: `#0000`,
-            borderRadius: `8px`,
-            border: `2px solid var(--mainELBlur)`,
-            outline: `none`,
-        }
-    ));
+    const [message, setMessage] = useState({textValue: ``});
+
+    const messageTextOnChangeHandler = (event) => {
+        setMessage((message) => ({...message, textValue: event.target.value}))
+    };
+
+    const sendClickHandler = () => {
+        onSend(message)
+        setMessage({textValue: ``});
+    };
 
     return (
         <Stack direction={`row`} gap={1}>
             <Stack flex={1}>
-                <Input placeholder={`Message to ${data.firstName} ${data.lastName}`}/>
+                <TextField
+                    sx={{
+                        ".MuiOutlinedInput-notchedOutline": {
+                            border: `2px solid var(--mainELBlur)`,
+                            borderRadius: `8px`,
+                        },
+                        "& input:valid:focus + fieldset": {
+                            border: `2px solid var(--mainELBlur)`,
+                            borderRadius: `6px`,
+                        },
+                        "& .MuiOutlinedInput-root:hover": {
+                            "& > fieldset": {
+                                border: `2px solid var(--mainELBlur)`,
+                                borderRadius: `8px`,
+                            }
+                        }
+                    }}
+                    size={`small`}
+                    placeholder={`Message to ${data.firstName} ${data.lastName}`}
+                    value={message.textValue}
+                    onChange={messageTextOnChangeHandler}
+                />
             </Stack>
             <Stack>
-                <IconButton sx={{color: `var(--mainBlur)`}}>
+                <IconButton sx={{color: `var(--mainBlur)`}} onClick={sendClickHandler}>
                     <SendIcon/>
                 </IconButton>
             </Stack>

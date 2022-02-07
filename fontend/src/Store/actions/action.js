@@ -9,7 +9,7 @@ import {
     GET_USERS_LIST,
     LOGIN_USER,
     LOGOUT_USER,
-    REJECT_LEAVE, SET_CHAT_SELECTION,
+    REJECT_LEAVE, SEND_MESSAGE, SET_CHAT_SELECTION,
     UPDATE_PROFILE,
     UPLOAD_IMAGE_PROFILE
 } from "./actionType";
@@ -147,7 +147,15 @@ export const getEmployeeInfo = payload => ({
 });
 
 export const chatSelection = payload => ({
-    type : SET_CHAT_SELECTION,
-    toasterString : null,
+    type: SET_CHAT_SELECTION,
+    toasterString: null,
     payload,
 });
+
+export const sendMessage = payload => ({
+    type: SEND_MESSAGE,
+    isFirebaseRealTimeDataBaseAction: true,
+    collectionName: `direct`,
+    loader : false,
+    payload,
+})
