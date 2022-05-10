@@ -4,12 +4,12 @@ import ReduxThunk from 'redux-thunk';
 
 import reducer from "./reducers/reducer";
 import httpActions from "./middleware/httpActions";
-import firebaseBucketAction from "./middleware/firebaseBucketAction";
+import firebaseAction from "./middleware/firebaseAction";
 
 
 const store = createStore(
     reducer,
-    composeWithDevTools(applyMiddleware(ReduxThunk, firebaseBucketAction, httpActions))
+    composeWithDevTools(applyMiddleware(ReduxThunk, firebaseAction, httpActions))
 );
 
 export default store;

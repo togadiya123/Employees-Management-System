@@ -1,8 +1,9 @@
 import React from 'react';
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
-
 import 'react-toastify/dist/ReactToastify.css';
+
+import "./config/firebaseConfig";
 import {ForgotPassword, Login} from "./Components/View";
 import {DefaultLayout} from "./Components/layout";
 import Loader from "./Components/CommonComponents/Loader/Loader";
