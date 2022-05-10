@@ -15,16 +15,23 @@ import {
 } from "./utiles";
 import {commonBlurHandler, commonChangeHandler} from "../../CommonComponents/Form/utiles";
 import {LEAVE_ACTION_MODAL_BODY} from "./staticList";
-import {approveLeave, cancelLeave, editLeave, rejectLeave} from "../../../Store/actions/action";
+import {approveLeave, cancelLeave, editLeave, getLeaveInfo, rejectLeave} from "../../../Store/actions/action";
 
 const LeaveInformationModalBody = ({data}) => {
 
-    const [LeaveInformationFormData, setLeaveInformationFormData] = useState(getLeaveInformationModalBodyFormData(data))
+    /**
+     *      after the edit or cancel leave new data is not updating, I have created a commonMethod to get data but still new data is not update.
+     *      may be after the change button option will not change.
+     *
+     *
+     * **/
+
+    const [leaveInformationFormData, setLeaveInformationFormData] = useState(getLeaveInformationModalBodyFormData(data))
     const [leaveModal, setLeaveModal] = useState({mode: ``, childModal: {isOpen: false}});
     const dispatch = useDispatch();
     const user = useSelector(store => store.user);
 
-    const onChangeHandler = (e) => commonChangeHandler(LeaveInformationFormData, setLeaveInformationFormData, e, ``,false, (formData, id) => {
+    const onChangeHandler = (e) => commonChangeHandler(leaveInformationFormData, setLeaveInformationFormData, e, ``,false, (formData, id) => {
         if (id === `startingDate-input`) formData = minAndMaxDateSet(formData);
         if (id === `endingDate-input`) formData = minAndMaxDateSet(formData);
         setLeaveModal(e => JSON.parse(JSON.stringify({
@@ -32,7 +39,7 @@ const LeaveInformationModalBody = ({data}) => {
         })))
         return formData;
     });
-    const onBlurHandler = (e) => commonBlurHandler(LeaveInformationFormData, setLeaveInformationFormData, e, ``);
+    const onBlurHandler = (e) => commonBlurHandler(leaveInformationFormData, setLeaveInformationFormData, e, ``);
 
     const setChildModal = (id, negativeOnClick, positiveOnClick) => {
         const obj = LEAVE_ACTION_MODAL_BODY(id, negativeOnClick, positiveOnClick, user.firstName, data.userFullName)
@@ -45,40 +52,76 @@ const LeaveInformationModalBody = ({data}) => {
         }));
     };
 
+    /** Common Actions **/
+
+        // get updated leave data after the action
+    const getUpdatedLeaveData = () => {
+            dispatch(getLeaveInfo({taskId: data._id || ''})).then((state) => {
+                    setLeaveInformationFormData(() => getLeaveInformationModalBodyFormData(state?.pageData?.leave?.specificLeaveInfo || {}))
+                }
+            );
+        };
+
     const commonCloseChildModalAction = () => {
-        setLeaveModal(e => JSON.parse(JSON.stringify({...e, childModal: {...e.childModal, isOpen: false}})));
+        setLeaveModal({mode: ``, childModal: {isOpen: false}});
     };
     const commonCancelEditAction = () => {
         setLeaveInformationFormData(getLeaveInformationModalBodyFormData(data));
         setLeaveModal(e => JSON.parse(JSON.stringify({...e, mode: ``})));
     }
 
+    /** Cancel Action **/
+
     const onCancelHandler = () => {
         setChildModal(`cancelLeave`, commonCloseChildModalAction, () => {
-            dispatch(cancelLeave({leaveApplicationId: data._id}))
+            dispatch(cancelLeave({leaveApplicationId: data._id})).then(() => {
+                commonCloseChildModalAction()
+                getUpdatedLeaveData()
+            })
         })
     };
+
+    /** Edit Actions **/
+
     const onEditHandler = (event) => {
         setLeaveModal(e => JSON.parse(JSON.stringify({...e, mode: event.target.id})));
         setLeaveInformationFormData((data) => setLeaveModalDataToEditForm(data))
     };
+
     const onEditCancelHandler = () => {
         leaveModal?.changedValue?.isChanged ? setChildModal(`cancelLeaveEdit`, commonCloseChildModalAction, commonCancelEditAction) : commonCancelEditAction();
     }
     const onEditSaveHandler = () => {
         leaveModal?.changedValue?.isChanged ? setChildModal(`saveLeaveEdit`, commonCloseChildModalAction, () => {
-            dispatch(editLeave({leaveApplicationId: data._id, changedValue: leaveModal?.changedValue?.formattedChangedValue}))
+            dispatch(editLeave({
+                leaveApplicationId: data._id,
+                changedValue: leaveModal?.changedValue?.formattedChangedValue
+            })).then(() => {
+                commonCloseChildModalAction()
+                getUpdatedLeaveData()
+            })
         }) : toast.info(`First you required some changes on leave application`);
     }
 
+    /** Reject Action **/
+
     const onRejectHandler = () => {
         setChildModal(`rejectLeaveApplication`, commonCloseChildModalAction, () => {
-            dispatch(rejectLeave({leaveApplicationId: data._id, userId: data.user}))
+            dispatch(rejectLeave({leaveApplicationId: data._id, userId: data.user})).then(() => {
+                getUpdatedLeaveData()
+                commonCloseChildModalAction()
+            })
         })
     };
+
+    /** Approve Action **/
+
     const onApproveHandler = () => {
         setChildModal(`approveLeaveApplication`, commonCloseChildModalAction, () => {
-            dispatch(approveLeave({leaveApplicationId: data._id, userId: data.user}))
+            dispatch(approveLeave({leaveApplicationId: data._id, userId: data.user})).then(() => {
+                commonCloseChildModalAction()
+                getUpdatedLeaveData()
+            })
         })
     };
 
@@ -86,7 +129,7 @@ const LeaveInformationModalBody = ({data}) => {
         <Stack gap={1}>
             <Stack sx={{overflowX: `auto`}}>
                 <Form
-                    formDesign={LeaveInformationFormData}
+                    formDesign={leaveInformationFormData}
                     onBlur={onBlurHandler}
                     onChange={onChangeHandler}
                 />

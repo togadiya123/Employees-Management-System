@@ -56,6 +56,17 @@ const getUsersList = async (req, res) => {
     }
 };
 
+const getAllEmployeeListForChat = async (req, res) => {
+    try {
+        const users = await User.find({}, {firstName: 1, lastName: 1, designation: 1, positionType: 1, avatar: 1});
+
+        return responseHandler(`successful`, res, users);
+    } catch (e) {
+        console.log(`Error on getAllEmployeeListForChat`);
+        return res.status(400).send(`Error on getAllEmployeeListForChat : ${e}`);
+    }
+};
+
 const getEmployeeInfo = async (req, res) => {
     try {
         const user = await User.findOne({_id: req.body.employeeId});
@@ -67,4 +78,4 @@ const getEmployeeInfo = async (req, res) => {
     }
 };
 
-export default {getUserInfo, updateUserInfo, logOut, getUsersList, getEmployeeInfo};
+export default {getUserInfo, updateUserInfo, logOut, getUsersList, getEmployeeInfo, getAllEmployeeListForChat};

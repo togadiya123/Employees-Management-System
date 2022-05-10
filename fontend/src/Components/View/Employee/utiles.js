@@ -60,7 +60,7 @@ export const EMPLOYEE_TABLE = () => [
     },
     {
         id: `dateOfBirth`,
-        label: `Date ff Birth`,
+        label: `Date of Birth`,
         type: `date`,
         sortable: true,
         searchable: true,

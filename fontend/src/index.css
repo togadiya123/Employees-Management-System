@@ -1,6 +1,9 @@
 :root {
     --main: #192673;
     --mainBlur: #192673cf;
+    --mainXBlur: #19267320;
+    --mainLBlur: #19267305;
+    --mainELBlur: #19267380;
     --mainHover: #0c1964;
     --default: #5a5666;
     --white70: #FFFFFF70;

@@ -2,13 +2,14 @@ import {
     APPLY_TO_LEAVE, APPROVE_LEAVE,
     CANCEL_LEAVE, EDIT_LEAVE,
     GET_EMPLOYEE_INFO,
+    GET_EMPLOYEE_LIST_FOR_CHAT,
     GET_LEAVE_INFO,
     GET_LEAVE_LIST,
     GET_USER_INFO,
     GET_USERS_LIST,
     LOGIN_USER,
     LOGOUT_USER,
-    REJECT_LEAVE,
+    REJECT_LEAVE, SEND_MESSAGE, SET_CHAT_SELECTION,
     UPDATE_PROFILE,
     UPLOAD_IMAGE_PROFILE
 } from "./actionType";
@@ -128,6 +129,14 @@ export const getUsersList = payload => ({
     body: payload,
 });
 
+export const getAllEmployeeListForChat = () => ({
+    type: GET_EMPLOYEE_LIST_FOR_CHAT,
+    toasterString: `Try to get employeeList list.`,
+    isHttpAction: true,
+    url: '/user/getAllEmployeeListForChat',
+    method: 'GET',
+});
+
 export const getEmployeeInfo = payload => ({
     type: GET_EMPLOYEE_INFO,
     toasterString: `Try to get employee information.`,
@@ -136,3 +145,17 @@ export const getEmployeeInfo = payload => ({
     method: 'POST',
     body: payload,
 });
+
+export const chatSelection = payload => ({
+    type: SET_CHAT_SELECTION,
+    toasterString: null,
+    payload,
+});
+
+export const sendMessage = payload => ({
+    type: SEND_MESSAGE,
+    isFirebaseRealTimeDataBaseAction: true,
+    collectionName: `direct`,
+    loader : false,
+    payload,
+})

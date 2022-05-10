@@ -6,7 +6,8 @@ import {Leave, ApplyToLeave} from "./Leave";
 import {Profile} from "./Profile";
 import Salary from "./Salary";
 import Login from "./Login";
+import {Chat} from "./Chat";
 
 export {
-    Attendance, Dashboard, Employee, ForgotPassword, Leave, ApplyToLeave, Login, Salary, Profile
+    Attendance, Dashboard, Employee, ForgotPassword, Leave, ApplyToLeave, Login, Salary, Profile, Chat
 };
