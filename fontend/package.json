@@ -13,6 +13,7 @@
     "axios": "^0.24.0",
     "dotenv": "^10.0.0",
     "firebase": "^9.6.3",
+    "gh-pages": "^4.0.0",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -29,6 +30,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -54,5 +57,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "homepage": "https://togadiya123.github.io/Employees-Management-System/frontend/"
 }
